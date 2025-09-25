@@ -8,12 +8,9 @@ public class MyFrame extends JFrame {
 	JTextField jtext3= new JTextField(20);
 	JButton e = new JButton("=");
 	public MyFrame() {
+		setSize(1000,220);
 		JLabel label1=new JLabel("+");
-//		p.add(jtext1);
-//		p.add(label1);
-//		p.add(jtext2);
-//		p.add(jtext3);
-//		MyFrame.add(p);
+
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setTitle("버튼연습장");
 		setVisible(true);
@@ -36,7 +33,10 @@ public class MyFrame extends JFrame {
 
 }
 
-// 인라인과 인라인 없는 것은 차이 C언어
-// static C언어
-// 지역변수와 전역변수의 개념 C언어
-// 위 3가지는 복습 할 내용
+
+//인라인과 인라인 없는 것은 차이 C언어
+//static C언어
+//지역변수와 전역변수의 개념 C언어
+//위 3가지는 복습 할 내용
+
+//일단 예제 들어가서 모르는것을 차근차근 검색해서 채워나가는 식으로 공부!
