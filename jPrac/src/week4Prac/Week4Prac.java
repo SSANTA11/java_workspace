@@ -10,4 +10,7 @@ public class Week4Prac extends JFrame{
 		setLayout(new FlowLayout());
 		setVisible(true);
 	}
+	public static void main(String[]args) {
+		Week4Prac a = new Week4Prac(); 
+	}
 }
