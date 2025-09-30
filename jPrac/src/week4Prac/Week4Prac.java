@@ -8,7 +8,10 @@ public class Week4Prac extends JFrame{
 		setTitle("MyFrame");
 		
 		setLayout(new FlowLayout());
+		JButton button = new JButton("버튼");
+		this.add(button);
 		setVisible(true);
+		
 	}
 	public static void main(String[]args) {
 		Week4Prac a = new Week4Prac(); 
