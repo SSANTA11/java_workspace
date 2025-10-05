@@ -15,7 +15,7 @@ public class MyFrame extends JFrame {
 		setTitle("버튼연습장");
 		setVisible(true);
 		
-		setLayout(new FlowLayout());// 화면에서 좌측부터 순서대로 배치한후 화면에 차면 다음 행으로 넘김
+//		setLayout(new FlowlaLayout());// 화면에서 좌측부터 순서대로 배치한후 화면에 차면 다음 행으로 넘김
 		this.add(jtext1);
 		this.add(label1);
 		this.add(jtext2);
