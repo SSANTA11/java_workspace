@@ -1,43 +1,43 @@
-package week4;
-
-
-import java.awt.event.*; // 이벤트 처리를 위한 패키지
-import javax.swing.*;
-
-class MyFrame extends JFrame {
-     private JButton button1, button2;
-     private JLabel label;
-     public MyFrame() {
-         this.setSize(300, 200);
-         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-         this.setTitle("이벤트 예제");
-         JPanel panel = new JPanel();
-         label = new JLabel("1");
-         button1 = new JButton("△");
-         button2 = new JButton("▽");
-         button1.addActionListener(new MyListener()); // 버튼에 이벤트 리스너 등록
-         button2.addActionListener(new MyListener()); // 버튼에 이벤트 리스너 등록
-
-         panel.add(label);
-         panel.add(button1);
-         panel.add(button2);
-         
-         this.add(panel);
-         this.setVisible(true);
-     }
-
-     private class MyListener implements ActionListener {
-         public void actionPerformed(ActionEvent e) {
-             if (e.getSource() == button1) {
-                 label.setText("+");
-             }
-             else {
-            	 label.setText("-");            	 
-             }
-            	 
-         }
-     }
-}
+//package week4;
+//
+//
+//import java.awt.event.*; // 이벤트 처리를 위한 패키지
+//import javax.swing.*;
+//
+//class MyFrame extends JFrame {
+//     private JButton button1, button2;
+//     private JLabel label;
+//     public MyFrame() {
+//         this.setSize(300, 200);
+//         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//         this.setTitle("이벤트 예제");
+//         JPanel panel = new JPanel();
+//         label = new JLabel("1");
+//         button1 = new JButton("△");
+//         button2 = new JButton("▽");
+//         button1.addActionListener(new MyListener()); // 버튼에 이벤트 리스너 등록
+//         button2.addActionListener(new MyListener()); // 버튼에 이벤트 리스너 등록
+//
+//         panel.add(label);
+//         panel.add(button1);
+//         panel.add(button2);
+//         
+//         this.add(panel);
+//         this.setVisible(true);
+//     }
+//
+//     private class MyListener implements ActionListener {
+//         public void actionPerformed(ActionEvent e) {
+//             if (e.getSource() == button1) {
+//                 label.setText("+");
+//             }
+//             else {
+//            	 label.setText("-");            	 
+//             }
+//            	 
+//         }
+//     }
+//}
 
 // 인터페이스란 ?
 // 중간 매개체 역할인 인터페이스.

@@ -4,6 +4,7 @@ import javax.swing.*;
 import java.awt.FlowLayout;
 import java.awt.event.*;
 
+
 public class assignment extends JFrame {
 	private JTextField num1, num2;
 	private JButton equal;
@@ -22,6 +23,22 @@ public class assignment extends JFrame {
 		}
 	}
 
+	private class MyListener implements ActionListener {
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			try {
+				int a = Integer.parseInt(num1.getText());
+				int b = Integer.parseInt(num2.getText());
+				if (p.isSelected())
+					answer.setText(Integer.toString(a + b));
+				else if (m.isSelected())
+					answer.setText(Integer.toString(a - b));
+			}catch(NumberFormatException err){
+				answer.setText("오류 발생: " + err);
+			}
+		}
+		
+	}
 	public assignment() {
 		setSize(500, 200);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -43,18 +60,4 @@ public class assignment extends JFrame {
 		setVisible(true);
 	}
 
-	private class MyListener implements ActionListener {
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			String n1 = num1.getText();
-			String n2 = num2.getText();
-			int a = Integer.parseInt(n1);
-			int b = Integer.parseInt(n2);
-			if (p.isSelected())
-				answer.setText(Integer.toString(a + b));
-			else if (m.isSelected())
-				answer.setText(Integer.toString(a - b));
-		}
-
-	}
 }

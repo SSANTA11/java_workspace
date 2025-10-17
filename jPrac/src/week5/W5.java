@@ -1,49 +1,49 @@
-package week5;
-
-import java.awt.event.*; // 이벤트 처리를 위한 패키지
-import javax.swing.*;
-
-class MyFrame extends JFrame {
-	private JButton button1, button2;
-	private JLabel label;
-	private int number = 1;
-
-	public MyFrame() {
-		this.setSize(300, 200);
-		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		this.setTitle("이벤트 예제");
-		JPanel panel = new JPanel();
-		label = new JLabel("1");
-		button1 = new JButton("△");
-		button2 = new JButton("▽");
-		button1.addActionListener(new MyListener());
-		button2.addActionListener(new MyListener());
-
-		panel.add(label);
-		panel.add(button1);
-		panel.add(button2);
-
-		this.add(panel);
-		this.setVisible(true);
-	}
-
-	private class MyListener implements ActionListener {
-		public void actionPerformed(ActionEvent e) {
-//        	 try {
-        		 
-             if (e.getSource() == button1) {
-            	 number+=1;
-             }
-             else {
-            	 number-=1;
-             }
-             label.setText(Integer.toString(number));            	 
-//        	 } catch() {
-//        		 continue;
-//        	 }
-         }
-	}
-}
+//package week5;
+//
+//import java.awt.event.*; // 이벤트 처리를 위한 패키지
+//import javax.swing.*;
+//
+//class MyFrame extends JFrame {
+//	private JButton button1, button2;
+//	private JLabel label;
+//	private int number = 1;
+//
+//	public MyFrame() {
+//		this.setSize(300, 200);
+//		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//		this.setTitle("이벤트 예제");
+//		JPanel panel = new JPanel();
+//		label = new JLabel("1");
+//		button1 = new JButton("△");
+//		button2 = new JButton("▽");
+//		button1.addActionListener(new MyListener());
+//		button2.addActionListener(new MyListener());
+//
+//		panel.add(label);
+//		panel.add(button1);
+//		panel.add(button2);
+//
+//		this.add(panel);
+//		this.setVisible(true);
+//	}
+//
+//	private class MyListener implements ActionListener {
+//		public void actionPerformed(ActionEvent e) {
+////        	 try {
+//        		 
+//             if (e.getSource() == button1) {
+//            	 number+=1;
+//             }
+//             else {
+//            	 number-=1;
+//             }
+//             label.setText(Integer.toString(number));            	 
+////        	 } catch() {
+////        		 continue;
+////        	 }
+//         }
+//	}
+//}
 
 // 인터페이스란 ?
 // 중간 매개체 역할인 인터페이스.
