@@ -10,7 +10,7 @@ public class assignment extends JFrame {
 	private JButton equal;
 	private JRadioButton p, m;
 	private JLabel answer;
-
+	
 	public class PMpanel extends JPanel {
 		public PMpanel() {
 			p = new JRadioButton("+");
@@ -55,7 +55,7 @@ public class assignment extends JFrame {
 		this.add(equal);
 		this.add(answer);
 
-		equal.addActionListener(new MyListener());
+		equal.addActionListener(new MyListener()); //jvm에게 요구!
 
 		setVisible(true);
 	}
