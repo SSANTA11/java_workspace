@@ -19,7 +19,7 @@ class MyFrame extends JFrame{
 	private JButton b1;
 	private JButton b2;
 	private JPanel p;
-//	MyListener listener =new MyListener();
+//	MyListener listener = new MyListener();
 	public MyFrame() {
 		this.setSize(300,200);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -38,7 +38,7 @@ class MyFrame extends JFrame{
 //		b2.addActionListener(listener);
 		b2.addActionListener(new MyListener());
 		p.add(b2);
-		p.add();
+//		p.add();
 		this.add(p);
 		
 		this.setVisible(true);
