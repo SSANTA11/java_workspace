@@ -1,8 +1,9 @@
 package mid_practice;
+//
 
-import javax.swing.*;
-import java.awt.event.*;
-import java.awt.*;
+//import javax.swing.*;
+//import java.awt.event.*;
+//import java.awt.*;
 
 // 1단계 연습문제 JFrame과 JPanel
 
@@ -173,5 +174,115 @@ import java.awt.*;
 //
 //	public static void main(String[] args) {
 //		Prac p = new Prac();
+//	}
+//}
+//import javax.swing.*;
+//import java.awt.event.*;
+//import java.awt.*;
+//
+//public class Prac extends JFrame implements ActionListener{
+//	private JTextField t;
+//	JPanel p;
+//	Prac(){
+//		setTitle("키패드 만들기");
+//		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//		t=new JTextField(20);
+//		add(t, BorderLayout.NORTH);
+//		JPanel p = new JPanel();
+//		p.setLayout(new GridLayout(3,3));
+//		add(p, BorderLayout.CENTER);
+//		for (int i=1; i<=9; i++) {			
+//			JButton b=new JButton(""+i);
+//			b.addActionListener(this);
+//			b.setPreferredSize(new Dimension(100,100));
+//			p.add(b);
+//		}
+//		pack();
+//		setVisible(true);
+//	}
+//	@Override
+//	public void actionPerformed(ActionEvent e) {
+//		String actionCommand=e.getActionCommand();
+//		t.setText(t.getText()+actionCommand);
+//	}
+//	public static void main(String [] args) {
+//		new Prac();
+//	}
+//}
+
+//import javax.swing.*;
+//import java.awt.event.*;
+//import java.awt.*;
+//import java.util.*;
+//
+//public class Prac extends JFrame implements ActionListener {
+//	static final int ROCK = 0, PAPER = 1, SCISSOR = 2;
+//	private JButton rock, paper, scissor;
+//	private JTextField t1, t2;
+//
+//	Prac() {
+//		setTitle("가위 바위 보");
+//		setSize(500, 300);
+//		JPanel p = new JPanel();
+//		p.setLayout(new GridLayout(0, 3));
+//		t1=new JTextField("가위바위보 해보실까여!");
+//		t2=new JTextField(20);
+//		rock = new JButton("ROCK");
+//		paper = new JButton("PAPER");
+//		scissor = new JButton("SCISSOR");
+//		ButtonGroup b= new ButtonGroup();
+//		add(t1, BorderLayout.NORTH);
+//		add(p);
+//		rock.addActionListener(this);
+//		p.add(rock);
+//		paper.addActionListener(this);
+//		p.add(paper);
+//		scissor.addActionListener(this);
+//		p.add(scissor);
+//		add(t2, BorderLayout.SOUTH);
+//		setVisible(true);
+//	}
+//	@Override
+//	public void actionPerformed(ActionEvent e) {
+//		Random r = new Random();
+//		int hand = r.nextInt(3);
+//		if (e.getSource()==rock) {
+//			if (hand == ROCK) {
+//				t2.setText("무승부");
+//			} else if (hand == SCISSOR) {
+//				t2.setText("승리");
+//
+//			} else {
+//				t2.setText("패배");
+//
+//			}
+//		} else if (e.getSource()==paper) {
+//			if (hand == PAPER) {
+//
+//				t2.setText("무승부");
+//			} else if (hand == SCISSOR) {
+//
+//				t2.setText("패배");
+//
+//			} else {
+//
+//				t2.setText("승리");
+//			}
+//		} else if (e.getSource()==scissor)  {
+//			if (hand == SCISSOR) {
+//
+//				t2.setText("무승부");
+//			} else if (hand == ROCK) {
+//
+//				t2.setText("패배");
+//			} else {
+//
+//				t2.setText("승리");
+//			}
+//		}
+//	}
+//
+//	public static void main(String[] args) {
+//		new Prac();
 //	}
 //}
