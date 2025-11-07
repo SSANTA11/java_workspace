@@ -1,11 +1,19 @@
 package entities;
 
-public class Player extends Entity{
-	void stop(){};
-	void stepBack(){};
-	void move() {};
-	void rolling() {};
-	void Sandevistan() {};
-	
+public class Player extends Entity {
+	public void stop(Entity e) {
+	};
+
+	public void stepBack(Player p) {
+	};
+
+	public void move(Player p) {
+	};
+
+	public void rolling(Player p) {
+	};
+
+	public void Sandevistan(Player p) {
+	};
 	
 }
