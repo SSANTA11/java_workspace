@@ -1,5 +1,8 @@
 package core;
 
 public class MapManager {
-	void map() {};
+	void map() {
+		
+	};
+	
 }

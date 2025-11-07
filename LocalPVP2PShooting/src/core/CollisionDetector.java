@@ -1,7 +1,10 @@
 package core;
 
+import entities.*;
+
 public class CollisionDetector {
-	boolean isCollision(){
+	public boolean checkCollision(Entity e1, Entity e2){
+		
 		return false;
-	};
+	}
 }
