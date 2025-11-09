@@ -15,5 +15,9 @@ public class Player extends Entity {
 
 	public void Sandevistan(Player p) {
 	};
+<<<<<<< HEAD
 	
+=======
+
+>>>>>>> f183d83cef6e891962a6f13ab6eff94f2df77719
 }

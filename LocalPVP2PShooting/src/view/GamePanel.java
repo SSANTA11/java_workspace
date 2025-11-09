@@ -1,5 +1,6 @@
 package view;
 
+<<<<<<< HEAD
 import java.awt.Graphics;
 import javax.swing.*;
 import core.MapManager;
@@ -43,5 +44,21 @@ public class GamePanel extends JPanel {
 			}
 		}
 //		g.drawImage(player.png,200,200,10,10,null);
+=======
+import java.awt.CardLayout;
+
+import javax.swing.*;
+
+import core.GameManager;
+
+public class GamePanel extends JPanel {
+	JButton play;
+	GamePanel() {
+		play = new JButton("게임 플레이!");
+		play.addActionListener(e -> {
+//			GameManager.changePanel("TITLE");
+		});
+		this.add(play);
+>>>>>>> f183d83cef6e891962a6f13ab6eff94f2df77719
 	}
 }

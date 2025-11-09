@@ -8,6 +8,7 @@ import javax.imageio.ImageIO;
 import view.GameWindow;
 
 public class MapManager {
+<<<<<<< HEAD
 	public static final int TILE_SIZE = 64;
 	public static final int WIDTH_TILES = GameWindow.WIDTH / TILE_SIZE;
 	public static final int HEIGHT_TILES = GameWindow.HEIGHT / TILE_SIZE;
@@ -54,4 +55,10 @@ public class MapManager {
 		return 'w';
 	}
 
+=======
+	void map() {
+		
+	};
+	
+>>>>>>> f183d83cef6e891962a6f13ab6eff94f2df77719
 }
