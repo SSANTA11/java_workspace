@@ -1,18 +1,19 @@
 package view;
 
-<<<<<<< HEAD
 import java.awt.Graphics;
 import javax.swing.*;
+
+import core.InputHandler;
 import core.MapManager;
 import entities.Player;
 
 public class GamePanel extends JPanel {
 	private MapManager mapManager;
-	private Player p;
+	private Player p = new Player();
 
-	public GamePanel(MapManager mapManager, Player p) {
+	public GamePanel(MapManager mapManager) {
 		this.mapManager = mapManager;
-		this.p = p;
+		addKeyListener(new InputHandler(p));
 	}
 
 	@Override
@@ -43,22 +44,5 @@ public class GamePanel extends JPanel {
 
 			}
 		}
-//		g.drawImage(player.png,200,200,10,10,null);
-=======
-import java.awt.CardLayout;
-
-import javax.swing.*;
-
-import core.GameManager;
-
-public class GamePanel extends JPanel {
-	JButton play;
-	GamePanel() {
-		play = new JButton("게임 플레이!");
-		play.addActionListener(e -> {
-//			GameManager.changePanel("TITLE");
-		});
-		this.add(play);
->>>>>>> f183d83cef6e891962a6f13ab6eff94f2df77719
 	}
 }
