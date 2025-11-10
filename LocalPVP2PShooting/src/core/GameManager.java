@@ -1,14 +1,11 @@
 package core;
 
-import javax.swing.JPanel;
 import entities.*;
-import view.GamePanel;
 import view.GameWindow;
 
 public class GameManager {
 
 	private static final GameManager instance = new GameManager();
-
 	private GameWindow gameWindow;
 
 	private GameManager() {
@@ -16,6 +13,7 @@ public class GameManager {
 
 	public void initialize(GameWindow gameWindow) {
 		this.gameWindow = gameWindow;
+		Player.getInstance().initialize(this);
 	}
 
 	public static GameManager getInstance() {

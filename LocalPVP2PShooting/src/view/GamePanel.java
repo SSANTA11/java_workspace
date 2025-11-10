@@ -1,19 +1,33 @@
 package view;
 
 import java.awt.Graphics;
-import javax.swing.*;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
-import core.InputHandler;
+import javax.swing.*;
 import core.MapManager;
 import entities.Player;
 
 public class GamePanel extends JPanel {
+	private Player player = Player.getInstance();
 	private MapManager mapManager;
-	private Player p = new Player();
 
 	public GamePanel(MapManager mapManager) {
 		this.mapManager = mapManager;
-		addKeyListener(new InputHandler(p));
+		addKeyListener(new KeyAdapter() {
+
+			@Override
+			public void keyPressed(KeyEvent e) {
+				player.setMoving(e.getKeyCode(), true);
+			}
+
+			@Override
+			public void keyReleased(KeyEvent e) {
+				player.setMoving(e.getKeyCode(), false);
+			}
+		});
+		setFocusable(true);
+		requestFocusInWindow();
 	}
 
 	@Override
@@ -44,5 +58,6 @@ public class GamePanel extends JPanel {
 
 			}
 		}
+		player.draw(g);
 	}
 }

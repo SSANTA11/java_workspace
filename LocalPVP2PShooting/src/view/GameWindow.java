@@ -7,7 +7,7 @@ import javax.swing.SwingUtilities;
 
 import core.GameManager;
 import core.MapManager;
-import entities.Player;
+//import entities.Player;
 
 public class GameWindow extends JFrame {
 	public static final int WIDTH = 1250;
@@ -42,7 +42,9 @@ public class GameWindow extends JFrame {
 	}
 
 	public static void main(String[] args) {
-		GameWindow gameWindow = new GameWindow();
-		GameManager.getInstance().initialize(gameWindow);
+		SwingUtilities.invokeLater(() -> {
+			GameWindow gameWindow = new GameWindow();
+			GameManager.getInstance().initialize(gameWindow);
+		});
 	}
 }
