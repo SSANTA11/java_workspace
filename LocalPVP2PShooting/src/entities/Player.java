@@ -10,32 +10,26 @@ import javax.imageio.ImageIO;
 import core.GameManager;
 
 public class Player extends Entity {
-	private static final Player instance = new Player();
-
 	private int x = 500;
 	private int y = 500;
 	private int hp = 100;
 	private int power = 10;
 	private final int speed = 2;
-	private boolean up, down, left, right;
+	private boolean up=false, down=false, left=false, right=false;
 	private BufferedImage image = null;
-	GameManager gameManager;
 
-	private Player() {
+	public Player() {
 		try {
-			image = ImageIO.read(getClass().getResource("/res/Player.png"));
+			image = ImageIO.read(getClass().getResource("/Player.png"));
 		} catch (IOException e) {
 			System.err.println("img 오류");
 			e.printStackTrace();
 		}
 	}
 
-	public void initialize(GameManager gameManager) {
-		this.gameManager = gameManager;
-	}
-
-	public static Player getInstance() {
-		return instance;
+	public void setPosition(int x, int y) {
+		this.x = x;
+		this.y = y;
 	}
 
 	public void setMoving(int keyCode, boolean isMoving) {
@@ -57,7 +51,6 @@ public class Player extends Entity {
 			left = isMoving;
 			break;
 		}
-
 	}
 
 	public void updatePosition() {
@@ -66,7 +59,7 @@ public class Player extends Entity {
 
 		if (up)
 			this.y -= speed / ADJUST;
-		
+
 		if (down)
 			this.y += speed / ADJUST;
 

@@ -35,6 +35,11 @@ public class GameWindow extends JFrame {
 
 		add(mainPanel);
 		setVisible(true);
+
+	}
+
+	public GamePanel getGamePanel() {
+		return gamePanel;
 	}
 
 	public void changePanel(String panel) {
@@ -44,7 +49,10 @@ public class GameWindow extends JFrame {
 	public static void main(String[] args) {
 		SwingUtilities.invokeLater(() -> {
 			GameWindow gameWindow = new GameWindow();
-			GameManager.getInstance().initialize(gameWindow);
+			GameManager manager = GameManager.getInstance();
+			manager.initialize(gameWindow);
+			new Thread(new core.GameLoop(manager)).start();
+
 		});
 	}
 }

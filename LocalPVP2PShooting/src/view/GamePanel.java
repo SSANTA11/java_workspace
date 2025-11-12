@@ -5,29 +5,37 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
 import javax.swing.*;
+
+import core.GameLoop;
+import core.GameManager;
 import core.MapManager;
 import entities.Player;
 
 public class GamePanel extends JPanel {
-	private Player player = Player.getInstance();
 	private MapManager mapManager;
+	private GameManager manager = GameManager.getInstance();
+	private Player mainPlayer;
 
 	public GamePanel(MapManager mapManager) {
 		this.mapManager = mapManager;
+		manager.makePlayer();
+		this.mainPlayer = manager.getPlayer(0);
 		addKeyListener(new KeyAdapter() {
 
 			@Override
 			public void keyPressed(KeyEvent e) {
-				player.setMoving(e.getKeyCode(), true);
+				System.out.println("키 입력 감지: " + e.getKeyCode());
+				mainPlayer.setMoving(e.getKeyCode(), true);
 			}
 
 			@Override
 			public void keyReleased(KeyEvent e) {
-				player.setMoving(e.getKeyCode(), false);
+				mainPlayer.setMoving(e.getKeyCode(), false);
 			}
 		});
 		setFocusable(true);
 		requestFocusInWindow();
+		
 	}
 
 	@Override
@@ -58,6 +66,6 @@ public class GamePanel extends JPanel {
 
 			}
 		}
-		player.draw(g);
+		mainPlayer.draw(g);
 	}
 }
