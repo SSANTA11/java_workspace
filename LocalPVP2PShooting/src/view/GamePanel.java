@@ -6,7 +6,6 @@ import java.awt.event.KeyEvent;
 
 import javax.swing.*;
 
-import core.GameLoop;
 import core.GameManager;
 import core.MapManager;
 import entities.Player;
@@ -17,6 +16,8 @@ public class GamePanel extends JPanel {
 	private Player mainPlayer;
 
 	public GamePanel(MapManager mapManager) {
+		setFocusable(true);
+		requestFocusInWindow();
 		this.mapManager = mapManager;
 		manager.makePlayer();
 		this.mainPlayer = manager.getPlayer(0);
@@ -33,8 +34,6 @@ public class GamePanel extends JPanel {
 				mainPlayer.setMoving(e.getKeyCode(), false);
 			}
 		});
-		setFocusable(true);
-		requestFocusInWindow();
 		
 	}
 
