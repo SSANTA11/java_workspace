@@ -7,29 +7,56 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
-import core.GameManager;
+import view.Camera;
 
 public class Player extends Entity {
 	private int x = 500;
 	private int y = 500;
 	private int hp = 100;
 	private int power = 10;
-	private final int speed = 2;
-	private boolean up=false, down=false, left=false, right=false;
+	private final int speed = 20;
+	private boolean up = false, down = false, left = false, right = false;
 	private BufferedImage image = null;
+	private final Camera camera;
 
-	public Player() {
+	// 맵 경계 필드
+	private final int MAP_WIDTH;
+	private final int MAP_HEIGHT;
+
+	// 생성자: Camera와 맵 경계를 주입받습니다.
+	public Player(Camera camera, int mapWidth, int mapHeight) {
 		try {
 			image = ImageIO.read(getClass().getResource("/Player.png"));
 		} catch (IOException e) {
 			System.err.println("img 오류");
 			e.printStackTrace();
 		}
+		this.camera = camera;
+		this.MAP_WIDTH = mapWidth;
+		this.MAP_HEIGHT = mapHeight;
 	}
 
 	public void setPosition(int x, int y) {
 		this.x = x;
 		this.y = y;
+	}
+
+	// 📢 추가됨: 현재 X 좌표를 반환합니다.
+	public int getX() {
+		return x;
+	}
+
+	// 📢 추가됨: 현재 Y 좌표를 반환합니다.
+	public int getY() {
+		return y;
+	}
+
+	public int getWidth() {
+		return image != null ? image.getWidth() : 0;
+	}
+
+	public int getHeight() {
+		return image != null ? image.getHeight() : 0;
 	}
 
 	public void setMoving(int keyCode, boolean isMoving) {
@@ -54,26 +81,36 @@ public class Player extends Entity {
 	}
 
 	public void updatePosition() {
-		boolean isDouble = (up || down) && (left || right);
-		final int ADJUST = isDouble ? 2 : 1;
+		int nextX = this.x;
+		int nextY = this.y;
 
 		if (up)
-			this.y -= speed / ADJUST;
+			nextY -= speed;
 
 		if (down)
-			this.y += speed / ADJUST;
+			nextY += speed;
 
 		if (left)
-			this.x -= speed / ADJUST;
+			nextX -= speed;
 
 		if (right)
-			this.x += speed / ADJUST;
+			nextX += speed;
+
+         		// 경계 클램핑 로직
+		int minX = 0;
+		int minY = 0;
+		int maxX = MAP_WIDTH - getWidth();
+		int maxY = MAP_HEIGHT - getHeight();
+
+		this.x = Math.max(minX, Math.min(nextX, maxX));
+		this.y = Math.max(minY, Math.min(nextY, maxY));
+
+		camera.updatePlayerPosition(this.x, this.y);
 	}
 
-	public void draw(Graphics g) {
+	public void draw(Graphics g, int screenX, int screenY) {
 		if (image != null) {
-			g.drawImage(image, x, y, null);
+			g.drawImage(image, screenX, screenY, getWidth(), getHeight(), null);
 		}
 	}
-
 }

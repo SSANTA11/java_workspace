@@ -8,10 +8,11 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 
-import core.GameManager;
+import core.GameManager; // GameManager import는 필요 없으나, 현재 코드의 구조를 유지하기 위해 남겨둡니다.
+import java.awt.Window; // Window 클래스 import 추가
 
 public class TitlePanel extends JPanel {
-	private final GameManager manager = GameManager.getInstance();
+	// private final GameManager manager = GameManager.getInstance(); // ❌ GameManager 필드 제거
 	private JPanel p = new JPanel();
 	JButton b1 = new JButton("게임 시작");
 	JButton b2 = new JButton("옵션");
@@ -34,12 +35,21 @@ public class TitlePanel extends JPanel {
 		p.add(b2);
 		p.add(b3);
 		add(p, BorderLayout.SOUTH);
+
+		// 📢 수정: 버튼 클릭 시, 자신을 포함하는 GameWindow 객체를 찾아 changePanel 호출
 		b1.addActionListener(e -> {
-			manager.changePanel("GAME");
+			// 자신(TitlePanel)의 최상위 Window 객체를 찾습니다.
+			Window window = SwingUtilities.getWindowAncestor(this);
+			if (window instanceof GameWindow) {
+				((GameWindow) window).changePanel("GAME");
+			}
 		});
 
 		b2.addActionListener(e -> {
-			manager.changePanel("OPTION");
+			Window window = SwingUtilities.getWindowAncestor(this);
+			if (window instanceof GameWindow) {
+				((GameWindow) window).changePanel("OPTION");
+			}
 		});
 
 		b3.addActionListener(e -> {
@@ -49,6 +59,8 @@ public class TitlePanel extends JPanel {
 
 	@Override
 	protected void paintComponent(Graphics g) {
-		g.drawImage(title, 0, 0, GameWindow.WIDTH, GameWindow.HEIGHT, null);
+        // 배경 이미지를 그리기 전에 반드시 super.paintComponent를 호출해야 합니다.
+        super.paintComponent(g); 
+		g.drawImage(title, 0, 0, getWidth(), getHeight(), null); // GameWindow.WIDTH 대신 getWidth() 사용 권장
 	}
 }

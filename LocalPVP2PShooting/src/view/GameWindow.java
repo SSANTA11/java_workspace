@@ -6,8 +6,7 @@ import javax.swing.*;
 import javax.swing.SwingUtilities;
 
 import core.GameManager;
-import core.MapManager;
-//import entities.Player;
+import core.GameLoop;
 
 public class GameWindow extends JFrame {
 	public static final int WIDTH = 1250;
@@ -20,39 +19,49 @@ public class GameWindow extends JFrame {
 	private GamePanel gamePanel;
 	private OptionPanel optionPanel;
 
-	public GameWindow() {
-
+	public GameWindow(TitlePanel t, GamePanel g, OptionPanel o) {
 		setSize(WIDTH, HEIGHT);
 		setTitle("LocalShooting");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		this.titlePanel = new TitlePanel();
-		this.gamePanel = new GamePanel(new MapManager());
-		this.optionPanel = new OptionPanel();
+
+		this.titlePanel = t;
+		this.gamePanel = g;
+		this.optionPanel = o;
 
 		mainPanel.add(titlePanel, "TITLE");
 		mainPanel.add(gamePanel, "GAME");
 		mainPanel.add(optionPanel, "OPTION");
 
 		add(mainPanel);
+
 		setVisible(true);
 
 	}
 
-	public GamePanel getGamePanel() {
-		return gamePanel;
-	}
+	public void changePanel(String panelName) {
+		cardLayout.show(mainPanel, panelName);
 
-	public void changePanel(String panel) {
-		cardLayout.show(mainPanel, panel);
+		if ("GAME".equals(panelName)) {
+			SwingUtilities.invokeLater(() -> {
+		        setFocusable(true); 
+				gamePanel.requestFocusInWindow();
+				System.out.println("디버그 메세지: GamePanel에 포커스 요청 완료.");
+			});
+		}
 	}
 
 	public static void main(String[] args) {
 		SwingUtilities.invokeLater(() -> {
-			GameWindow gameWindow = new GameWindow();
 			GameManager manager = GameManager.getInstance();
-			manager.initialize(gameWindow);
-			new Thread(new core.GameLoop(manager)).start();
+			manager.initialize();
 
+			TitlePanel titlePanel = new TitlePanel();
+			GamePanel gamePanel = new GamePanel();
+			OptionPanel optionPanel = new OptionPanel();
+
+			GameWindow gameWindow = new GameWindow(titlePanel, gamePanel, optionPanel);
+
+			new Thread(new GameLoop(manager, gameWindow.gamePanel)).start();
 		});
 	}
 }
