@@ -14,16 +14,14 @@ public class Player extends Entity {
 	private int y = 500;
 	private int hp = 100;
 	private int power = 10;
-	private final int speed = 20;
+	private int speed = 20;
 	private boolean up = false, down = false, left = false, right = false;
 	private BufferedImage image = null;
 	private final Camera camera;
 
-	// 맵 경계 필드
 	private final int MAP_WIDTH;
 	private final int MAP_HEIGHT;
 
-	// 생성자: Camera와 맵 경계를 주입받습니다.
 	public Player(Camera camera, int mapWidth, int mapHeight) {
 		try {
 			image = ImageIO.read(getClass().getResource("/Player.png"));
@@ -41,12 +39,10 @@ public class Player extends Entity {
 		this.y = y;
 	}
 
-	// 📢 추가됨: 현재 X 좌표를 반환합니다.
 	public int getX() {
 		return x;
 	}
 
-	// 📢 추가됨: 현재 Y 좌표를 반환합니다.
 	public int getY() {
 		return y;
 	}
@@ -96,7 +92,6 @@ public class Player extends Entity {
 		if (right)
 			nextX += speed;
 
-         		// 경계 클램핑 로직
 		int minX = 0;
 		int minY = 0;
 		int maxX = MAP_WIDTH - getWidth();

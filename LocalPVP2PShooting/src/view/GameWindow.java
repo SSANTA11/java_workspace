@@ -20,10 +20,10 @@ public class GameWindow extends JFrame {
 	private OptionPanel optionPanel;
 
 	public GameWindow(TitlePanel t, GamePanel g, OptionPanel o) {
-		setSize(WIDTH, HEIGHT);
 		setTitle("LocalShooting");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
+		setUndecorated(true);
+		setExtendedState(JFrame.MAXIMIZED_BOTH);
 		this.titlePanel = t;
 		this.gamePanel = g;
 		this.optionPanel = o;
@@ -43,7 +43,7 @@ public class GameWindow extends JFrame {
 
 		if ("GAME".equals(panelName)) {
 			SwingUtilities.invokeLater(() -> {
-		        setFocusable(true); 
+				setFocusable(true);
 				gamePanel.requestFocusInWindow();
 				System.out.println("디버그 메세지: GamePanel에 포커스 요청 완료.");
 			});

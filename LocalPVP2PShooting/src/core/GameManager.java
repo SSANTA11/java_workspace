@@ -56,11 +56,6 @@ public class GameManager {
 			}
 			Player MAINPLAYER = arr.get(0);
 			MAINPLAYER.updatePosition();
-
-			// 📢 매 업데이트마다 카메라 위치를 갱신합니다. (GamePanel의 repaint 전에 실행)
-			// Camera.updateCamera()는 이제 GamePanel에서 화면 크기와 함께 호출되어야 합니다.
-			// 여기서는 플레이어 위치만 카메라에 전달합니다.
-			camera.updatePlayerPosition(MAINPLAYER.getX(), MAINPLAYER.getY());
 		}
 	}
 }
