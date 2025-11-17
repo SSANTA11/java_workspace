@@ -1,11 +1,13 @@
 package core;
 
+import view.Camera;
 import view.GamePanel;
 
 public class GameLoop implements Runnable {
 
 	private final GameManager gameManager;
 	private final GamePanel gamePanel;
+	private final Camera camera;
 
 	private static final int TARGET_FPS = 60;
 	private static final long TARGET_TIME = 1000 / TARGET_FPS;
@@ -14,6 +16,7 @@ public class GameLoop implements Runnable {
 	public GameLoop(GameManager manager, GamePanel panel) {
 		this.gameManager = manager;
 		this.gamePanel = panel;
+		this.camera=manager.getCamera();
 	}
 
 	@Override
@@ -27,6 +30,7 @@ public class GameLoop implements Runnable {
 			startTime = System.currentTimeMillis();
 
 			gameManager.updateGame();
+			camera.updateCamera();
 			gamePanel.repaint();
 
 			timeUsed = System.currentTimeMillis() - startTime;

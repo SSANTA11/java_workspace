@@ -6,7 +6,7 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 
 public class MapManager {
-	public static final int TILE_SIZE = 20;
+	public static final int TILE_SIZE =200;
 	public static final int WIDTH_TILES = 1000;
 	public static final int HEIGHT_TILES = 1000;
 

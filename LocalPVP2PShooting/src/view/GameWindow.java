@@ -22,8 +22,8 @@ public class GameWindow extends JFrame {
 	public GameWindow(TitlePanel t, GamePanel g, OptionPanel o) {
 		setTitle("LocalShooting");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setUndecorated(true);
-		setExtendedState(JFrame.MAXIMIZED_BOTH);
+		setLocationRelativeTo(null);
+		setSize(1000,1000);
 		this.titlePanel = t;
 		this.gamePanel = g;
 		this.optionPanel = o;

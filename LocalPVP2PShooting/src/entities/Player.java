@@ -10,8 +10,8 @@ import javax.imageio.ImageIO;
 import view.Camera;
 
 public class Player extends Entity {
-	private int x = 500;
-	private int y = 500;
+	private int playerWorldX = 0;
+	private int playerWorldY = 500;
 	private int hp = 100;
 	private int power = 10;
 	private int speed = 3;
@@ -34,24 +34,24 @@ public class Player extends Entity {
 		this.MAP_HEIGHT = mapHeight;
 	}
 
-	public void setPosition(int x, int y) {
-		this.x = x;
-		this.y = y;
+	public void setPosition(int playerWorldX, int playerWorldY) {
+		this.playerWorldX = playerWorldX;
+		this.playerWorldX = playerWorldY;
 	}
 
 	public int getX() {
-		return x;
+		return playerWorldX;
 	}
 
 	public int getY() {
-		return y;
+		return playerWorldY;
 	}
 
-	public int getWidth() {
+	public int getPlayerWidth() {
 		return image != null ? image.getWidth() : 0;
 	}
 
-	public int getHeight() {
+	public int getPlayerHeight() {
 		return image != null ? image.getHeight() : 0;
 	}
 
@@ -77,8 +77,8 @@ public class Player extends Entity {
 	}
 
 	public void updatePosition() {
-		int nextX = this.x;
-		int nextY = this.y;
+		int nextX = this.playerWorldX;
+		int nextY = this.playerWorldY;
 
 		if (up)
 			nextY -= speed;
@@ -94,18 +94,18 @@ public class Player extends Entity {
 
 		int minX = 0;
 		int minY = 0;
-		int maxX = MAP_WIDTH - getWidth();
-		int maxY = MAP_HEIGHT - getHeight();
+		int maxX = MAP_WIDTH - getPlayerWidth();
+		int maxY = MAP_HEIGHT - getPlayerHeight();
 
-		this.x = Math.max(minX, Math.min(nextX, maxX));
-		this.y = Math.max(minY, Math.min(nextY, maxY));
+		this.playerWorldX = Math.max(minX, Math.min(nextX, maxX));
+		this.playerWorldY = Math.max(minY, Math.min(nextY, maxY));
 
-		camera.updatePlayerPosition(this.x, this.y);
+		camera.updatePlayerPosition(this.playerWorldX, this.playerWorldY);
 	}
 
 	public void draw(Graphics g, int screenX, int screenY) {
 		if (image != null) {
-			g.drawImage(image, screenX, screenY, getWidth(), getHeight(), null);
+			g.drawImage(image, screenX, screenY, getPlayerWidth(), getPlayerHeight(), null);
 		}
 	}
 }

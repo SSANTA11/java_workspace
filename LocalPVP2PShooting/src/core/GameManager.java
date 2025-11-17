@@ -52,6 +52,7 @@ public class GameManager {
 	public void updateGame() {
 		synchronized (arr) {
 			if (arr.isEmpty()) {
+				System.err.println("캐릭터가 없는뎁숑");
 				return;
 			}
 			Player MAINPLAYER = arr.get(0);
