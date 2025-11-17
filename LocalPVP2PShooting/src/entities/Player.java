@@ -14,7 +14,7 @@ public class Player extends Entity {
 	private int y = 500;
 	private int hp = 100;
 	private int power = 10;
-	private int speed = 20;
+	private int speed = 3;
 	private boolean up = false, down = false, left = false, right = false;
 	private BufferedImage image = null;
 	private final Camera camera;

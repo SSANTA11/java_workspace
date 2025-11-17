@@ -7,7 +7,7 @@ public class GameLoop implements Runnable {
 	private final GameManager gameManager;
 	private final GamePanel gamePanel;
 
-	private static final int TARGET_FPS = 120;
+	private static final int TARGET_FPS = 60;
 	private static final long TARGET_TIME = 1000 / TARGET_FPS;
 	private volatile boolean running = true;
 

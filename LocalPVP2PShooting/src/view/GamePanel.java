@@ -4,10 +4,7 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.awt.image.BufferedImage; // BufferedImage는 사용하지 않지만 import는 유지
-
 import javax.swing.*;
-
 import core.GameManager;
 import core.MapManager;
 import entities.Player;
@@ -57,11 +54,11 @@ public class GamePanel extends JPanel {
 		int startY = camY / MapManager.TILE_SIZE;
 		int endX = (camX + FIXED_VIEW_SIZE) / MapManager.TILE_SIZE;
 		int endY = (camY + FIXED_VIEW_SIZE) / MapManager.TILE_SIZE;
-//
-//		startX = Math.max(0, startX);
-//		startY = Math.max(0, startY);
-//		endX = Math.min(endX, MapManager.WIDTH_TILES);
-//		endY = Math.min(endY, MapManager.HEIGHT_TILES);
+
+		startX = Math.max(0, startX);
+		startY = Math.max(0, startY);
+		endX = Math.min(endX, MapManager.WIDTH_TILES);
+		endY = Math.min(endY, MapManager.HEIGHT_TILES);
 
 		for (int y = startY; y < endY; y++) {
 			for (int x = startX; x < endX; x++) {
