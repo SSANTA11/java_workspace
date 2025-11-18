@@ -1,5 +1,7 @@
 package core;
 
+import javax.swing.SwingUtilities;
+
 import view.Camera;
 import view.GamePanel;
 
@@ -31,7 +33,9 @@ public class GameLoop implements Runnable {
 
 			gameManager.updateGame();
 			camera.updateCamera();
+			SwingUtilities.invokeLater(()->{				
 			gamePanel.repaint();
+			});
 
 			timeUsed = System.currentTimeMillis() - startTime;
 			sleepTime = TARGET_TIME - timeUsed;
