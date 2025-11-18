@@ -11,9 +11,10 @@ public class Camera {
 	private int playerWorldY;
 	private int cameraWorldX = 0;
 	private int cameraWorldY = 0;
-	private static final int DEAD_ZONE_WIDTH = 200;
-	private static final int DEAD_ZONE_HEIGHT = 200;
-	private static final int FIXED_VIEW_SIZE = 2000;
+	private GameWindow window;
+	private static final int DEAD_ZONE_WIDTH = 10;
+	private static final int DEAD_ZONE_HEIGHT = 10;
+	private static final int FIXED_RANDER_SIZE = 5000;
 
 	public Camera() {
 	}
@@ -23,9 +24,13 @@ public class Camera {
 		this.playerWorldY = playerWorldY;
 	}
 
+	public void setWindow(GameWindow window) {
+		this.window = window; // 윈도우 참조 저장
+	}
+
 	public void updateCamera() {
-		int viewPortWidth = FIXED_VIEW_SIZE;
-		int viewPortHeight = FIXED_VIEW_SIZE;
+		int viewPortWidth = window.getWidth();
+		int viewPortHeight = window.getHeight();
 
 		int deadZoneMinX = ((viewPortWidth - DEAD_ZONE_WIDTH) / 2);
 		int deadZoneMaxX = (deadZoneMinX + DEAD_ZONE_WIDTH);
@@ -55,7 +60,7 @@ public class Camera {
 	}
 
 	public int getCameraSize() {
-		return FIXED_VIEW_SIZE;
+		return FIXED_RANDER_SIZE;
 	}
 
 	public int getplayerWorldX() {
