@@ -44,9 +44,6 @@ public class GamePanel extends JPanel {
 		int cameraWorldY = camera.getCameraWorldY();
 		int TILE_SIZE = MapManager.TILE_SIZE;
 
-		int viewportOffsetX = (getWidth() - FIXED_VIEW_SIZE) / 2;
-		int viewportOffsetY = (getHeight() - FIXED_VIEW_SIZE) / 2;
-
 		int startTileXIndex = cameraWorldX / TILE_SIZE;
 		int startTileYIndex = cameraWorldY / TILE_SIZE;
 		int endTileXIndex = (cameraWorldX + FIXED_VIEW_SIZE) / TILE_SIZE;
@@ -59,8 +56,6 @@ public class GamePanel extends JPanel {
 
 		for (int y = startTileYIndex; y < endTileYIndex; y++) {
 			for (int x = startTileXIndex; x < endTileXIndex; x++) {
-//				int screenX = viewportOffsetX + (x * TILE_SIZE - cameraWorldX);
-//				int screenY = viewportOffsetY + (y * TILE_SIZE - cameraWorldY);
 				int screenX = (x * TILE_SIZE - cameraWorldX);
 				int screenY = (y * TILE_SIZE - cameraWorldY);
 
@@ -69,12 +64,10 @@ public class GamePanel extends JPanel {
 			}
 		}
 
-		// --- 플레이어 그리기 ---
+		// 플레이어 뷰는 마지막에 하자!!
 
 		int playerScreenX = (mainPlayer.getX() - cameraWorldX);
 		int playerScreenY = (mainPlayer.getY() - cameraWorldY);
-//		int playerScreenX = (mainPlayer.getX() - cameraWorldX) + viewportOffsetX;
-//		int playerScreenY = (mainPlayer.getY() - cameraWorldY) + viewportOffsetY;
 
 		mainPlayer.draw(g, playerScreenX, playerScreenY);
 

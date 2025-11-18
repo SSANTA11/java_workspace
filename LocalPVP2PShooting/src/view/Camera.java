@@ -25,7 +25,7 @@ public class Camera {
 	}
 
 	public void setWindow(GameWindow window) {
-		this.window = window; // 윈도우 참조 저장
+		this.window = window;
 	}
 
 	public void updateCamera() {
