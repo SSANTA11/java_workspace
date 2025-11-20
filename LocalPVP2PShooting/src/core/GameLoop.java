@@ -1,7 +1,5 @@
 package core;
 
-import javax.swing.SwingUtilities;
-
 import view.Camera;
 import view.GamePanel;
 
@@ -30,12 +28,10 @@ public class GameLoop implements Runnable {
 		System.out.println("스레드 실행 중 ");
 		while (running) {
 			startTime = System.currentTimeMillis();
-			
+
 			gameManager.updateGame();
 			camera.updateCamera();
-			SwingUtilities.invokeLater(() -> {
-				gamePanel.repaint();
-			});
+			gamePanel.repaint();
 
 			timeUsed = System.currentTimeMillis() - startTime;
 			sleepTime = TARGET_TIME - timeUsed;
@@ -44,7 +40,6 @@ public class GameLoop implements Runnable {
 				try {
 					Thread.sleep(sleepTime);
 				} catch (InterruptedException e) {
-					Thread.currentThread().interrupt();
 					System.err.println("GameLoop 스레드 종료됨.");
 				}
 			}

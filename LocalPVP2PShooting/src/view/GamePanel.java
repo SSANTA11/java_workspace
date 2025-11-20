@@ -21,7 +21,7 @@ public class GamePanel extends JPanel implements ActionListener{
 	public GamePanel() {
 		this.camera = manager.getCamera();
 		this.FIXED_VIEW_SIZE = camera.getCameraSize();
-		this.mainPlayer = (Player)manager.getPlayer(0);
+		this.mainPlayer = (Player)manager.getEntity(0);
 
 		addKeyListener(new KeyAdapter() {
 			@Override
@@ -66,7 +66,6 @@ public class GamePanel extends JPanel implements ActionListener{
 			}
 		}
 
-		// 플레이어 뷰는 마지막에 하자!!
 
 		int playerScreenX = (mainPlayer.getX() - cameraWorldX);
 		int playerScreenY = (mainPlayer.getY() - cameraWorldY);

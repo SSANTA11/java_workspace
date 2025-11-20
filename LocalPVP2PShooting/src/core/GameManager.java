@@ -11,7 +11,7 @@ public class GameManager {
 
 	private final MapManager mapManager;
 	private final Camera camera;
-
+	
 	private GameManager() {
 
 		this.mapManager = new MapManager();
@@ -30,17 +30,21 @@ public class GameManager {
 	public Camera getCamera() {
 		return camera;
 	}
-
+	
+	public ArrayList<Entity> getList() {
+		return arr;
+	}
+	
 	public void makePlayer() {
 		arr.add(new Player(camera, MapManager.MAP_WIDTH, MapManager.MAP_HEIGHT));
 		System.out.println(arr.size() + "번째 플레이어 생성");
 	}
 
-	public Entity getPlayer(int index) {
+	public Entity getEntity(int index) {
 		return arr.get(index);
 	}
 
-	public void removePlayer(int index) {
+	public void removeEntity(int index) {
 		arr.remove(index);
 		System.out.println("entity가 제거되었습니다. 현재 entity 수: " + arr.size());
 	}

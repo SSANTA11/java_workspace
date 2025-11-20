@@ -51,17 +51,15 @@ public class GameWindow extends JFrame {
 	}
 
 	public static void main(String[] args) {
-		SwingUtilities.invokeLater(() -> {
-			GameManager manager = GameManager.getInstance();
-			manager.initialize();
+		GameManager manager = GameManager.getInstance();
+		manager.initialize();
 
-			TitlePanel titlePanel = new TitlePanel();
-			GamePanel gamePanel = new GamePanel();
-			OptionPanel optionPanel = new OptionPanel();
+		TitlePanel titlePanel = new TitlePanel();
+		GamePanel gamePanel = new GamePanel();
+		OptionPanel optionPanel = new OptionPanel();
 
-			GameWindow gameWindow = new GameWindow(titlePanel, gamePanel, optionPanel);
-			manager.getCamera().setWindow(gameWindow);
-			new Thread(new GameLoop(manager, gameWindow.gamePanel)).start();
-		});
+		GameWindow gameWindow = new GameWindow(titlePanel, gamePanel, optionPanel);
+		manager.getCamera().setWindow(gameWindow);
+		new Thread(new GameLoop(manager, gameWindow.gamePanel)).start();
 	}
 }

@@ -8,7 +8,6 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 
-import core.GameManager; // GameManager import는 필요 없으나, 현재 코드의 구조를 유지하기 위해 남겨둡니다.
 import java.awt.Window; // Window 클래스 import 추가
 
 public class TitlePanel extends JPanel {
