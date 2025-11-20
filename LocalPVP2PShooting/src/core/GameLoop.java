@@ -11,14 +11,14 @@ public class GameLoop implements Runnable {
 	private final GamePanel gamePanel;
 	private final Camera camera;
 
-	private static final int TARGET_FPS = 60;
+	private static final int TARGET_FPS = 120;
 	private static final long TARGET_TIME = 1000 / TARGET_FPS;
 	private volatile boolean running = true;
 
 	public GameLoop(GameManager manager, GamePanel panel) {
 		this.gameManager = manager;
 		this.gamePanel = panel;
-		this.camera=manager.getCamera();
+		this.camera = manager.getCamera();
 	}
 
 	@Override
@@ -33,8 +33,8 @@ public class GameLoop implements Runnable {
 
 			gameManager.updateGame();
 			camera.updateCamera();
-			SwingUtilities.invokeLater(()->{				
-			gamePanel.repaint();
+			SwingUtilities.invokeLater(() -> {
+				gamePanel.repaint();
 			});
 
 			timeUsed = System.currentTimeMillis() - startTime;

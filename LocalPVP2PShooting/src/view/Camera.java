@@ -12,8 +12,8 @@ public class Camera {
 	private int cameraWorldX = 0;
 	private int cameraWorldY = 0;
 	private GameWindow window;
-	private static final int DEAD_ZONE_WIDTH = 10;
-	private static final int DEAD_ZONE_HEIGHT = 10;
+	private static final int DEAD_ZONE_WIDTH = 1;
+	private static final int DEAD_ZONE_HEIGHT = 1;
 	private static final int FIXED_RANDER_SIZE = 5000;
 
 	public Camera() {
