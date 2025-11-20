@@ -48,11 +48,11 @@ public class Player extends Entity {
 	}
 
 	public int getPlayerWidth() {
-		return image != null ? image.getWidth() : 0;
+		return image.getWidth();
 	}
 
 	public int getPlayerHeight() {
-		return image != null ? image.getHeight() : 0;
+		return image.getHeight();
 	}
 
 	public void setMoving(int keyCode, boolean isMoving) {

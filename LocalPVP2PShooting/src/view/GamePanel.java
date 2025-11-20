@@ -2,6 +2,8 @@ package view;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import javax.swing.*;
@@ -9,7 +11,7 @@ import core.GameManager;
 import core.MapManager;
 import entities.Player;
 
-public class GamePanel extends JPanel {
+public class GamePanel extends JPanel implements ActionListener{
 
 	private final GameManager manager = GameManager.getInstance();
 	private final Player mainPlayer;
@@ -19,7 +21,7 @@ public class GamePanel extends JPanel {
 	public GamePanel() {
 		this.camera = manager.getCamera();
 		this.FIXED_VIEW_SIZE = camera.getCameraSize();
-		this.mainPlayer = manager.getPlayer(0);
+		this.mainPlayer = (Player)manager.getPlayer(0);
 
 		addKeyListener(new KeyAdapter() {
 			@Override
@@ -71,5 +73,11 @@ public class GamePanel extends JPanel {
 
 		mainPlayer.draw(g, playerScreenX, playerScreenY);
 
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		// TODO Auto-generated method stub
+		
 	}
 }

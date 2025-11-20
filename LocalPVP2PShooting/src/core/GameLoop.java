@@ -30,7 +30,7 @@ public class GameLoop implements Runnable {
 		System.out.println("스레드 실행 중 ");
 		while (running) {
 			startTime = System.currentTimeMillis();
-
+			
 			gameManager.updateGame();
 			camera.updateCamera();
 			SwingUtilities.invokeLater(() -> {

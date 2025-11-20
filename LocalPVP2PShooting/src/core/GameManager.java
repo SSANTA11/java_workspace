@@ -6,7 +6,7 @@ import entities.*;
 import view.Camera;
 
 public class GameManager {
-	private ArrayList<Player> arr = new ArrayList<>();
+	private ArrayList<Entity> arr = new ArrayList<>();
 	private static final GameManager instance = new GameManager();
 
 	private final MapManager mapManager;
@@ -36,13 +36,13 @@ public class GameManager {
 		System.out.println(arr.size() + "번째 플레이어 생성");
 	}
 
-	public Player getPlayer(int index) {
+	public Entity getPlayer(int index) {
 		return arr.get(index);
 	}
 
 	public void removePlayer(int index) {
 		arr.remove(index);
-		System.out.println("플레이어가 제거되었습니다. 현재 플레이어 수: " + arr.size());
+		System.out.println("entity가 제거되었습니다. 현재 entity 수: " + arr.size());
 	}
 
 	public void initialize() {
@@ -56,7 +56,7 @@ public class GameManager {
 				return;
 			}
 //		}
-			Player MAINPLAYER = arr.get(0);
+			Player MAINPLAYER = (Player)arr.get(0);
 			MAINPLAYER.updatePosition();
 		}
 }
