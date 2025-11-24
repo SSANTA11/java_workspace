@@ -7,6 +7,8 @@ import view.Camera;
 
 public class GameManager {
 	private ArrayList<Entity> arr = new ArrayList<>();
+	private final ArrayList<Projectile> projectiles = new ArrayList<>();
+	private final ArrayList<Wall> walls = new ArrayList<>();
 	private static final GameManager instance = new GameManager();
 
 	private final MapManager mapManager;
@@ -21,6 +23,10 @@ public class GameManager {
 		return instance;
 	}
 
+	public Player getMainPlayer() {
+		return (Player) arr.get(0);
+	}
+
 	public MapManager getMapManager() {
 		return mapManager;
 	}
@@ -33,18 +39,31 @@ public class GameManager {
 		return arr;
 	}
 
-		public void makePlayer() {
-			arr.add(new Player(camera, MapManager.MAP_WIDTH, MapManager.MAP_HEIGHT));
-			System.out.println(arr.size() + "번째 플레이어 생성");
-		}
-
-	public Entity getEntity(int index) {
-		return arr.get(index);
+	public void makePlayer() {
+		arr.add(new Player(camera, MapManager.MAP_WIDTH, MapManager.MAP_HEIGHT));
+		System.out.println(arr.size() + "플레이어 생성");
 	}
 
 	public void removeEntity(Entity E) {
 		arr.remove(E);
 		System.out.println("entity가 제거되었습니다. 현재 entity 수: " + arr.size());
+	}
+
+	public void makeProjectile(String weapon, int X, int Y, int angleT) {
+		Projectile newProj = new Projectile(weapon, X, Y, angleT);
+		arr.add(newProj);
+		projectiles.add(newProj);
+		System.out.println(arr.size() + "발사체 생성");
+	}
+
+	public void removeProjectile(Entity E) {
+		arr.remove(E);
+		projectiles.remove(E);
+		System.out.println("발사체가 탄착하여 제거되었습니다. 현재 entity 수: " + arr.size() + ", 필드 위 발사체 수: " + projectiles.size());
+	}
+
+	public Entity getEntity(int index) {
+		return arr.get(index);
 	}
 
 	public void initialize() {
@@ -54,6 +73,7 @@ public class GameManager {
 	public void HPhandeler(Entity E, int damage) {
 		int HP = E.getHP();
 		HP -= damage;
+		E.setHP(HP);
 	}
 
 	public void updateGame() {

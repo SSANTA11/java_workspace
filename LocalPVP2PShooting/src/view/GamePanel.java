@@ -10,28 +10,32 @@ import javax.swing.*;
 import core.GameManager;
 import core.MapManager;
 import entities.Player;
+import entities.TankTop;
 
-public class GamePanel extends JPanel implements ActionListener{
+public class GamePanel extends JPanel implements ActionListener {
 
 	private final GameManager manager = GameManager.getInstance();
 	private final Player mainPlayer;
 	private final Camera camera;
+	private final TankTop tankTop;
 	private final int FIXED_VIEW_SIZE;
 
 	public GamePanel() {
 		this.camera = manager.getCamera();
 		this.FIXED_VIEW_SIZE = camera.getCameraSize();
-		this.mainPlayer = (Player)manager.getEntity(0);
-
+		this.mainPlayer = (Player) manager.getEntity(0);
+		this.tankTop = mainPlayer.getTankTop();
 		addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyPressed(KeyEvent e) {
 				mainPlayer.setMoving(e.getKeyCode(), true);
+				tankTop.fireControl(e.getKeyCode());
 			}
 
 			@Override
 			public void keyReleased(KeyEvent e) {
 				mainPlayer.setMoving(e.getKeyCode(), false);
+				tankTop.fireControl(e.getKeyCode());
 			}
 		});
 
@@ -66,7 +70,6 @@ public class GamePanel extends JPanel implements ActionListener{
 			}
 		}
 
-
 		int playerScreenX = (mainPlayer.getX() - cameraWorldX);
 		int playerScreenY = (mainPlayer.getY() - cameraWorldY);
 
@@ -77,6 +80,6 @@ public class GamePanel extends JPanel implements ActionListener{
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
-		
+
 	}
 }

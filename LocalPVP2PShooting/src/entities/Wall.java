@@ -1,10 +1,11 @@
 package entities;
 
+import java.awt.Graphics;
+
 public class Wall extends Entity{
 	private int condition;
 	void block() {};
 	void broken() {};
-	void build() {}
 	@Override
 	public int getWidth() {
 		// TODO Auto-generated method stub
@@ -42,6 +43,21 @@ public class Wall extends Entity{
 	}
 	@Override
 	public void setPosition(int playerWorldX, int playerWorldY) {
+		// TODO Auto-generated method stub
+		
+	}
+	@Override
+	public int setHP(int HP) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+	@Override
+	public void updatePosition() {
+		// TODO Auto-generated method stub
+		
+	}
+	@Override
+	public void draw(Graphics g,  int screenX, int screenY) {
 		// TODO Auto-generated method stub
 		
 	};
