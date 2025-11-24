@@ -8,13 +8,13 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 import java.awt.Graphics2D;
 import view.Camera;
+import java.lang.Math;
 
 public class Player extends Entity {
 	private int playerWorldX = 0;
 	private int playerWorldY = 500;
-	private int hp = 100;
-	private int power = 10;
-	private int speed = 3;
+	private int HP = 100;
+	public int speed = 3;
 	private int angleB = 0;
 	private int angleT = 180;
 	private boolean up = false, down = false, left = false, right = false, Z = false, X = false;
@@ -62,6 +62,7 @@ public class Player extends Entity {
 		return tankTopImage.getWidth();
 	}
 
+	@Override
 	public void setPosition(int playerWorldX, int playerWorldY) {
 		this.playerWorldX = playerWorldX;
 		this.playerWorldY = playerWorldY;
@@ -93,28 +94,28 @@ public class Player extends Entity {
 	public void updatePosition() {
 		int nextX = this.playerWorldX;
 		int nextY = this.playerWorldY;
-		
+
 		if (Z) {
-			angleT+=5;
+			angleT += 5;
 		} else if (X) {
-			angleT-=5;
+			angleT -= 5;
 		}
-		
+
 		if (up && right) {
-			nextX += speed;
-			nextY -= speed;
+			nextX += speed / 1.4;
+			nextY -= speed / 1.4;
 			angleB = 315;
 		} else if (up && left) {
-			nextX -= speed;
-			nextY -= speed;
+			nextX -= speed / 1.4;
+			nextY -= speed / 1.4;
 			angleB = 225;
 		} else if (down && left) {
-			nextX -= speed;
-			nextY += speed;
+			nextX -= speed / 1.4;
+			nextY += speed / 1.4;
 			angleB = 135;
 		} else if (down && right) {
-			nextX += speed;
-			nextY += speed;
+			nextX += speed / 1.4;
+			nextY += speed / 1.4;
 			angleB = 45;
 		} else if (up) {
 			nextY -= speed;
@@ -131,14 +132,14 @@ public class Player extends Entity {
 		}
 		int minX = 0;
 		int minY = 0;
-		int maxX = MAP_WIDTH - getBottomWidth();
-		int maxY = MAP_HEIGHT - getBottomHeight();
+		int maxX = MAP_WIDTH - getBottomWidth() / 2;
+		int maxY = MAP_HEIGHT - getBottomHeight() / 2;
 
 		this.playerWorldX = Math.max(minX, Math.min(nextX, maxX));
 		this.playerWorldY = Math.max(minY, Math.min(nextY, maxY));
 
 		camera.updatePlayerPosition(this.playerWorldX, this.playerWorldY);
-		
+
 	}
 
 	public void draw(Graphics g, int screenX, int screenY) {
@@ -160,5 +161,40 @@ public class Player extends Entity {
 		g2.rotate(Math.toRadians(angleT), topCenterX, topCenterY);
 		g2.drawImage(tankTopImage, screenX + 20, screenY + 10, topWidth, topHeight, null);
 
+	}
+
+	@Override
+	public int getWidth() {
+		return tankBottomImage.getWidth() / 2;
+	}
+
+	@Override
+	public int getHeight() {
+		return tankBottomImage.getHeight() / 2;
+	}
+
+	@Override
+	public int getWorldX() {
+		return getX();
+	}
+
+	@Override
+	public int getWorldY() {
+		return getY();
+	}
+
+	@Override
+	public String getType() {
+		return "PLAYER";
+	}
+
+	@Override
+	public int getHP() {
+		return HP;
+	}
+
+	@Override
+	public int getSpeed() {
+		return speed;
 	}
 }

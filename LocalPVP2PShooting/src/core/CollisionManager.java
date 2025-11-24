@@ -1,34 +1,59 @@
 package core;
 
 import java.util.ArrayList;
-
 import entities.Entity;
+import entities.Player;
 
 public class CollisionManager {
-	private ArrayList<Entity> arr = GameManager.getInstance().getList();
+	GameManager gameManager = GameManager.getInstance();
+	private ArrayList<Entity> arr = gameManager.getList();
 
 	public CollisionManager() {
 	}
 
 	public void checkAllCollisions() {
-		for (int i = 0; i < arr.size()-1; i++) {
-			for (int j = 1; j < arr.size(); j++) {
-				if (isColliding(arr.get(i),arr.get(j))){
-					
+		for (int i = 0; i < arr.size() - 1; i++) {
+			for (int j = i+1; j < arr.size(); j++) {
+				if (isColliding(arr.get(i), arr.get(j))) {
+					handleCollision(arr.get(i), arr.get(j));
 				}
 			}
 		}
 	}
-    private boolean isColliding(Entity a, Entity b) {
-        // 이 부분이 실제 사각형/원형 충돌 검사 로직이 들어가는 곳입니다.
-        // 예를 들어: a.getBounds().intersects(b.getBounds())
-        
-        // 여기에 a와 b의 width, height, X, Y 값을 지역 변수로 가져와서 사용합니다.
-        
-        return false; // 임시 반환
-    }
-    
-    private void handleCollision(Entity a, Entity b) {
-        // 충돌 발생 시 체력 감소, 득점 등 상태 변화 로직을 구현합니다.
-    }
+
+	private boolean isColliding(Entity a, Entity b) {
+
+		int aH = a.getHeight();
+		int aW = a.getWidth();
+		int aX = a.getWorldX();
+		int aY = a.getWorldY();
+
+		int bH = b.getHeight();
+		int bW = b.getWidth();
+		int bX = b.getWorldX();
+		int bY = b.getWorldY();
+
+		boolean overlapX = (aX < bX + bW) && (aX + aW > bX);
+		boolean overlapY = (aY < bY + bH) && (aY + aH > bY);
+		return overlapX && overlapY;
+	}// aabb충돌로직(임시). 추후에 45도 각도 관련 상황에서 히트 지점 수정해야함!!
+
+	private void handleCollision(Entity a, Entity b) {
+		if (a.getType() == "PLAYER") {
+			String type = b.getType();
+			switch (type) {
+			case "PROJECTILE":
+				gameManager.HPhandeler(a, 10);
+				gameManager.removeEntity(b);
+				break;
+			case "WALL":
+				gameManager.HPhandeler(b, 10);
+				gameManager.getEntity(0).setPosition(a.getWorldX() - a.getSpeed(), a.getWorldY() - a.getSpeed());
+				break;
+			case "FOOTSOLDIER":
+				gameManager.HPhandeler(b, 100);
+				break;
+			}
+		}
+	}
 }
