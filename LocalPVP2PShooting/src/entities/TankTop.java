@@ -34,10 +34,10 @@ public class TankTop extends Entity {
 			fireDelay = 500;
 			break;
 		case KeyEvent.VK_C:
-			long currentTime = System.currentTimeMillis();
-			if (currentTime - lastFireTime > fireDelay) {
+			long start = System.currentTimeMillis();
+			if (start - lastFireTime > fireDelay) {
 				fire();
-				lastFireTime = currentTime;
+				lastFireTime = start;
 				System.out.println("발사");
 			}
 			break;

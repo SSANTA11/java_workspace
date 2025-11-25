@@ -25,13 +25,13 @@ public class CollisionManager {
 
 		int aH = a.getHeight();
 		int aW = a.getWidth();
-		int aX = a.getWorldX();
-		int aY = a.getWorldY();
+		double aX = a.getWorldX();
+		double aY = a.getWorldY();
 
 		int bH = b.getHeight();
 		int bW = b.getWidth();
-		int bX = b.getWorldX();
-		int bY = b.getWorldY();
+		double bX = b.getWorldX();
+		double bY = b.getWorldY();
 
 		boolean overlapX = (aX < bX + bW) && (aX + aW > bX);
 		boolean overlapY = (aY < bY + bH) && (aY + aH > bY);

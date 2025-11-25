@@ -87,4 +87,9 @@ public class GameManager {
 		Player MAINPLAYER = (Player) arr.get(0);
 		MAINPLAYER.updatePosition();
 	}
+
+	public void makeProjectile(String weapon, double centerX, double centerY, int angleT) {
+		// TODO Auto-generated method stub
+		
+	}
 }

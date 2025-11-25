@@ -21,7 +21,7 @@ public class Projectile extends Entity {
 	public Projectile(String weapon, int X, int Y, int angleT) {
 		switch (weapon) {
 		case "MG":
-			this.speed = 15;
+			this.speed = 50;
 			this.range = 50;
 			this.explosionRange = 0;
 			this.killingTankIsPossible = false;
@@ -31,8 +31,8 @@ public class Projectile extends Entity {
 			break;
 
 		case "AP":
-			this.speed = 12;
-			this.range = 300;
+			this.speed = 30;
+			this.range = 100;
 			this.explosionRange = 0;
 			this.killingTankIsPossible = true;
 			this.damage = 20;
@@ -41,9 +41,9 @@ public class Projectile extends Entity {
 			break;
 
 		case "HE":
-			this.speed = 12;
-			this.range = 300;
-			this.explosionRange = 10;
+			this.speed = 30;
+			this.range = 100;
+			this.explosionRange = 300;
 			this.killingTankIsPossible = false;
 			this.damage = 3;
 			this.width = 6;
@@ -51,20 +51,13 @@ public class Projectile extends Entity {
 			break;
 
 		case "HEAT":
-			this.speed = 12;
-			this.range = 300;
-			this.explosionRange = 0;
+			this.speed = 30;
+			this.range = 100;
+			this.explosionRange = 300;
 			this.killingTankIsPossible = true;
 			this.damage = 100;
 			this.width = 6;
 			this.height = 8;
-			break;
-
-		default:
-			this.speed = 10;
-			this.range = 100;
-			this.width = 5;
-			this.height = 5;
 			break;
 		}
 		this.WorldX = X;
@@ -75,8 +68,8 @@ public class Projectile extends Entity {
 	@Override
 	public void updatePosition() {
 		double radians = Math.toRadians(angleT);
-		this.WorldX += (int) Math.round(this.speed * Math.cos(radians));
-		this.WorldY += (int) Math.round(this.speed * Math.sin(radians));
+		this.WorldX -= (int) Math.round(this.speed * Math.cos(radians));
+		this.WorldY -= (int) Math.round(this.speed * Math.sin(radians));
 		this.range--;
 		if (this.range <= 0) {
 			GameManager.getInstance().removeProjectile(this);
@@ -85,13 +78,22 @@ public class Projectile extends Entity {
 
 	@Override
 	public void draw(Graphics g, int screenX, int screenY) {
+		updatePosition();
+		if (this.range <= 0 && explosionRange > 0) {
+			drawExplo(g, screenX-explosionRange/2, screenY-explosionRange/2);
+		}
 		Graphics2D g2 = (Graphics2D) g.create();
-		
+
 		g2.setColor(Color.YELLOW);
 		g2.rotate(Math.toRadians(angleT), screenX + width / 2, screenY + height / 2);
-		g2.fillRect(screenX, screenY, width, height);
-		
+		g2.fillRect(screenX - 80, screenY, width, height);
+
 		g2.dispose();
+	}
+
+	public void drawExplo(Graphics g, int screenX, int screenY) {
+		g.setColor(Color.red);
+		g.fillRect(screenX, screenY, explosionRange, explosionRange);
 	}
 
 	@Override

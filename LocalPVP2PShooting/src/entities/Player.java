@@ -39,10 +39,10 @@ public class Player extends Entity {
 			System.err.println("img 오류");
 		}
 
-		this.TANK_BOTTOM_WIDTH = tankBottomImage.getWidth() / 2;
-		this.TANK_BOTTOM_HEIGHT = tankBottomImage.getHeight() / 2;
-		this.TANK_TOP_WIDTH = tankTopImage.getWidth() / 2;
-		this.TANK_TOP_HEIGHT = tankTopImage.getHeight() / 2;
+		this.TANK_BOTTOM_WIDTH = tankBottomImage.getWidth() / 3;
+		this.TANK_BOTTOM_HEIGHT = tankBottomImage.getHeight() / 3;
+		this.TANK_TOP_WIDTH = tankTopImage.getWidth() / 3;
+		this.TANK_TOP_HEIGHT = tankTopImage.getHeight() / 3;
 
 		this.camera = camera;
 		this.MAP_WIDTH = mapWidth;
@@ -53,7 +53,6 @@ public class Player extends Entity {
 	public TankTop getTankTop() {
 		return tankTop;
 	}
-
 
 	public int getBottomWidth() {
 		return TANK_BOTTOM_WIDTH;
@@ -69,6 +68,10 @@ public class Player extends Entity {
 
 	public int getTopWidth() {
 		return TANK_TOP_WIDTH;
+	}
+
+	public int getAngleT() {
+		return angleT;
 	}
 
 	@Override
@@ -129,8 +132,8 @@ public class Player extends Entity {
 		if (movementSpeed != 0) {
 			double radians = Math.toRadians(angleB);
 
-			int nextX = this.playerWorldX + (int) Math.round(Math.cos(radians) * movementSpeed);
-			int nextY = this.playerWorldY + (int) Math.round(Math.sin(radians) * movementSpeed);
+			int nextX = this.playerWorldX + (int)Math.round(Math.cos(radians) * movementSpeed);
+			int nextY = this.playerWorldY + (int)Math.round(Math.sin(radians) * movementSpeed);
 
 			int minX = 0;
 			int minY = 0;
@@ -144,29 +147,27 @@ public class Player extends Entity {
 		camera.updatePlayerPosition(this.playerWorldX, this.playerWorldY);
 	}
 
-	public int getAngleT() {
-		return angleT;
-	}
-
 	public void draw(Graphics g, int screenX, int screenY) {
-		Graphics2D g2 = (Graphics2D) g;
+		Graphics2D g2t = (Graphics2D) g.create();
+		Graphics2D g2b = (Graphics2D) g.create();
 
 		int bottomwidth = TANK_BOTTOM_WIDTH;
 		int bottomHeight = TANK_BOTTOM_HEIGHT;
 		int topWidth = TANK_TOP_WIDTH;
 		int topHeight = TANK_TOP_HEIGHT;
 
-		int bottomCenterX = screenX + 150 / 2;
-		int bottomCenterY = screenY + 70 / 2;
+		int bottomCenterX = screenX + 150 / 3;
+		int bottomCenterY = screenY + 70 / 3;
 		int topCenterX = bottomCenterX;
 		int topCenterY = bottomCenterY;
 
-		g2.rotate(Math.toRadians(angleB), bottomCenterX + 20, bottomCenterY);
-		g2.drawImage(tankBottomImage, screenX, screenY, bottomwidth, bottomHeight, null);
+		g2b.rotate(Math.toRadians(angleB), bottomCenterX, bottomCenterY);
+		g2b.drawImage(tankBottomImage, screenX, screenY, bottomwidth, bottomHeight, null);
+		g2b.dispose();
 
-		g2.rotate(Math.toRadians(angleT), topCenterX, topCenterY);
-		g2.drawImage(tankTopImage, screenX + 20, screenY + 10, topWidth, topHeight, null);
-
+		g2t.rotate(Math.toRadians(angleT), topCenterX, topCenterY);
+		g2t.drawImage(tankTopImage, screenX + 20, screenY + 10, topWidth, topHeight, null);
+		g2t.dispose();
 	}
 
 	@Override
@@ -208,5 +209,7 @@ public class Player extends Entity {
 	public int setHP(int HP) {
 		return 0;
 	}
+
+
 
 }

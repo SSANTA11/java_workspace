@@ -1,7 +1,7 @@
 package view;
 
-import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
@@ -21,11 +21,16 @@ public class GamePanel extends JPanel implements ActionListener {
 	private final Player mainPlayer;
 	private final Camera camera;
 	private final TankTop tankTop;
-	private final int FIXED_VIEW_SIZE;
+	private JButton b2 = new JButton("옵션");
 
 	public GamePanel() {
+		add(b2);
+
+		b2.addActionListener(e -> {
+			Window gameWindow = SwingUtilities.getWindowAncestor(this);
+			((GameWindow) gameWindow).changePanel("OPTION");
+		});
 		this.camera = manager.getCamera();
-		this.FIXED_VIEW_SIZE = camera.getCameraSize();
 		this.mainPlayer = (Player) manager.getEntity(0);
 		this.tankTop = mainPlayer.getTankTop();
 		addKeyListener(new KeyAdapter() {
@@ -41,7 +46,6 @@ public class GamePanel extends JPanel implements ActionListener {
 			}
 		});
 
-		setBackground(Color.BLACK);
 	}
 
 	@Override

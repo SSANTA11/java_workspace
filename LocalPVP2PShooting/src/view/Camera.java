@@ -7,8 +7,8 @@ public class Camera {
 	private static final int MAP_WIDTH = MapManager.MAP_WIDTH;
 	private static final int MAP_HEIGHT = MapManager.MAP_HEIGHT;
 
-	private int playerWorldX;
-	private int playerWorldY;
+	private double playerWorldX;
+	private double playerWorldY;
 	private int cameraWorldX = 0;
 	private int cameraWorldY = 0;
 	private GameWindow window;
@@ -19,7 +19,7 @@ public class Camera {
 	public Camera() {
 	}
 
-	public void updatePlayerPosition(int playerWorldX, int playerWorldY) {
+	public void updatePlayerPosition(double playerWorldX, double playerWorldY) {
 		this.playerWorldX = playerWorldX;
 		this.playerWorldY = playerWorldY;
 	}
@@ -37,8 +37,8 @@ public class Camera {
 		int deadZoneMinY = ((viewPortHeight - DEAD_ZONE_HEIGHT) / 2);
 		int deadZoneMaxY = (deadZoneMinY + DEAD_ZONE_HEIGHT);
 
-		int playerDeadZoneRefX = playerWorldX - cameraWorldX;
-		int playerDeadZoneRefY = playerWorldY - cameraWorldY;
+		double playerDeadZoneRefX = playerWorldX - cameraWorldX;
+		double playerDeadZoneRefY = playerWorldY - cameraWorldY;
 
 		if (playerDeadZoneRefX > deadZoneMaxX) {
 			cameraWorldX += playerDeadZoneRefX - deadZoneMaxX;
@@ -63,11 +63,11 @@ public class Camera {
 		return FIXED_RANDER_SIZE;
 	}
 
-	public int getplayerWorldX() {
+	public double getplayerWorldX() {
 		return playerWorldX;
 	}
 
-	public int getplayerWorldY() {
+	public double getplayerWorldY() {
 		return playerWorldY;
 	}
 

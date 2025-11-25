@@ -7,8 +7,8 @@ import javax.imageio.ImageIO;
 
 public class MapManager {
 	public static final int TILE_SIZE = 200;
-	public static final int WIDTH_TILES = 10;
-	public static final int HEIGHT_TILES = 10;
+	public static final int WIDTH_TILES = 100;
+	public static final int HEIGHT_TILES = 100;
 
 	public static final int MAP_WIDTH = WIDTH_TILES * TILE_SIZE;
 	public static final int MAP_HEIGHT = HEIGHT_TILES * TILE_SIZE;
