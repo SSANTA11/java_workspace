@@ -56,14 +56,17 @@ public class GameManager {
 		System.out.println(arr.size() + "발사체 생성");
 	}
 
-	public void removeProjectile(Entity E) {
-		arr.remove(E);
-		projectiles.remove(E);
-		System.out.println("발사체가 탄착하여 제거되었습니다. 현재 entity 수: " + arr.size() + ", 필드 위 발사체 수: " + projectiles.size());
+	public void removeProjectile(Projectile proj) {
+		arr.remove(proj);
+		projectiles.remove(proj);
+		System.out.println("발사체가 탄착하여, 혹은 사거리를 다하여 제거되었습니다. 현재 entity 수: " + arr.size() + ", 필드 위 발사체 수: " + projectiles.size());
 	}
 
 	public Entity getEntity(int index) {
 		return arr.get(index);
+	}
+	public ArrayList<Projectile> getProjList(){
+		return projectiles;
 	}
 
 	public void initialize() {

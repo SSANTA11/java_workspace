@@ -54,13 +54,6 @@ public class Player extends Entity {
 		return tankTop;
 	}
 
-	public int getX() {
-		return playerWorldX;
-	}
-
-	public int getY() {
-		return playerWorldY;
-	}
 
 	public int getBottomWidth() {
 		return TANK_BOTTOM_WIDTH;
@@ -188,12 +181,12 @@ public class Player extends Entity {
 
 	@Override
 	public int getWorldX() {
-		return getX();
+		return playerWorldX;
 	}
 
 	@Override
 	public int getWorldY() {
-		return getY();
+		return playerWorldY;
 	}
 
 	@Override

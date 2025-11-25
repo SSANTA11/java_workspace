@@ -3,7 +3,6 @@ package view;
 import java.awt.CardLayout;
 
 import javax.swing.*;
-import javax.swing.SwingUtilities;
 
 import core.GameManager;
 import core.GameLoop;

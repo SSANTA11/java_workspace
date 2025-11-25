@@ -1,6 +1,10 @@
 package entities;
 
+import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
+
+import core.GameManager;
 
 public class Projectile extends Entity {
 	private int speed;
@@ -17,45 +21,51 @@ public class Projectile extends Entity {
 	public Projectile(String weapon, int X, int Y, int angleT) {
 		switch (weapon) {
 		case "MG":
-			this.speed = 100;
+			this.speed = 15;
 			this.range = 50;
 			this.explosionRange = 0;
 			this.killingTankIsPossible = false;
 			this.damage = 3;
-			this.width=1;
-			this.height=1;
+			this.width = 4;
+			this.height = 4;
 			break;
 
 		case "AP":
-			this.speed = 80;
+			this.speed = 12;
 			this.range = 300;
 			this.explosionRange = 0;
 			this.killingTankIsPossible = true;
 			this.damage = 20;
-			this.width=1;
-			this.height=2;
+			this.width = 6;
+			this.height = 8;
 			break;
 
 		case "HE":
-			this.speed = 80;
+			this.speed = 12;
 			this.range = 300;
 			this.explosionRange = 10;
 			this.killingTankIsPossible = false;
 			this.damage = 3;
-			this.width=1;
-			this.height=2;
+			this.width = 6;
+			this.height = 8;
 			break;
 
 		case "HEAT":
-			this.speed = 80;
+			this.speed = 12;
 			this.range = 300;
 			this.explosionRange = 0;
 			this.killingTankIsPossible = true;
 			this.damage = 100;
-			this.width=1;
-			this.height=2;
+			this.width = 6;
+			this.height = 8;
 			break;
 
+		default:
+			this.speed = 10;
+			this.range = 100;
+			this.width = 5;
+			this.height = 5;
+			break;
 		}
 		this.WorldX = X;
 		this.WorldY = Y;
@@ -64,38 +74,44 @@ public class Projectile extends Entity {
 
 	@Override
 	public void updatePosition() {
-		// TODO Auto-generated method stub
-
+		double radians = Math.toRadians(angleT);
+		this.WorldX += (int) Math.round(this.speed * Math.cos(radians));
+		this.WorldY += (int) Math.round(this.speed * Math.sin(radians));
+		this.range--;
+		if (this.range <= 0) {
+			GameManager.getInstance().removeProjectile(this);
+		}
 	}
 
 	@Override
 	public void draw(Graphics g, int screenX, int screenY) {
-		// TODO Auto-generated method stub
-
+		Graphics2D g2 = (Graphics2D) g.create();
+		
+		g2.setColor(Color.YELLOW);
+		g2.rotate(Math.toRadians(angleT), screenX + width / 2, screenY + height / 2);
+		g2.fillRect(screenX, screenY, width, height);
+		
+		g2.dispose();
 	}
 
 	@Override
 	public int getWidth() {
-		// TODO Auto-generated method stub
-		return 0;
+		return this.width;
 	}
 
 	@Override
 	public int getHeight() {
-		// TODO Auto-generated method stub
-		return 0;
+		return this.height;
 	}
 
 	@Override
 	public int getWorldX() {
-		// TODO Auto-generated method stub
-		return 0;
+		return this.WorldX;
 	}
 
 	@Override
 	public int getWorldY() {
-		// TODO Auto-generated method stub
-		return 0;
+		return this.WorldY;
 	}
 
 	@Override
@@ -105,25 +121,20 @@ public class Projectile extends Entity {
 
 	@Override
 	public int getHP() {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
 	public int getSpeed() {
-		// TODO Auto-generated method stub
-		return 0;
+		return speed;
 	}
 
 	@Override
 	public void setPosition(int playerWorldX, int playerWorldY) {
-		// TODO Auto-generated method stub
-
 	}
 
 	@Override
 	public int setHP(int HP) {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 

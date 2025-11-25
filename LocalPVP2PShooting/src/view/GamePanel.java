@@ -6,14 +6,17 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.util.ArrayList;
+
 import javax.swing.*;
 import core.GameManager;
 import core.MapManager;
+import entities.Entity;
 import entities.Player;
 import entities.TankTop;
 
 public class GamePanel extends JPanel implements ActionListener {
-
+	private final ArrayList<Entity> allEntities = GameManager.getInstance().getList();
 	private final GameManager manager = GameManager.getInstance();
 	private final Player mainPlayer;
 	private final Camera camera;
@@ -35,7 +38,6 @@ public class GamePanel extends JPanel implements ActionListener {
 			@Override
 			public void keyReleased(KeyEvent e) {
 				mainPlayer.setMoving(e.getKeyCode(), false);
-				tankTop.fireControl(e.getKeyCode());
 			}
 		});
 
@@ -52,8 +54,8 @@ public class GamePanel extends JPanel implements ActionListener {
 
 		int startTileXIndex = cameraWorldX / TILE_SIZE;
 		int startTileYIndex = cameraWorldY / TILE_SIZE;
-		int endTileXIndex = (cameraWorldX + FIXED_VIEW_SIZE) / TILE_SIZE;
-		int endTileYIndex = (cameraWorldY + FIXED_VIEW_SIZE) / TILE_SIZE;
+		int endTileXIndex = (cameraWorldX + this.getWidth()) / TILE_SIZE + 3;
+		int endTileYIndex = (cameraWorldY + this.getHeight()) / TILE_SIZE + 3;
 
 		startTileXIndex = Math.max(0, startTileXIndex);
 		startTileYIndex = Math.max(0, startTileYIndex);
@@ -70,16 +72,19 @@ public class GamePanel extends JPanel implements ActionListener {
 			}
 		}
 
-		int playerScreenX = (mainPlayer.getX() - cameraWorldX);
-		int playerScreenY = (mainPlayer.getY() - cameraWorldY);
+		for (int i = 0; i < allEntities.size(); i++) {
+			Entity entity = allEntities.get(i);
+			int screenX = entity.getWorldX() - cameraWorldX;
+			int screenY = entity.getWorldY() - cameraWorldY;
 
-		mainPlayer.draw(g, playerScreenX, playerScreenY);
-
+			if (screenX > -100 && screenX < getWidth() + 100 && screenY > -100 && screenY < getHeight() + 100) {
+				entity.draw(g, screenX, screenY);
+			}
+		}
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
 
 	}
 }
