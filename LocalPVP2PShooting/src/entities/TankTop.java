@@ -26,20 +26,20 @@ public class TankTop extends Entity {
 		case KeyEvent.VK_3:
 			this.weapon = "HE";
 			System.out.println("고폭탄 선택");
-			fireDelay = 500;
+			fireDelay = 600;
 			break;
 		case KeyEvent.VK_4:
 			this.weapon = "HEAT";
 			System.out.println("대전차고폭탄 선택");
-			fireDelay = 500;
+			fireDelay = 600;
 			break;
 		case KeyEvent.VK_C:
 			long start = System.currentTimeMillis();
-			if (start - lastFireTime > fireDelay) {
+//			if (start - lastFireTime > fireDelay) {
 				fire();
-				lastFireTime = start;
+//				lastFireTime = start;
 				System.out.println("발사");
-			}
+//			}
 			break;
 		}
 	}

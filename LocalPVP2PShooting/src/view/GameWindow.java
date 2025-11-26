@@ -41,7 +41,7 @@ public class GameWindow extends JFrame {
 		cardLayout.show(mainPanel, panelName);
 
 		if ("GAME".equals(panelName)) {
-			setFocusable(true);
+			gamePanel.setFocusable(true);
 			gamePanel.requestFocusInWindow();
 			System.out.println("디버그 메세지: GamePanel에 포커스 요청 완료.");
 		}

@@ -6,8 +6,10 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
+
+import core.Camera;
+
 import java.awt.Graphics2D;
-import view.Camera;
 import java.lang.Math;
 
 public class Player extends Entity {

@@ -9,6 +9,8 @@ import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 
 import javax.swing.*;
+
+import core.Camera;
 import core.GameManager;
 import core.MapManager;
 import entities.Entity;

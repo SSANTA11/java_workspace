@@ -1,6 +1,6 @@
-package view;
+package core;
 
-import core.MapManager;
+import view.GameWindow;
 
 public class Camera {
 
@@ -9,8 +9,8 @@ public class Camera {
 
 	private double playerWorldX;
 	private double playerWorldY;
-	private double cameraWorldX = 0.0; // ------------
-	private double cameraWorldY = 0.0; // ------------
+	private double cameraWorldX = 0.0;
+	private double cameraWorldY = 0.0;
 	private GameWindow window;
 	private static final int DEAD_ZONE_WIDTH = 1;
 	private static final int DEAD_ZONE_HEIGHT = 1;
@@ -52,11 +52,11 @@ public class Camera {
 			cameraWorldY += playerDeadZoneRefY - deadZoneMinY;
 		}
 
-		double maxCameraWorldX = MAP_WIDTH - viewPortWidth; // ------------
-		double maxCameraWorldY = MAP_HEIGHT - viewPortHeight; // ------------
+		double maxCameraWorldX = MAP_WIDTH - viewPortWidth;
+		double maxCameraWorldY = MAP_HEIGHT - viewPortHeight;
 
-		cameraWorldX = Math.max(0.0, Math.min(cameraWorldX, maxCameraWorldX)); // ------------
-		cameraWorldY = Math.max(0.0, Math.min(cameraWorldY, maxCameraWorldY)); // ------------
+		cameraWorldX = Math.max(0.0, Math.min(cameraWorldX, maxCameraWorldX));
+		cameraWorldY = Math.max(0.0, Math.min(cameraWorldY, maxCameraWorldY));
 	}
 
 	public int getCameraSize() {
@@ -72,10 +72,10 @@ public class Camera {
 	}
 
 	public int getCameraWorldX() {
-		return (int) Math.round(cameraWorldX); // ------------
+		return (int) Math.round(cameraWorldX);
 	}
 
 	public int getCameraWorldY() {
-		return (int) Math.round(cameraWorldY); // ------------
+		return (int) Math.round(cameraWorldY);
 	}
 }

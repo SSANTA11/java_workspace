@@ -3,7 +3,6 @@ package core;
 import java.util.ArrayList;
 
 import entities.*;
-import view.Camera;
 
 public class GameManager {
 	private ArrayList<Entity> arr = new ArrayList<>();
@@ -88,8 +87,4 @@ public class GameManager {
 		MAINPLAYER.updatePosition();
 	}
 
-	public void makeProjectile(String weapon, double centerX, double centerY, int angleT) {
-		// TODO Auto-generated method stub
-		
-	}
 }
