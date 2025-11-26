@@ -11,12 +11,12 @@ import view.Camera;
 import java.lang.Math;
 
 public class Player extends Entity {
-	private int playerWorldX = 0;
-	private int playerWorldY = 500;
+	private double playerWorldX = 0.0;
+	private double playerWorldY = 500.0;
 	private int HP = 100;
 	public int speed = 3;
 	private int angleB = 0;
-	private int angleT = 180;
+	private int angleT = 0;
 	private boolean up = false, down = false, left = false, right = false, Z = false, X = false;
 	private BufferedImage tankBottomImage = null;
 	private BufferedImage tankTopImage = null;
@@ -112,7 +112,7 @@ public class Player extends Entity {
 			angleT -= 1;
 		}
 
-		double movementSpeed = 0;
+		int movementSpeed = 0;
 		int rotationSpeed = 0;
 
 		if (up) {
@@ -132,13 +132,16 @@ public class Player extends Entity {
 		if (movementSpeed != 0) {
 			double radians = Math.toRadians(angleB);
 
-			int nextX = this.playerWorldX + (int)Math.round(Math.cos(radians) * movementSpeed);
-			int nextY = this.playerWorldY + (int)Math.round(Math.sin(radians) * movementSpeed);
+			double deltaX = Math.cos(radians) * movementSpeed;
+			double deltaY = Math.sin(radians) * movementSpeed;
 
-			int minX = 0;
-			int minY = 0;
-			int maxX = MAP_WIDTH - TANK_BOTTOM_WIDTH;
-			int maxY = MAP_HEIGHT - TANK_BOTTOM_HEIGHT;
+			double nextX = this.playerWorldX + deltaX;
+			double nextY = this.playerWorldY + deltaY;
+
+			double minX = 0.0;
+			double minY = 0.0;
+			double maxX = (double) MAP_WIDTH - TANK_BOTTOM_WIDTH;
+			double maxY = (double) MAP_HEIGHT - TANK_BOTTOM_HEIGHT;
 
 			this.playerWorldX = Math.max(minX, Math.min(nextX, maxX));
 			this.playerWorldY = Math.max(minY, Math.min(nextY, maxY));
@@ -166,7 +169,7 @@ public class Player extends Entity {
 		g2b.dispose();
 
 		g2t.rotate(Math.toRadians(angleT), topCenterX, topCenterY);
-		g2t.drawImage(tankTopImage, screenX + 20, screenY + 10, topWidth, topHeight, null);
+		g2t.drawImage(tankTopImage, screenX + 25, screenY + 8, topWidth, topHeight, null);
 		g2t.dispose();
 	}
 
@@ -182,12 +185,12 @@ public class Player extends Entity {
 
 	@Override
 	public int getWorldX() {
-		return playerWorldX;
+		return (int) playerWorldX;
 	}
 
 	@Override
 	public int getWorldY() {
-		return playerWorldY;
+		return (int) playerWorldY;
 	}
 
 	@Override
@@ -209,7 +212,5 @@ public class Player extends Entity {
 	public int setHP(int HP) {
 		return 0;
 	}
-
-
 
 }

@@ -68,8 +68,8 @@ public class Projectile extends Entity {
 	@Override
 	public void updatePosition() {
 		double radians = Math.toRadians(angleT);
-		this.WorldX -= (int) Math.round(this.speed * Math.cos(radians));
-		this.WorldY -= (int) Math.round(this.speed * Math.sin(radians));
+		this.WorldX += (int) Math.round(this.speed * Math.cos(radians));
+		this.WorldY += (int) Math.round(this.speed * Math.sin(radians));
 		this.range--;
 		if (this.range <= 0) {
 			GameManager.getInstance().removeProjectile(this);
@@ -80,23 +80,23 @@ public class Projectile extends Entity {
 	public void draw(Graphics g, int screenX, int screenY) {
 		updatePosition();
 		if (this.range <= 0 && explosionRange > 0) {
-			drawExplo(g, screenX-explosionRange/2, screenY-explosionRange/2);
+			drawExplo(g, screenX - explosionRange / 2, screenY - explosionRange / 2);
 		}
 		Graphics2D g2 = (Graphics2D) g.create();
 
 		g2.setColor(Color.YELLOW);
 		g2.rotate(Math.toRadians(angleT), screenX + width / 2, screenY + height / 2);
-		g2.fillRect(screenX - 80, screenY, width, height);
+		g2.fillRect(screenX + 80 , screenY, width, height);
 
 		g2.dispose();
 	}
 
 	public void drawExplo(Graphics g, int screenX, int screenY) {
 		g.setColor(Color.YELLOW);
-		g.fillRect(screenX, screenY, explosionRange-20, explosionRange-20);
+		g.fillRect(screenX, screenY, explosionRange - 20, explosionRange - 20);
 		g.setColor(Color.red);
 		g.fillRect(screenX, screenY, explosionRange, explosionRange);
-		
+
 	}
 
 	@Override

@@ -9,8 +9,8 @@ public class Camera {
 
 	private double playerWorldX;
 	private double playerWorldY;
-	private int cameraWorldX = 0;
-	private int cameraWorldY = 0;
+	private double cameraWorldX = 0.0; // ------------
+	private double cameraWorldY = 0.0; // ------------
 	private GameWindow window;
 	private static final int DEAD_ZONE_WIDTH = 1;
 	private static final int DEAD_ZONE_HEIGHT = 1;
@@ -52,11 +52,11 @@ public class Camera {
 			cameraWorldY += playerDeadZoneRefY - deadZoneMinY;
 		}
 
-		int maxCameraWorldX = MAP_WIDTH - viewPortWidth;
-		int maxCameraWorldY = MAP_HEIGHT - viewPortHeight;
+		double maxCameraWorldX = MAP_WIDTH - viewPortWidth; // ------------
+		double maxCameraWorldY = MAP_HEIGHT - viewPortHeight; // ------------
 
-		cameraWorldX = Math.max(0, Math.min(cameraWorldX, maxCameraWorldX));
-		cameraWorldY = Math.max(0, Math.min(cameraWorldY, maxCameraWorldY));
+		cameraWorldX = Math.max(0.0, Math.min(cameraWorldX, maxCameraWorldX)); // ------------
+		cameraWorldY = Math.max(0.0, Math.min(cameraWorldY, maxCameraWorldY)); // ------------
 	}
 
 	public int getCameraSize() {
@@ -72,10 +72,10 @@ public class Camera {
 	}
 
 	public int getCameraWorldX() {
-		return cameraWorldX;
+		return (int) Math.round(cameraWorldX); // ------------
 	}
 
 	public int getCameraWorldY() {
-		return cameraWorldY;
+		return (int) Math.round(cameraWorldY); // ------------
 	}
 }
