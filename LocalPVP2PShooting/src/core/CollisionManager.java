@@ -36,7 +36,7 @@ public class CollisionManager {
 		boolean overlapX = (aX < bX + bW) && (aX + aW > bX);
 		boolean overlapY = (aY < bY + bH) && (aY + aH > bY);
 		return overlapX && overlapY;
-	}// aabb충돌로직(임시). 추후에 45도 각도 관련 상황에서 히트 지점 수정해야함!!
+	}// aabb충돌로직(임시). 추후에 전각도 관련 상황에서 히트 지점 수정해야함
 
 	private void handleCollision(Entity a, Entity b) {
 		if (a.getType() == "PLAYER") {

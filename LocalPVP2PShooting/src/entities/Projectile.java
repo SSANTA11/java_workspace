@@ -22,7 +22,7 @@ public class Projectile extends Entity {
 		switch (weapon) {
 		case "MG":
 			this.speed = 50;
-			this.range = 50;
+			this.range = 25;
 			this.explosionRange = 0;
 			this.killingTankIsPossible = false;
 			this.damage = 3;
@@ -32,7 +32,7 @@ public class Projectile extends Entity {
 
 		case "AP":
 			this.speed = 30;
-			this.range = 100;
+			this.range = 50;
 			this.explosionRange = 0;
 			this.killingTankIsPossible = true;
 			this.damage = 20;
@@ -42,7 +42,7 @@ public class Projectile extends Entity {
 
 		case "HE":
 			this.speed = 30;
-			this.range = 100;
+			this.range = 50;
 			this.explosionRange = 300;
 			this.killingTankIsPossible = false;
 			this.damage = 3;
@@ -52,7 +52,7 @@ public class Projectile extends Entity {
 
 		case "HEAT":
 			this.speed = 30;
-			this.range = 100;
+			this.range = 50;
 			this.explosionRange = 300;
 			this.killingTankIsPossible = true;
 			this.damage = 100;
@@ -92,8 +92,11 @@ public class Projectile extends Entity {
 	}
 
 	public void drawExplo(Graphics g, int screenX, int screenY) {
+		g.setColor(Color.YELLOW);
+		g.fillRect(screenX, screenY, explosionRange-20, explosionRange-20);
 		g.setColor(Color.red);
 		g.fillRect(screenX, screenY, explosionRange, explosionRange);
+		
 	}
 
 	@Override
