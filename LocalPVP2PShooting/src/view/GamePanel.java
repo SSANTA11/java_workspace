@@ -54,8 +54,8 @@ public class GamePanel extends JPanel implements ActionListener {
 	protected void paintComponent(Graphics g) {
 		super.paintComponent(g);
 
-		int cameraWorldX = camera.getCameraWorldX();
-		int cameraWorldY = camera.getCameraWorldY();
+		int cameraWorldX = (int)camera.getCameraWorldX();
+		int cameraWorldY = (int)camera.getCameraWorldY();
 		int TILE_SIZE = MapManager.TILE_SIZE;
 
 		int startTileXIndex = cameraWorldX / TILE_SIZE;

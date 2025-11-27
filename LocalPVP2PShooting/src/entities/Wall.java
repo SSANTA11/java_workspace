@@ -7,13 +7,13 @@ public class Wall extends Entity {
 	private int X, Y;
 	private int width;
 	private int height;
-	public Wall() {
-		switch() {
-		case:
-		case:
-		case:
-		case:
-		case:
+	// 1:물 2:진흙 3:콘크리트 4:바리게이트
+	public Wall(String s) {
+		switch(s) {
+		case "1":
+		case "2":
+		case "3":
+		case "4":
 		}
 	}
 
@@ -59,7 +59,6 @@ public class Wall extends Entity {
 
 	@Override
 	public int getSpeed() {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 

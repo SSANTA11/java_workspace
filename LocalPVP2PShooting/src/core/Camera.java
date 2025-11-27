@@ -4,17 +4,17 @@ import view.GameWindow;
 
 public class Camera {
 
-	private static final int MAP_WIDTH = MapManager.MAP_WIDTH;
-	private static final int MAP_HEIGHT = MapManager.MAP_HEIGHT;
+	private static final double MAP_WIDTH = MapManager.MAP_WIDTH;
+	private static final double MAP_HEIGHT = MapManager.MAP_HEIGHT;
 
 	private double playerWorldX;
 	private double playerWorldY;
 	private double cameraWorldX = 0.0;
 	private double cameraWorldY = 0.0;
 	private GameWindow window;
-	private static final int DEAD_ZONE_WIDTH = 1;
-	private static final int DEAD_ZONE_HEIGHT = 1;
-	private static final int FIXED_RANDER_SIZE = 5000;
+	private static final double DEAD_ZONE_WIDTH = 1;
+	private static final double DEAD_ZONE_HEIGHT = 1;
+	private static final double FIXED_RANDER_SIZE = 5000;
 
 	public Camera() {
 	}
@@ -29,13 +29,13 @@ public class Camera {
 	}
 
 	public void updateCamera() {
-		int viewPortWidth = window.getWidth();
-		int viewPortHeight = window.getHeight();
+		double viewPortWidth = window.getWidth();
+		double viewPortHeight = window.getHeight();
 
-		int deadZoneMinX = ((viewPortWidth - DEAD_ZONE_WIDTH) / 2);
-		int deadZoneMaxX = (deadZoneMinX + DEAD_ZONE_WIDTH);
-		int deadZoneMinY = ((viewPortHeight - DEAD_ZONE_HEIGHT) / 2);
-		int deadZoneMaxY = (deadZoneMinY + DEAD_ZONE_HEIGHT);
+		double deadZoneMinX = ((viewPortWidth - DEAD_ZONE_WIDTH) / 2);
+		double deadZoneMaxX = (deadZoneMinX + DEAD_ZONE_WIDTH);
+		double deadZoneMinY = ((viewPortHeight - DEAD_ZONE_HEIGHT) / 2);
+		double deadZoneMaxY = (deadZoneMinY + DEAD_ZONE_HEIGHT);
 
 		double playerDeadZoneRefX = playerWorldX - cameraWorldX;
 		double playerDeadZoneRefY = playerWorldY - cameraWorldY;
@@ -59,7 +59,7 @@ public class Camera {
 		cameraWorldY = Math.max(0.0, Math.min(cameraWorldY, maxCameraWorldY));
 	}
 
-	public int getCameraSize() {
+	public double getCameraSize() {
 		return FIXED_RANDER_SIZE;
 	}
 
@@ -71,11 +71,11 @@ public class Camera {
 		return playerWorldY;
 	}
 
-	public int getCameraWorldX() {
-		return (int) Math.round(cameraWorldX);
+	public double getCameraWorldX() {
+		return (double) Math.round(cameraWorldX);
 	}
 
-	public int getCameraWorldY() {
-		return (int) Math.round(cameraWorldY);
+	public double getCameraWorldY() {
+		return (double) Math.round(cameraWorldY);
 	}
 }
