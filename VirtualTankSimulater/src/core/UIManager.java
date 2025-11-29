@@ -1,7 +1,6 @@
 package core;
 
 import java.awt.CardLayout;
-import java.awt.image.BufferedImage;
 
 import javax.swing.JPanel;
 
@@ -12,15 +11,14 @@ import view.TitlePanel;
 import view.TitleOptionPanel;
 
 public class UIManager {
-	private static UIManager UI;
+	private static UIManager uiManager;
 	private GameWindow gameWindow;
 	private TitlePanel title = TitlePanel.getInstance();
 	private TitleOptionPanel titleOption = TitleOptionPanel.getInstance();
 	private IngameOptionPanel ingameOption = IngameOptionPanel.getInstance();
-	private GamePanel game = new GamePanel();
+	private GamePanel gamePanel = new GamePanel();
 	private JPanel mainPanel;
 	private CardLayout cardLayout;
-	private BufferedImage TITLE_IMG;
 
 	private UIManager() {
 		mainPanel = new JPanel();
@@ -29,10 +27,10 @@ public class UIManager {
 	}
 
 	public static UIManager getInstance() {
-		if (UI == null) {
-			UI = new UIManager();
+		if (uiManager == null) {
+			uiManager = new UIManager();
 		}
-		return UI;
+		return uiManager;
 	}
 
 	public void makeMainPanel() {
@@ -40,7 +38,7 @@ public class UIManager {
 		mainPanel.add(title, "title");
 		mainPanel.add(titleOption, "titleOption");
 		mainPanel.add(ingameOption, "ingameOption");
-		mainPanel.add(game, "game");
+		mainPanel.add(gamePanel, "game");
 	}
 
 	public JPanel getMainPanel() {
@@ -71,9 +69,16 @@ public class UIManager {
 
 		}
 	}
-
-	public GameWindow getWindow() {
+	public GameWindow getWindow(){
 		return gameWindow;
+	}
+
+	public double getWindowWidth() {
+		return gameWindow.getWidth();
+	}
+
+	public double getWindowHeight() {
+		return gameWindow.getHeight();
 	}
 
 }

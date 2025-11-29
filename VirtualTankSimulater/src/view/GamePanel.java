@@ -11,6 +11,7 @@ import java.awt.image.BufferedImage;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
+import core.CameraViewLogic;
 import core.GameManager;
 import core.MapManager;
 import core.SourceManager;
@@ -22,9 +23,12 @@ public class GamePanel extends JPanel {
 	private BufferedImage tileIMG;
 	private final int TILE_SIZE;
 	private final int TILES;
-	private TankController tankController = TankController.getInstance();
+	private CameraViewLogic cameraViewLogic;
+	private TankController tankController;
 
 	public GamePanel() {
+		this.cameraViewLogic = CameraViewLogic.getInstance();
+
 		addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyTyped(KeyEvent e) {
@@ -63,7 +67,7 @@ public class GamePanel extends JPanel {
 				}
 			}
 		}
-		GameManager.getInstance().getTank().draw(g);
+//		cameraViewLogic.update(TILE_SIZE, TILES);;
 	}
 
 }

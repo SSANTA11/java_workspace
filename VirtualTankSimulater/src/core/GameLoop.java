@@ -1,13 +1,20 @@
 package core;
 
 public class GameLoop implements Runnable {
-
-	private volatile boolean flag = false;
+	private static GameLoop gameLoop;
+	private volatile boolean flag = true;
 	private final int TARGET_FPS = 60;
 	private final int TARGET_TIME = 1000 / TARGET_FPS;
 
-	public GameLoop() {
+	private GameLoop() {
 
+	}
+
+	public static GameLoop getInstance() {
+		if (gameLoop == null) {
+			gameLoop = new GameLoop();
+		}
+		return gameLoop;
 	}
 
 	public void stopGameLoop() {
