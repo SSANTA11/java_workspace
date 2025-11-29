@@ -1,27 +1,29 @@
 package core;
 
 import java.awt.CardLayout;
+import java.awt.image.BufferedImage;
 
 import javax.swing.JPanel;
 
 import view.GamePanel;
 import view.GameWindow;
-import view.IngameOption;
-import view.Title;
-import view.TitleOption;
+import view.IngameOptionPanel;
+import view.TitlePanel;
+import view.TitleOptionPanel;
 
 public class UIManager {
 	private static UIManager UI;
-	private GameWindow gw;
-	private Title title = Title.getInstance();
-	private TitleOption titleOption = TitleOption.getInstance();
-	private IngameOption ingameOption = IngameOption.getInstance();
+	private GameWindow gameWindow;
+	private TitlePanel title = TitlePanel.getInstance();
+	private TitleOptionPanel titleOption = TitleOptionPanel.getInstance();
+	private IngameOptionPanel ingameOption = IngameOptionPanel.getInstance();
 	private GamePanel game = new GamePanel();
-	private JPanel p;
+	private JPanel mainPanel;
 	private CardLayout cardLayout;
+	private BufferedImage TITLE_IMG;
 
 	private UIManager() {
-		p = new JPanel();
+		mainPanel = new JPanel();
 		cardLayout = new CardLayout();
 		makeMainPanel();
 	}
@@ -34,34 +36,34 @@ public class UIManager {
 	}
 
 	public void makeMainPanel() {
-		p.setLayout(cardLayout);
-		p.add(title, "title");
-		p.add(titleOption, "titleOption");
-		p.add(ingameOption, "ingameOption");
-		p.add(game, "game");
+		mainPanel.setLayout(cardLayout);
+		mainPanel.add(title, "title");
+		mainPanel.add(titleOption, "titleOption");
+		mainPanel.add(ingameOption, "ingameOption");
+		mainPanel.add(game, "game");
 	}
 
 	public JPanel getMainPanel() {
-		return p;
+		return mainPanel;
 	}
 
-	public void insertWindow(GameWindow gw) {
-		this.gw = gw;
+	public void insertWindow(GameWindow gameWindow) {
+		this.gameWindow = gameWindow;
 	}
 
 	public void changePanel(String panel) {
 		switch (panel) {
 		case "game":
-			cardLayout.show(p, "game");
+			cardLayout.show(mainPanel, "game");
 			break;
 		case "titleOption":
-			cardLayout.show(p, "titleOption");
+			cardLayout.show(mainPanel, "titleOption");
 			break;
 		case "ingameOption":
-			cardLayout.show(p, "ingameOption");
+			cardLayout.show(mainPanel, "ingameOption");
 			break;
 		case "title":
-			cardLayout.show(p, "title");
+			cardLayout.show(mainPanel, "title");
 			break;
 		case "exit":
 			System.exit(0);
@@ -71,7 +73,7 @@ public class UIManager {
 	}
 
 	public GameWindow getWindow() {
-		return gw;
+		return gameWindow;
 	}
 
 }

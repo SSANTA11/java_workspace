@@ -5,13 +5,13 @@ import javax.swing.JPanel;
 
 import core.UIManager;
 
-public class IngameOption extends JPanel {
-	private static IngameOption igo;
+public class IngameOptionPanel extends JPanel {
+	private static IngameOptionPanel igo;
 	private JButton game;
 	private JButton title;
 	private JButton exit;
 
-	private IngameOption() {
+	private IngameOptionPanel() {
 		this.game = new JButton("게임으로 돌아가기");
 		this.title = new JButton("타이틀로 돌아가기");
 		this.exit = new JButton("나가기");
@@ -29,9 +29,9 @@ public class IngameOption extends JPanel {
 		add(exit);
 	}
 
-	public static IngameOption getInstance() {
+	public static IngameOptionPanel getInstance() {
 		if (igo == null) {
-			igo = new IngameOption();
+			igo = new IngameOptionPanel();
 		}
 		return igo;
 	}

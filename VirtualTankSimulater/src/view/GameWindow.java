@@ -11,5 +11,5 @@ public class GameWindow extends JFrame {
 		add(mainPanel);
 		setVisible(true);
 	}
-
+	
 }

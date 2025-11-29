@@ -5,11 +5,11 @@ import javax.swing.JPanel;
 
 import core.UIManager;
 
-public class TitleOption extends JPanel {
-	private static TitleOption to;
+public class TitleOptionPanel extends JPanel {
+	private static TitleOptionPanel to;
 	private JButton game, title;
 
-	private TitleOption() {
+	private TitleOptionPanel() {
 		this.game = new JButton("게임으로 돌아가기");
 		this.title = new JButton("타이틀로 돌아가기");
 		game.addActionListener(e -> {
@@ -23,9 +23,9 @@ public class TitleOption extends JPanel {
 		add(title);
 	}
 
-	public static TitleOption getInstance() {
+	public static TitleOptionPanel getInstance() {
 		if (to == null) {
-			to = new TitleOption();
+			to = new TitleOptionPanel();
 		}
 		return to;
 	}
