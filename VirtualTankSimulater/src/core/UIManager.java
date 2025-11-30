@@ -11,25 +11,27 @@ import view.TitlePanel;
 import view.TitleOptionPanel;
 
 public class UIManager {
-	private static UIManager uiManager;
+	private static UIManager uiManager = new UIManager();
 	private GameWindow gameWindow;
-	private TitlePanel title = TitlePanel.getInstance();
-	private TitleOptionPanel titleOption = TitleOptionPanel.getInstance();
-	private IngameOptionPanel ingameOption = IngameOptionPanel.getInstance();
-	private GamePanel gamePanel = new GamePanel();
+	private TitlePanel title;
+	private TitleOptionPanel titleOption;
+	private IngameOptionPanel ingameOption;
+	private GamePanel gamePanel;
 	private JPanel mainPanel;
 	private CardLayout cardLayout;
 
 	private UIManager() {
 		mainPanel = new JPanel();
 		cardLayout = new CardLayout();
+		title = TitlePanel.getInstance();
+		gamePanel = new GamePanel();
+		titleOption = new TitleOptionPanel();
+		ingameOption=new IngameOptionPanel();
 		makeMainPanel();
 	}
 
 	public static UIManager getInstance() {
-		if (uiManager == null) {
-			uiManager = new UIManager();
-		}
+
 		return uiManager;
 	}
 
@@ -37,12 +39,16 @@ public class UIManager {
 		mainPanel.setLayout(cardLayout);
 		mainPanel.add(title, "title");
 		mainPanel.add(titleOption, "titleOption");
-		mainPanel.add(ingameOption, "ingameOption");
 		mainPanel.add(gamePanel, "game");
+		mainPanel.add(ingameOption, "ingameOption");
 	}
 
 	public JPanel getMainPanel() {
 		return mainPanel;
+	}
+
+	public GamePanel getGamePanel() {
+		return gamePanel;
 	}
 
 	public void insertWindow(GameWindow gameWindow) {
@@ -53,6 +59,8 @@ public class UIManager {
 		switch (panel) {
 		case "game":
 			cardLayout.show(mainPanel, "game");
+			gamePanel.setFocusable(true);
+			gamePanel.requestFocusInWindow();
 			break;
 		case "titleOption":
 			cardLayout.show(mainPanel, "titleOption");
@@ -69,7 +77,8 @@ public class UIManager {
 
 		}
 	}
-	public GameWindow getWindow(){
+
+	public GameWindow getWindow() {
 		return gameWindow;
 	}
 

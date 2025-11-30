@@ -1,20 +1,22 @@
 package core;
 
+import entities.Tank;
+import view.GamePanel;
+
 public class GameLoop implements Runnable {
 	private static GameLoop gameLoop;
 	private volatile boolean flag = true;
-	private final int TARGET_FPS = 60;
+	private final int TARGET_FPS = 120;
 	private final int TARGET_TIME = 1000 / TARGET_FPS;
+	private GamePanel gamePanel;
+	private Tank tank;
+//	private CameraViewLogic cameraViewLogic;
 
-	private GameLoop() {
+	public GameLoop() {
+		this.gamePanel = UIManager.getInstance().getGamePanel();
+		this.tank = GameManager.getInstance().getPlayer();
+//		cameraViewLogic = CameraViewLogic.getInstance();
 
-	}
-
-	public static GameLoop getInstance() {
-		if (gameLoop == null) {
-			gameLoop = new GameLoop();
-		}
-		return gameLoop;
 	}
 
 	public void stopGameLoop() {
@@ -36,7 +38,12 @@ public class GameLoop implements Runnable {
 
 		while (flag) {
 			startTime = System.currentTimeMillis();
-			// 로직
+			
+//			cameraViewLogic.updateViewPort();
+			tank.updateTank();
+			gamePanel.repaint();
+
+			
 			timeUsed = System.currentTimeMillis() - startTime;
 			sleepTime = TARGET_TIME - timeUsed;
 
@@ -47,7 +54,6 @@ public class GameLoop implements Runnable {
 					System.err.println("GameLoop 스레드 종료됨.");
 				}
 			}
-
 		}
 	}
 

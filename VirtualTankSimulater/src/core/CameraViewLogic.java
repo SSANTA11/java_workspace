@@ -1,9 +1,8 @@
 package core;
 
-import view.GameWindow;
 
 public class CameraViewLogic {
-	private static CameraViewLogic camera;
+	private static CameraViewLogic cameraViewLogic = new CameraViewLogic();
 
 	private final int TILE_SIZE;
 	private final int TILES;
@@ -25,18 +24,15 @@ public class CameraViewLogic {
 	double deadZoneMaxY;
 
 	private CameraViewLogic() {
-		this.TILE_SIZE = MapManager.getInstance().getTileSize();
-		this.TILES = MapManager.getInstance().getTiles();
+		this.TILE_SIZE = MapManager.TILE_SIZE;
+		this.TILES = MapManager.TILES;
 		this.viewPortHeight = UIManager.getInstance().getWindowHeight();
 		this.viewPortWidth = UIManager.getInstance().getWindowWidth();
 		this.MAP_SIZE = TILE_SIZE * TILES;
 	}
 
 	public static CameraViewLogic getInstance() {
-		if (camera == null) {
-			camera = new CameraViewLogic();
-		}
-		return camera;
+		return cameraViewLogic;
 	}
 
 	public void update(double playerWorldX, double playerWorldY) {
@@ -50,21 +46,24 @@ public class CameraViewLogic {
 		double deadZoneMinY = ((viewPortHeight - DEAD_ZONE_HEIGHT) / 2);
 		double deadZoneMaxY = (deadZoneMinY + DEAD_ZONE_HEIGHT);
 
-		double playerDeadZoneRefX = playerWorldX - viewPortworldX;
-		double playerDeadZoneRefY = playerWorldY - viewPortworldY;
+		double playerScreenX = playerWorldX - viewPortworldX;
+	    double playerScreenY = playerWorldY - viewPortworldY;
+		if (playerScreenX > deadZoneMaxX) {
+	        // 플레이어가 데드 존의 오른쪽 경계를 벗어남
+	        viewPortworldX += playerScreenX - deadZoneMaxX;
+	    } else if (playerScreenX < deadZoneMinX) {
+	        // 플레이어가 데드 존의 왼쪽 경계를 벗어남
+	        viewPortworldX += playerScreenX - deadZoneMinX;
+	    }
 
-		if (playerWorldX > deadZoneMaxX) {
-			viewPortworldX += playerDeadZoneRefX + deadZoneMaxX;
-		} else if (playerWorldX < deadZoneMinX) {
-			viewPortworldX -= deadZoneMinX - playerDeadZoneRefX;
-		}
-
-		if (playerDeadZoneRefY > deadZoneMaxY) {
-			viewPortworldY += playerDeadZoneRefY - deadZoneMaxY;
-		} else if (playerWorldY < deadZoneMinY) {
-			viewPortworldY -= deadZoneMinY - playerDeadZoneRefY;
-		}
-
+	    // **[수정] Y축 스크롤 로직:**
+	    if (playerScreenY > deadZoneMaxY) {
+	        // 플레이어가 데드 존의 아래쪽 경계를 벗어남
+	        viewPortworldY += playerScreenY - deadZoneMaxY;
+	    } else if (playerScreenY < deadZoneMinY) {
+	        // 플레이어가 데드 존의 위쪽 경계를 벗어남
+	        viewPortworldY += playerScreenY - deadZoneMinY;
+	    }
 		viewPortworldX = Math.max(0, Math.min(viewPortworldX, MAP_SIZE - viewPortWidth));
 		viewPortworldY = Math.max(0, Math.min(viewPortworldY, MAP_SIZE - viewPortHeight));
 	}

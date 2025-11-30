@@ -4,11 +4,12 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
+import java.io.IOException;
 
+import javax.imageio.ImageIO;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
-import core.SourceManager;
 import core.UIManager;
 
 public class TitlePanel extends JPanel {
@@ -19,8 +20,11 @@ public class TitlePanel extends JPanel {
 	private BufferedImage titleIMG;
 
 	private TitlePanel() {
-		this.titleIMG = SourceManager.getInstance().getIMGSource("title");
-		this.game = new JButton("PLAY!");
+		try {
+			titleIMG = ImageIO.read(getClass().getResource("/title.png"));
+		} catch (IOException e) {
+			System.err.println("img 오류");
+		}		this.game = new JButton("PLAY!");
 		this.exit = new JButton("나가기");
 		this.option = new JButton("옵션");
 		setLayout(new BorderLayout());

@@ -6,12 +6,11 @@ import javax.swing.JPanel;
 import core.UIManager;
 
 public class IngameOptionPanel extends JPanel {
-	private static IngameOptionPanel igo;
 	private JButton game;
 	private JButton title;
 	private JButton exit;
 
-	private IngameOptionPanel() {
+	public IngameOptionPanel() {
 		this.game = new JButton("게임으로 돌아가기");
 		this.title = new JButton("타이틀로 돌아가기");
 		this.exit = new JButton("나가기");
@@ -29,10 +28,4 @@ public class IngameOptionPanel extends JPanel {
 		add(exit);
 	}
 
-	public static IngameOptionPanel getInstance() {
-		if (igo == null) {
-			igo = new IngameOptionPanel();
-		}
-		return igo;
-	}
 }

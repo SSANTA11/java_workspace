@@ -1,57 +1,58 @@
 package view;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.awt.image.BufferedImage;
+import java.io.IOException;
 
+import javax.imageio.ImageIO;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
-import core.CameraViewLogic;
 import core.GameManager;
 import core.MapManager;
-import core.SourceManager;
-import core.TankController;
 import core.UIManager;
+import entities.Tank;
 
 public class GamePanel extends JPanel {
 	private JButton option;
 	private BufferedImage tileIMG;
 	private final int TILE_SIZE;
 	private final int TILES;
-	private CameraViewLogic cameraViewLogic;
-	private TankController tankController;
+	private Tank tank;
+	private Tank player;
 
 	public GamePanel() {
-		this.cameraViewLogic = CameraViewLogic.getInstance();
-
+		this.tank = GameManager.getInstance().getPlayer();
+		this.player = GameManager.getInstance().getPlayer();
 		addKeyListener(new KeyAdapter() {
 			@Override
-			public void keyTyped(KeyEvent e) {
-				tankController.setTank(e.getKeyCode(), true);
+			public void keyPressed(KeyEvent e) {
+				tank.setTank(e.getKeyCode(), true);
 			}
 
 			@Override
 			public void keyReleased(KeyEvent e) {
-				tankController.setTank(e.getKeyCode(), false);
+				tank.setTank(e.getKeyCode(), false);
 
 			}
 		});
-		this.tileIMG = SourceManager.getInstance().getIMGSource("tile");
-		this.TILE_SIZE = MapManager.getInstance().getTileSize();
-		this.TILES = MapManager.getInstance().getTiles();
+
+		try {
+			tileIMG = ImageIO.read(getClass().getResource("/floor.png"));
+		} catch (IOException e) {
+			System.err.println("img 오류");
+		}
+		this.TILE_SIZE = MapManager.TILE_SIZE;
+		this.TILES = MapManager.TILES;
 		this.option = new JButton("옵션");
-		setLayout(new BorderLayout());
 		option.addActionListener(e -> {
 			UIManager.getInstance().changePanel("ingameOption");
 		});
-		add(option, BorderLayout.NORTH);
-		repaint();
 
+		add(option);
 	}
 
 	@Override
@@ -59,15 +60,15 @@ public class GamePanel extends JPanel {
 		super.paintComponent(g);
 		for (int x = 0; x < TILES; x++) {
 			for (int y = 0; y < TILES; y++) {
-				char word =MapManager.getInstance().getTile(x, y);
-				switch(word) {
+				char word = MapManager.getInstance().getTile(x, y);
+				switch (word) {
 				case 'w':
 					g.drawImage(tileIMG, x * TILE_SIZE, y * TILE_SIZE, TILE_SIZE, TILE_SIZE, null);
-					break;					
+					break;
 				}
 			}
 		}
-//		cameraViewLogic.update(TILE_SIZE, TILES);;
+		player.draw(g);
 	}
 
 }

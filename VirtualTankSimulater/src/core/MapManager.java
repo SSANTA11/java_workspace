@@ -1,10 +1,10 @@
 package core;
 
 public class MapManager {
-	private static MapManager mapManager;
-	private final int TILE_SIZE = 127;
-	private final int TILES = 100;
-
+	static MapManager mapManager = new MapManager();
+	public static final int TILE_SIZE = 200;
+	public static final int TILES = 200;
+	public static final int MAP_SIZE = TILE_SIZE * TILES;
 	private char map[][] = new char[TILES][TILES];
 
 	private MapManager() {
@@ -16,22 +16,11 @@ public class MapManager {
 	}
 
 	public static MapManager getInstance() {
-		if (mapManager == null) {
-			mapManager = new MapManager();
-		}
 		return mapManager;
 	}
 
 	public char getTile(int x, int y) {
 		return map[y][x];
-	}
-
-	public char getTileSize() {
-		return TILE_SIZE;
-	}
-
-	public char getTiles() {
-		return TILES;
 	}
 
 }
