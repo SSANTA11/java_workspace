@@ -14,8 +14,8 @@ import core.MapManager;
 public class Tank extends Entity {
 	private double playerWorldX = 0;
 	private double playerWorldY = 500;
-	private double viewPortworldX;
-	private double viewPortworldY;
+	private double playerScreenX;
+	private double playerScreenY;
 	private int HP = 100;
 	private final int MOVING_SPEED = 3;
 	private final int ROTATION_SPEED = 1;
@@ -112,22 +112,36 @@ public class Tank extends Entity {
 
 		playerWorldX = Math.max(0, Math.min(playerWorldX, MAP_SIZE - TANK_BOTTOM_WIDTH));
 		playerWorldY = Math.max(0, Math.min(playerWorldY, MAP_SIZE - TANK_BOTTOM_HEIGHT));
-		CameraViewLogic.getInstance().update(playerWorldX, playerWorldY);
+		double viewPortworldX=CameraViewLogic.getInstance().getViewPortworldX();
+		double viewPortworldY=CameraViewLogic.getInstance().getViewPortworldY();
+		
+		playerScreenX = playerWorldX - viewPortworldX;
+		playerScreenY = playerWorldY - viewPortworldY;
+		
+		CameraViewLogic.getInstance().update(playerScreenX, playerScreenY);
 	}
-
+	public double getPlayerScreenX(){
+		return playerScreenX;
+	}
+	public double getPlayerScreenY(){
+		return playerScreenY;
+		
+	}
 	public void draw(Graphics g) {
 		Graphics2D g2b = (Graphics2D) g.create();
 		Graphics2D g2t = (Graphics2D) g.create();
 
-		double centerX = playerWorldX + TANK_BOTTOM_WIDTH / 2 + 8;
-		double centerY = playerWorldY + TANK_BOTTOM_HEIGHT / 2;
+
+		double centerX = playerScreenX + TANK_BOTTOM_WIDTH / 2 + 8;
+		double centerY = playerScreenY + TANK_BOTTOM_HEIGHT / 2;
 		g2b.rotate(radiansB, centerX, centerY);
-		g2b.drawImage(tankBottomIMG, (int) playerWorldX, (int) playerWorldY, TANK_BOTTOM_WIDTH, TANK_BOTTOM_HEIGHT,
+		g2b.drawImage(tankBottomIMG, (int) playerScreenX, (int) playerScreenY, TANK_BOTTOM_WIDTH, TANK_BOTTOM_HEIGHT,
 				null);
 		g2b.dispose();
 		g2t.rotate(radiansT, centerX, centerY);
-		g2t.drawImage(tankTopIMG, (int) playerWorldX + (TANK_BOTTOM_WIDTH - TANK_TOP_WIDTH) / 2 + 10,
-				(int) playerWorldY + (TANK_BOTTOM_HEIGHT - TANK_TOP_HEIGHT) / 2, TANK_TOP_WIDTH, TANK_TOP_HEIGHT, null);
+		g2t.drawImage(tankTopIMG, (int) playerScreenX + (TANK_BOTTOM_WIDTH - TANK_TOP_WIDTH) / 2 + 10,
+				(int) playerScreenY + (TANK_BOTTOM_HEIGHT - TANK_TOP_HEIGHT) / 2, TANK_TOP_WIDTH, TANK_TOP_HEIGHT,
+				null);
 		g2t.dispose();
 	}
 }

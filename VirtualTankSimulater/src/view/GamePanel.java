@@ -15,27 +15,31 @@ import core.GameManager;
 import core.MapManager;
 import core.UIManager;
 import entities.Tank;
+import core.CameraViewLogic;
 
 public class GamePanel extends JPanel {
 	private JButton option;
 	private BufferedImage tileIMG;
 	private final int TILE_SIZE;
 	private final int TILES;
-	private Tank tank;
 	private Tank player;
+	private CameraViewLogic camera;
+	private double viewPortWorldX;
+	private double viewPortWorldY;
 
 	public GamePanel() {
-		this.tank = GameManager.getInstance().getPlayer();
 		this.player = GameManager.getInstance().getPlayer();
-		addKeyListener(new KeyAdapter() {
+		this.camera = CameraViewLogic.getInstance();
+
+		this.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyPressed(KeyEvent e) {
-				tank.setTank(e.getKeyCode(), true);
+				player.setTank(e.getKeyCode(), true);
 			}
 
 			@Override
 			public void keyReleased(KeyEvent e) {
-				tank.setTank(e.getKeyCode(), false);
+				player.setTank(e.getKeyCode(), false);
 
 			}
 		});
@@ -58,16 +62,23 @@ public class GamePanel extends JPanel {
 	@Override
 	protected void paintComponent(Graphics g) {
 		super.paintComponent(g);
-		for (int x = 0; x < TILES; x++) {
-			for (int y = 0; y < TILES; y++) {
-				char word = MapManager.getInstance().getTile(x, y);
-				switch (word) {
-				case 'w':
-					g.drawImage(tileIMG, x * TILE_SIZE, y * TILE_SIZE, TILE_SIZE, TILE_SIZE, null);
-					break;
-				}
+
+		double viewPortworldX = camera.viewPortworldX;
+		double viewPortworldY = camera.viewPortworldY;
+
+		int startTileX = Math.max(0, (int) viewPortworldX / TILE_SIZE);
+		int startTileY = Math.max(0, (int) viewPortworldY / TILE_SIZE);
+		int endTileX = Math.min(startTileX + (int) viewPortworldX / TILE_SIZE, TILES);
+		int endTileY = Math.min(startTileY + (int) viewPortworldY / TILE_SIZE, TILES);
+
+		for (int x = startTileX; x < endTileX; x++) {
+			for (int y = startTileY; y < endTileY; y++) {
+				int screenX = (int) (x * TILE_SIZE - viewPortworldX);
+				int screenY = (int) (y * TILE_SIZE - viewPortworldY);
+				g.drawImage(tileIMG, screenX, screenY, TILE_SIZE, TILE_SIZE, null);
 			}
 		}
+
 		player.draw(g);
 	}
 

@@ -10,12 +10,12 @@ public class GameLoop implements Runnable {
 	private final int TARGET_TIME = 1000 / TARGET_FPS;
 	private GamePanel gamePanel;
 	private Tank tank;
-//	private CameraViewLogic cameraViewLogic;
+	private CameraViewLogic cameraViewLogic;
 
 	public GameLoop() {
 		this.gamePanel = UIManager.getInstance().getGamePanel();
 		this.tank = GameManager.getInstance().getPlayer();
-//		cameraViewLogic = CameraViewLogic.getInstance();
+		cameraViewLogic = CameraViewLogic.getInstance();
 
 	}
 
@@ -39,8 +39,8 @@ public class GameLoop implements Runnable {
 		while (flag) {
 			startTime = System.currentTimeMillis();
 			
-//			cameraViewLogic.updateViewPort();
 			tank.updateTank();
+			cameraViewLogic.updateViewPort();
 			gamePanel.repaint();
 
 			
