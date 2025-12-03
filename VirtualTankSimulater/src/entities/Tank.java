@@ -4,12 +4,11 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
-import java.io.IOException;
-
-import javax.imageio.ImageIO;
 
 import core.CameraViewLogic;
+import core.GameManager;
 import core.MapManager;
+import core.SourceManager;
 
 public class Tank extends Entity {
 	private double playerWorldX = 0;
@@ -35,18 +34,18 @@ public class Tank extends Entity {
 
 	private final int MAP_SIZE;
 
+	private int fireDelay;
+	private String weapon = "MG";
+	private long lastFireTime = 0;
+
 	public boolean rightB = false, leftB = false, forwardB = false, backwardB = false;
 	public boolean rightT = false, leftT = false;
 	public boolean fire = false;
 	public boolean MG = false, AP = false, HEAT = false;
 
 	public Tank() {
-		try {
-			tankTopIMG = ImageIO.read(getClass().getResource("/tankTop.png"));
-			tankBottomIMG = ImageIO.read(getClass().getResource("/tankBottom.png"));
-		} catch (IOException e) {
-			System.err.println("img 오류");
-		}
+		this.tankTopIMG = SourceManager.getInstance().getIMGSource("tankTop");
+		this.tankBottomIMG = SourceManager.getInstance().getIMGSource("tankBottom");
 		this.TANK_BOTTOM_WIDTH = tankBottomIMG.getWidth() / 3;
 		this.TANK_BOTTOM_HEIGHT = tankBottomIMG.getHeight() / 3;
 		this.TANK_TOP_WIDTH = tankTopIMG.getWidth() / 3;
@@ -84,6 +83,42 @@ public class Tank extends Entity {
 		} else if (keyCode == KeyEvent.VK_RIGHT) {
 			rightB = isSelected;
 		}
+		fireControl(keyCode);
+	}
+
+	public void fireControl(int keyCode) {
+		switch (keyCode) {
+		case KeyEvent.VK_1:
+			this.weapon = "MG";
+			System.out.println("공축기관총 선택");
+			fireDelay = 100;
+			break;
+		case KeyEvent.VK_2:
+			this.weapon = "AP";
+			System.out.println("철갑탄 선택");
+			fireDelay = 500;
+			break;
+		case KeyEvent.VK_3:
+			this.weapon = "HEAT";
+			System.out.println("대전차고폭탄 선택");
+			fireDelay = 600;
+			break;
+		case KeyEvent.VK_C:
+			long start = System.currentTimeMillis();
+//			if (start - lastFireTime > fireDelay) {
+			fire();
+//				lastFireTime = start;
+			System.out.println("발사");
+//			}
+			break;
+		}
+	}
+
+	public void fire() {
+		int centerX = (int) getPlayerScreenX();
+		int centerY = (int) getPlayerScreenY();
+
+		GameManager.getInstance().makeProjectile(weapon, centerX, centerY, angleT);
 	}
 
 	public void updateTank() {
@@ -112,25 +147,27 @@ public class Tank extends Entity {
 
 		playerWorldX = Math.max(0, Math.min(playerWorldX, MAP_SIZE - TANK_BOTTOM_WIDTH));
 		playerWorldY = Math.max(0, Math.min(playerWorldY, MAP_SIZE - TANK_BOTTOM_HEIGHT));
-		double viewPortworldX=CameraViewLogic.getInstance().getViewPortworldX();
-		double viewPortworldY=CameraViewLogic.getInstance().getViewPortworldY();
-		
+		double viewPortworldX = CameraViewLogic.getInstance().getViewPortworldX();
+		double viewPortworldY = CameraViewLogic.getInstance().getViewPortworldY();
+
 		playerScreenX = playerWorldX - viewPortworldX;
 		playerScreenY = playerWorldY - viewPortworldY;
-		
+
 		CameraViewLogic.getInstance().update(playerScreenX, playerScreenY);
 	}
-	public double getPlayerScreenX(){
+
+	public double getPlayerScreenX() {
 		return playerScreenX;
 	}
-	public double getPlayerScreenY(){
+
+	public double getPlayerScreenY() {
 		return playerScreenY;
-		
+
 	}
+
 	public void draw(Graphics g) {
 		Graphics2D g2b = (Graphics2D) g.create();
 		Graphics2D g2t = (Graphics2D) g.create();
-
 
 		double centerX = playerScreenX + TANK_BOTTOM_WIDTH / 2 + 8;
 		double centerY = playerScreenY + TANK_BOTTOM_HEIGHT / 2;

@@ -26,7 +26,7 @@ public class UIManager {
 		title = TitlePanel.getInstance();
 		gamePanel = new GamePanel();
 		titleOption = new TitleOptionPanel();
-		ingameOption=new IngameOptionPanel();
+		ingameOption = new IngameOptionPanel();
 		makeMainPanel();
 	}
 
@@ -51,10 +51,6 @@ public class UIManager {
 		return gamePanel;
 	}
 
-	public void insertWindow(GameWindow gameWindow) {
-		this.gameWindow = gameWindow;
-	}
-
 	public void changePanel(String panel) {
 		switch (panel) {
 		case "game":
@@ -77,6 +73,11 @@ public class UIManager {
 
 		}
 	}
+
+	public void insertWindow(GameWindow gameWindow) {
+		this.gameWindow = gameWindow;
+	}
+
 
 	public GameWindow getWindow() {
 		return gameWindow;
