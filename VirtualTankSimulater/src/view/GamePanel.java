@@ -4,10 +4,8 @@ import java.awt.BorderLayout;
 import java.awt.Graphics;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.awt.image.BufferedImage;
-import java.io.IOException;
+import java.util.ArrayList;
 
-import javax.imageio.ImageIO;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
@@ -16,7 +14,6 @@ import core.MapManager;
 import core.UIManager;
 import entities.Projectile;
 import entities.Tank;
-import core.CameraViewLogic;
 
 public class GamePanel extends JPanel {
 	private JButton option;
@@ -24,7 +21,7 @@ public class GamePanel extends JPanel {
 	private MapManager mapManager;
 
 	public GamePanel() {
-		this.mapManager= MapManager.getInstance();
+		this.mapManager = MapManager.getInstance();
 		this.player = GameManager.getInstance().getPlayer();
 
 		this.addKeyListener(new KeyAdapter() {
@@ -53,7 +50,10 @@ public class GamePanel extends JPanel {
 		super.paintComponent(g);
 		mapManager.draw(g);
 		player.draw(g);
-		
+		ArrayList<Projectile> projectiles = GameManager.getInstance().getProjectiles();
+		for (Projectile e : projectiles) {
+			e.draw(g);
+		}
 	}
 
 }

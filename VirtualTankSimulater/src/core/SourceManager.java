@@ -28,7 +28,6 @@ public class SourceManager {
 	}
 
 	public BufferedImage getIMGSource(String img) {
-
 		switch (img) {
 		case "title":
 			return title;

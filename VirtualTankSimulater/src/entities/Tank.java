@@ -6,9 +6,9 @@ import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 
 import core.CameraViewLogic;
-import core.GameManager;
 import core.MapManager;
 import core.SourceManager;
+import core.Weapons;
 
 public class Tank extends Entity {
 	private double playerWorldX = 0;
@@ -34,14 +34,11 @@ public class Tank extends Entity {
 
 	private final int MAP_SIZE;
 
-	private int fireDelay;
-	private String weapon = "MG";
-	private long lastFireTime = 0;
+	private boolean rightB = false, leftB = false, forwardB = false, backwardB = false;
+	private boolean rightT = false, leftT = false;
 
-	public boolean rightB = false, leftB = false, forwardB = false, backwardB = false;
-	public boolean rightT = false, leftT = false;
-	public boolean fire = false;
-	public boolean MG = false, AP = false, HEAT = false;
+	private double centerX;
+	private double centerY;
 
 	public Tank() {
 		this.tankTopIMG = SourceManager.getInstance().getIMGSource("tankTop");
@@ -54,21 +51,12 @@ public class Tank extends Entity {
 	}
 
 	public void setTank(int keyCode, boolean isSelected) {
-		if (keyCode == KeyEvent.VK_C) {
-			fire = isSelected;
-		}
-
-		if (keyCode == KeyEvent.VK_1) {
-			MG = isSelected;
-		} else if (keyCode == KeyEvent.VK_2) {
-			AP = isSelected;
-		} else if (keyCode == KeyEvent.VK_3) {
-			HEAT = isSelected;
-		}
+		Weapons.getInstance().fireControl(keyCode);
 
 		if (keyCode == KeyEvent.VK_Z) {
 			rightT = isSelected;
-		} else if (keyCode == KeyEvent.VK_X) {
+		}
+		if (keyCode == KeyEvent.VK_X) {
 			leftT = isSelected;
 		}
 
@@ -80,67 +68,37 @@ public class Tank extends Entity {
 
 		if (keyCode == KeyEvent.VK_LEFT) {
 			leftB = isSelected;
-		} else if (keyCode == KeyEvent.VK_RIGHT) {
+		}
+		if (keyCode == KeyEvent.VK_RIGHT) {
 			rightB = isSelected;
 		}
-		fireControl(keyCode);
-	}
 
-	public void fireControl(int keyCode) {
-		switch (keyCode) {
-		case KeyEvent.VK_1:
-			this.weapon = "MG";
-			System.out.println("공축기관총 선택");
-			fireDelay = 100;
-			break;
-		case KeyEvent.VK_2:
-			this.weapon = "AP";
-			System.out.println("철갑탄 선택");
-			fireDelay = 500;
-			break;
-		case KeyEvent.VK_3:
-			this.weapon = "HEAT";
-			System.out.println("대전차고폭탄 선택");
-			fireDelay = 600;
-			break;
-		case KeyEvent.VK_C:
-			long start = System.currentTimeMillis();
-//			if (start - lastFireTime > fireDelay) {
-			fire();
-//				lastFireTime = start;
-			System.out.println("발사");
-//			}
-			break;
-		}
-	}
-
-	public void fire() {
-		int centerX = (int) getPlayerScreenX();
-		int centerY = (int) getPlayerScreenY();
-
-		GameManager.getInstance().makeProjectile(weapon, centerX, centerY, angleT);
 	}
 
 	public void updateTank() {
 		if (rightB) {
 			angleB += ROTATION_SPEED;
-		} else if (leftB) {
+		}
+		if (leftB) {
 			angleB -= ROTATION_SPEED;
 		}
 		if (rightT) {
 			angleT += ROTATION_SPEED;
-		} else if (leftT) {
+		}
+		if (leftT) {
 			angleT -= ROTATION_SPEED;
 		}
 		radiansT = Math.toRadians(angleT);
 		radiansB = Math.toRadians(angleB);
-		double deltaX = MOVING_SPEED * Math.cos(radiansB);
-		double deltaY = MOVING_SPEED * Math.sin(radiansB);
 
 		if (forwardB) {
+			double deltaX = MOVING_SPEED * Math.cos(radiansB);
+			double deltaY = MOVING_SPEED * Math.sin(radiansB);
 			this.playerWorldX += deltaX;
 			this.playerWorldY += deltaY;
 		} else if (backwardB) {
+			double deltaX = (MOVING_SPEED - 1) * Math.cos(radiansB);
+			double deltaY = (MOVING_SPEED - 1) * Math.sin(radiansB);
 			this.playerWorldX -= deltaX;
 			this.playerWorldY -= deltaY;
 		}
@@ -165,12 +123,25 @@ public class Tank extends Entity {
 
 	}
 
+	public double getPlayerAngle() {
+		return angleT;
+
+	}
+
+	public double getCenterX() {
+		return centerX;
+	}
+
+	public double getCenterY() {
+		return centerY;
+	}
+
 	public void draw(Graphics g) {
 		Graphics2D g2b = (Graphics2D) g.create();
 		Graphics2D g2t = (Graphics2D) g.create();
 
-		double centerX = playerScreenX + TANK_BOTTOM_WIDTH / 2 + 8;
-		double centerY = playerScreenY + TANK_BOTTOM_HEIGHT / 2;
+		centerX = playerScreenX + TANK_BOTTOM_WIDTH / 2 + 8;
+		centerY = playerScreenY + TANK_BOTTOM_HEIGHT / 2;
 		g2b.rotate(radiansB, centerX, centerY);
 		g2b.drawImage(tankBottomIMG, (int) playerScreenX, (int) playerScreenY, TANK_BOTTOM_WIDTH, TANK_BOTTOM_HEIGHT,
 				null);

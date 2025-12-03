@@ -11,24 +11,25 @@ import core.SourceManager;
 public class Projectile extends Entity {
 	private int speed;
 	private int range;
-	private int WorldX;
-	private int WorldY;
 	private double angleT;
 	private int damage;
 	private int explosionRange;
-	private boolean killingTankIsPossible;
 	private int width;
 	private int height;
-	private static BufferedImage AP = SourceManager.getInstance().getIMGSource("AP");
-	private static BufferedImage HEAT = SourceManager.getInstance().getIMGSource("HEAT");
+	private BufferedImage AP = SourceManager.getInstance().getIMGSource("AP");
+	private BufferedImage HEAT = SourceManager.getInstance().getIMGSource("HEAT");
 
-	public Projectile(String weapon, int X, int Y, double angleT) {
+	private double playerAngle;
+	private boolean suicideFlag = false;
+	private int projectileScreenX;
+	private int projectileScreenY;
+
+	public Projectile(String weapon) {
 		switch (weapon) {
 		case "MG":
 			this.speed = 50;
 			this.range = 10;
 			this.explosionRange = 0;
-			this.killingTankIsPossible = false;
 			this.damage = 3;
 			this.width = 4;
 			this.height = 4;
@@ -36,67 +37,63 @@ public class Projectile extends Entity {
 
 		case "AP":
 			this.speed = 30;
-			this.range = 20;
+			this.range = 50;
 			this.explosionRange = 0;
-			this.killingTankIsPossible = true;
 			this.damage = 20;
-			this.width = 6;
-			this.height = 8;
-			break;
-
-		case "HE":
-			this.speed = 30;
-			this.range = 20;
-			this.explosionRange = 300;
-			this.killingTankIsPossible = false;
-			this.damage = 3;
 			this.width = 6;
 			this.height = 8;
 			break;
 
 		case "HEAT":
 			this.speed = 30;
-			this.range = 20;
+			this.range = 50;
 			this.explosionRange = 300;
-			this.killingTankIsPossible = true;
 			this.damage = 100;
 			this.width = 6;
 			this.height = 8;
 			break;
 		}
-		this.WorldX = X;
-		this.WorldY = Y;
-		this.angleT = angleT;
 
+		this.playerAngle = GameManager.getInstance().getPlayer().getPlayerAngle();
+		this.projectileScreenX = (int) GameManager.getInstance().getPlayer().getCenterX();
+		this.projectileScreenY = (int) GameManager.getInstance().getPlayer().getCenterY();
 	}
 
-	public void updatePosition() {
-		double radians = Math.toRadians(angleT);
-		this.WorldX += (int) Math.round(this.speed * Math.cos(radians));
-		this.WorldY += (int) Math.round(this.speed * Math.sin(radians));
-		this.range--;
-		if (this.range <= 0) {
-			GameManager.getInstance().removeProjectile(this);
+	public void updateLocation() {
+		projectileScreenX += speed * Math.cos(angleT);
+		projectileScreenY += speed * Math.sin(angleT);
+		range--;
+		if (range < 0) {
+			suicideFlag = true;
 		}
+//		else if(만일 충돌했다면){
+//			
+//		}
 	}
 
-	public void drawExplo(Graphics g, int screenX, int screenY) {
-		g.setColor(Color.YELLOW);
-		g.fillRect(screenX, screenY, explosionRange - 20, explosionRange - 20);
-		System.out.println("폭발 완료");
-
-	}
-
-	public void draw(Graphics g, int screenX, int screenY) {
-		updatePosition();
-		if (this.range <= 0 && explosionRange > 0) {
-			drawExplo(g, screenX - explosionRange / 2, screenY - explosionRange / 2);
-		}
+	public void draw(Graphics g) {
 		Graphics2D g2 = (Graphics2D) g.create();
-
-		g2.rotate(Math.toRadians(angleT), screenX + width / 2, screenY + height / 2);
-		g2.drawImage(AP, screenX + 80, screenY, width, height, null);
-
+		double anlgleT = playerAngle;
+		g2.rotate(Math.toRadians(anlgleT), GameManager.getInstance().getPlayer().getCenterX(),
+				GameManager.getInstance().getPlayer().getCenterY());
+		g2.setColor(Color.RED);
+		g2.fillRect(projectileScreenX + 34, projectileScreenY - 4, width, height);
 		g2.dispose();
+		if (0 < range && range < 2 && explosionRange > 0) {
+			Graphics2D ex = (Graphics2D) g.create();
+			ex.setColor(Color.RED);
+			ex.rotate(Math.toRadians(anlgleT), GameManager.getInstance().getPlayer().getCenterX(),
+					GameManager.getInstance().getPlayer().getCenterY());
+			ex.fillRect(projectileScreenX - explosionRange / 2, projectileScreenY - explosionRange / 2, explosionRange,
+					explosionRange);
+			ex.dispose();
+		}
+		updateLocation();
+
 	}
+
+	public boolean isSuicideFlag() {
+		return suicideFlag;
+	}
+
 }

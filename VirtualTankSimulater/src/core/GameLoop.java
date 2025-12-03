@@ -14,13 +14,11 @@ public class GameLoop implements Runnable {
 	private GamePanel gamePanel;
 	private Tank tank;
 	private CameraViewLogic cameraViewLogic;
-	private ArrayList <Projectile> projectiles;
 
 	public GameLoop() {
 		this.gamePanel = UIManager.getInstance().getGamePanel();
 		this.tank = GameManager.getInstance().getPlayer();
 		this.cameraViewLogic = CameraViewLogic.getInstance();
-		this.projectiles=GameManager.getInstance().getProjList();
 		
 
 	}
@@ -48,11 +46,7 @@ public class GameLoop implements Runnable {
 			gamePanel.repaint();
 			tank.updateTank();
 			cameraViewLogic.updateViewPort();
-			if(!projectiles.isEmpty()) {
-				for(Projectile p:projectiles) {
-				}
-			}
-			
+			GameManager.getInstance().checkSuicideProjectile();
 
 			
 			timeUsed = System.currentTimeMillis() - startTime;
