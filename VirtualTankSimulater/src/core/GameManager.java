@@ -32,10 +32,14 @@ public class GameManager {
 		this.entities.add(tank);
 		this.tanks.add(tank);
 	}
+	
+	public ArrayList<Projectile> getProjectiles() {
+		return projectiles;
+	}
 
 	public Projectile makeProjectile(String weapon) {
 		Projectile projectile = new Projectile(weapon);
-		this.getProjectiles().add(projectile);
+		this.projectiles.add(projectile);
 		this.entities.add(projectile);
 		return projectile;
 	}
@@ -56,16 +60,12 @@ public class GameManager {
 	}
 
 	public static void main(String[] args) {
-		SourceManager sourceManager = SourceManager.getInstance();
+		SourceManager sourceManager;
 		gameManager.makePlayer();
 		JPanel mainPanel = UIManager.getInstance().getMainPanel();
 		GameWindow gameWindow = new GameWindow(mainPanel);
 		UIManager.getInstance().insertWindow(gameWindow);
 		new Thread(new GameLoop()).start();
-	}
-
-	public ArrayList<Projectile> getProjectiles() {
-		return projectiles;
 	}
 
 }

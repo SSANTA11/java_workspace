@@ -16,8 +16,6 @@ public class Projectile extends Entity {
 	private int explosionRange;
 	private int width;
 	private int height;
-	private BufferedImage AP = SourceManager.getInstance().getIMGSource("AP");
-	private BufferedImage HEAT = SourceManager.getInstance().getIMGSource("HEAT");
 
 	private double playerAngle;
 	private boolean suicideFlag = false;

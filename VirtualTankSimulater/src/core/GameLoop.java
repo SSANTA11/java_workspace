@@ -1,8 +1,6 @@
 package core;
 
-import java.util.ArrayList;
 
-import entities.Projectile;
 import entities.Tank;
 import view.GamePanel;
 
@@ -43,12 +41,11 @@ public class GameLoop implements Runnable {
 		while (flag) {
 			startTime = System.currentTimeMillis();
 			
-			gamePanel.repaint();
 			tank.updateTank();
 			cameraViewLogic.updateViewPort();
 			GameManager.getInstance().checkSuicideProjectile();
+			gamePanel.repaint();
 
-			
 			timeUsed = System.currentTimeMillis() - startTime;
 			sleepTime = TARGET_TIME - timeUsed;
 
