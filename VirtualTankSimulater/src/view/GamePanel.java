@@ -14,6 +14,7 @@ import core.MapManager;
 import core.UIManager;
 import entities.Projectile;
 import entities.Tank;
+import entities.Wall;
 
 public class GamePanel extends JPanel {
 	private JButton option;
@@ -54,6 +55,10 @@ public class GamePanel extends JPanel {
 		for (Projectile e : projectiles) {
 			e.draw(g);
 		}
-	}
+		ArrayList<Wall> walls = GameManager.getInstance().getWalls();
+		for (Wall e : walls) {
+			e.draw(g);
+		}
 
+	}
 }

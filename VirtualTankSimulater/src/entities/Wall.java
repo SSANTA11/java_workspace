@@ -1,25 +1,41 @@
 package entities;
 
+import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Rectangle;
 
 public class Wall extends Entity {
 	private int HP = 100;
-	private int X, Y;
-	private int width;
-	private int height;
-	// 1:물 2:진흙 3:콘크리트 4:바리게이트
-	public Wall(String s) {
-		switch(s) {
-		case "1":
-		case "2":
-		case "3":
-		case "4":
-		}
+	private int X = 800, Y = 800;
+	private int width = 200;
+	private int height = 200;
+
+	public Wall() {
+
 	}
 
-	void block() {
-	};
+	public void draw(Graphics g) {
+		g.setColor(Color.black);
+		g.fillRect(X, Y, width, height);
+	}
 
-	void broken() {
-	};
+	@Override
+	public Rectangle getBound() {
+		return new Rectangle(X, Y, width, height);
+	}
+
+	@Override
+	public int getDamage() {
+		return 0;
+	}
+
+	@Override
+	public void setHp(int damage) {
+		this.HP -= damage;
+	}
+
+	@Override
+	public int getHP() {
+		return HP;
+	}
 }

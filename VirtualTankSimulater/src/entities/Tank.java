@@ -2,6 +2,7 @@ package entities;
 
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Rectangle;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 
@@ -16,6 +17,7 @@ public class Tank extends Entity {
 	private double playerScreenX;
 	private double playerScreenY;
 	private int HP = 100;
+	private int damage = 3;
 	private final int MOVING_SPEED = 3;
 	private final int ROTATION_SPEED = 1;
 
@@ -152,4 +154,25 @@ public class Tank extends Entity {
 				null);
 		g2t.dispose();
 	}
+
+	@Override
+	public Rectangle getBound() {
+		return new Rectangle((int) playerScreenX, (int) playerScreenY, TANK_BOTTOM_WIDTH, TANK_BOTTOM_HEIGHT);
+	}
+
+	@Override
+	public int getDamage() {
+		return damage;
+	}
+
+	@Override
+	public void setHp(int damage) {
+		this.HP -= damage;
+	}
+
+	@Override
+	public int getHP() {
+		return HP;
+	}
+
 }

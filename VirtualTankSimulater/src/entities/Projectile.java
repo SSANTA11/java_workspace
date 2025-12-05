@@ -3,10 +3,9 @@ package entities;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.image.BufferedImage;
+import java.awt.Rectangle;
 
 import core.GameManager;
-import core.SourceManager;
 
 public class Projectile extends Entity {
 	private int speed;
@@ -16,7 +15,7 @@ public class Projectile extends Entity {
 	private int explosionRange;
 	private int width;
 	private int height;
-
+	private int HP = 1;
 	private double playerAngle;
 	private boolean suicideFlag = false;
 	private int projectileScreenX;
@@ -92,6 +91,26 @@ public class Projectile extends Entity {
 
 	public boolean isSuicideFlag() {
 		return suicideFlag;
+	}
+
+	@Override
+	public Rectangle getBound() {
+		return new Rectangle(projectileScreenX, projectileScreenY, width, height);
+	}
+
+	@Override
+	public int getDamage() {
+		return damage;
+	}
+
+	@Override
+	public void setHp(int damage) {
+		this.HP -= damage;
+	}
+
+	@Override
+	public int getHP() {
+		return HP;
 	}
 
 }

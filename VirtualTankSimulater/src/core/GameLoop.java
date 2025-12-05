@@ -44,6 +44,7 @@ public class GameLoop implements Runnable {
 			tank.updateTank();
 			cameraViewLogic.updateViewPort();
 			GameManager.getInstance().checkSuicideProjectile();
+			CollisionManager.getInstance().isCollision();
 			gamePanel.repaint();
 
 			timeUsed = System.currentTimeMillis() - startTime;

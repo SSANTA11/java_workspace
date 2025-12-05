@@ -1,26 +1,31 @@
 package core;
 
+import java.awt.Rectangle;
+import java.util.ArrayList;
+import entities.Entity;
+
 public class CollisionManager {
 	private static CollisionManager collisionManager = new CollisionManager();
+	private ArrayList<Entity> entities;
 
 	private CollisionManager() {
+	}
 
+	public void isCollision() {
+		for (int i = 0; i < entities.size(); i++) {
+			Rectangle boundA = entities.get(i).getBound();
+			for (int j = i + 1; j < entities.size(); j++) {
+				Rectangle boundB = entities.get(j).getBound();
+				if (boundA.intersects(boundB)) {
+					entities.get(j).setHp(entities.get(i).getDamage());
+					entities.get(i).setHp(entities.get(j).getDamage());
+				}
+			}
+		}
 	}
 
 	public static CollisionManager getInstance() {
 		return collisionManager;
 	}
 
-	public boolean isPlayerCollision() {
-		int playerCenterX = (int) GameManager.getInstance().getPlayer().getCenterX();
-		int playerCenterY = (int) GameManager.getInstance().getPlayer().getCenterY();
-
-		if (playerCenterX>) {
-			
-		}
-		// 충돌 경우의 수 
-			// 1. 피탄, 구조물, 적
-		// 전체 
-		return true;
-	}
 }
