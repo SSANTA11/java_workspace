@@ -4,46 +4,42 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
-
+import core.CameraViewLogic;
 import core.GameManager;
 
 public class Projectile extends Entity {
+	private double worldX, worldY;
+
 	private int speed;
 	private int range;
-	private double angleT;
+	private double angleT; // 발사 각도
 	private int damage;
 	private int explosionRange;
-	private int width;
-	private int height;
+	private int width, height;
 	private int HP = 1;
-	private double playerAngle;
 	private boolean dead = false;
-	private int projectileScreenX;
-	private int projectileScreenY;
 
 	public Projectile(String weapon) {
 		switch (weapon) {
 		case "MG":
-			this.speed = 50;
-			this.range = 10;
+			this.speed = 20;
+			this.range = 60;
 			this.explosionRange = 0;
 			this.damage = 3;
 			this.width = 4;
 			this.height = 4;
 			break;
-
 		case "AP":
 			this.speed = 30;
-			this.range = 50;
+			this.range = 100;
 			this.explosionRange = 0;
 			this.damage = 20;
 			this.width = 6;
 			this.height = 8;
 			break;
-
 		case "HEAT":
-			this.speed = 30;
-			this.range = 50;
+			this.speed = 25;
+			this.range = 80;
 			this.explosionRange = 300;
 			this.damage = 100;
 			this.width = 6;
@@ -51,56 +47,51 @@ public class Projectile extends Entity {
 			break;
 		}
 
-		this.playerAngle = GameManager.getInstance().getPlayer().getPlayerAngle();
-		this.projectileScreenX = (int) GameManager.getInstance().getPlayer().getCenterX();
-		this.projectileScreenY = (int) GameManager.getInstance().getPlayer().getCenterY();
+		Tank player = GameManager.getInstance().getPlayer();
+
+		this.angleT = Math.toRadians(player.getPlayerAngle());
+
+		this.worldX = player.getCenterX() + speed * Math.cos(angleT) * 4;
+		this.worldY = player.getCenterY() + speed * Math.sin(angleT) * 4;
 	}
 
+	@Override
 	public void update() {
 		if (!isDead()) {
+			worldX += speed * Math.cos(angleT);
+			worldY += speed * Math.sin(angleT);
 
-			projectileScreenX += speed * Math.cos(angleT);
-			projectileScreenY += speed * Math.sin(angleT);
 			range--;
 			if (range < 0) {
 				this.dead = true;
 			}
-//		else if(만일 충돌했다면){
-//			
-//		}
 		}
 	}
 
 	@Override
 	public void draw(Graphics g) {
 		if (!isDead()) {
-			Graphics2D g2 = (Graphics2D) g.create();
-			double anlgleT = playerAngle;
-			g2.rotate(Math.toRadians(anlgleT), GameManager.getInstance().getPlayer().getCenterX(),
-					GameManager.getInstance().getPlayer().getCenterY());
-			g2.setColor(Color.RED);
-			g2.fillRect(projectileScreenX + 34, projectileScreenY - 4, width, height);
-			g2.dispose();
-			if (0 < range && range < 2 && explosionRange > 0) {
-				Graphics2D ex = (Graphics2D) g.create();
-				ex.setColor(Color.RED);
-				ex.rotate(Math.toRadians(anlgleT), GameManager.getInstance().getPlayer().getCenterX(),
-						GameManager.getInstance().getPlayer().getCenterY());
-				ex.fillRect(projectileScreenX - explosionRange / 2, projectileScreenY - explosionRange / 2,
-						explosionRange, explosionRange);
-				ex.dispose();
+			int screenX = (int) (worldX - CameraViewLogic.getInstance().getViewPortworldX());
+			int screenY = (int) (worldY - CameraViewLogic.getInstance().getViewPortworldY());
+
+			g.setColor(Color.RED);
+			g.fillRect(screenX, screenY, width, height);
+
+			if (range < 2 && explosionRange > 0) {
+				g.drawOval(screenX - explosionRange / 2, screenY - explosionRange / 2, explosionRange, explosionRange);
 			}
 		}
 	}
 
 	@Override
-	public boolean isDead() {
-		return dead;
+	public Rectangle getBound() {
+
+		return new Rectangle((int) worldX, (int) worldY, width, height);
 	}
 
 	@Override
-	public Rectangle getBound() {
-		return new Rectangle(projectileScreenX, projectileScreenY, width, height);
+	public boolean isDead() {
+		return dead;
 	}
 
 	@Override
@@ -119,9 +110,8 @@ public class Projectile extends Entity {
 	}
 
 	@Override
-	public void destory() {
+	public void destroy() {
 		if (HP <= 0)
 			this.dead = true;
 	}
-
 }

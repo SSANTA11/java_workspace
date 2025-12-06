@@ -1,6 +1,7 @@
 package core;
 
 import java.util.ArrayList;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 import entities.Entity;
 import view.GamePanel;
@@ -40,13 +41,14 @@ public class GameLoop implements Runnable {
 		while (flag) {
 			startTime = System.currentTimeMillis();
 
-			ArrayList<Entity> entities = gameManager.getEntities();
+			CopyOnWriteArrayList<Entity> entities = gameManager.getEntities();
 			for (Entity e : entities) {
 				e.update();
 			}
 			cameraViewLogic.updateViewPort();
-			gameManager.checkSuicideProjectile();
+			gameManager.removeEntities();
 			CollisionManager.getInstance().isCollision();
+			gameManager.checkEntityLife();
 			gamePanel.repaint();
 
 			timeUsed = System.currentTimeMillis() - startTime;

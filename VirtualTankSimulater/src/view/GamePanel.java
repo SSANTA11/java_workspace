@@ -3,7 +3,7 @@ package view;
 import java.awt.Graphics;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.util.ArrayList;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JPanel;
@@ -48,7 +48,7 @@ public class GamePanel extends JPanel {
 	protected void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		mapManager.draw(g);
-		ArrayList<Entity> entities = GameManager.getInstance().getEntities();
+		CopyOnWriteArrayList<Entity> entities = GameManager.getInstance().getEntities();
 		for (Entity e : entities) {
 			e.draw(g);
 		}

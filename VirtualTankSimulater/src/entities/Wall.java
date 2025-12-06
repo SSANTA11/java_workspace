@@ -30,7 +30,7 @@ public class Wall extends Entity {
 
 	@Override
 	public Rectangle getBound() {
-		return new Rectangle(wallScreenX, wallScreenY, width, height);
+		return new Rectangle(wallWorldX, wallWorldY, width, height);
 	}
 
 	@Override
@@ -54,7 +54,7 @@ public class Wall extends Entity {
 	}
 
 	@Override
-	public void destory() {
+	public void destroy() {
 		if (HP <= 0)
 			this.dead = true;
 	}
@@ -62,8 +62,11 @@ public class Wall extends Entity {
 	@Override
 	public void update() {
 		if (!isDead()) {
-			wallScreenX = wallWorldX + (int) CameraViewLogic.getInstance().getViewPortworldX();
-			wallScreenY = wallWorldY + (int) CameraViewLogic.getInstance().getViewPortworldY();
+			wallScreenX = wallWorldX - (int) CameraViewLogic.getInstance().getViewPortworldX();
+			wallScreenY = wallWorldY - (int) CameraViewLogic.getInstance().getViewPortworldY();
+		} else {
+			wallScreenX = -100;
+			wallScreenY = -100;
 		}
 	}
 }

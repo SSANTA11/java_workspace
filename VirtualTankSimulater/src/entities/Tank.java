@@ -184,7 +184,7 @@ public class Tank extends Entity {
 	}
 
 	@Override
-	public void destory() {
+	public void destroy() {
 		if (HP <= 0)
 			this.dead = true;
 	}

@@ -18,6 +18,6 @@ public abstract class Entity {
 
 	public abstract void update();
 
-	public abstract void destory();
+	public abstract void destroy();
 
 }

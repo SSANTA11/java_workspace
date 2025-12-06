@@ -13,7 +13,7 @@ public class Weapons {
 
 	private int fireDelay;
 	private String weapon = "MG";
-//	private long lastFireTime = 0;
+	private long lastFireTime = 0;
 
 	public void fireControl(int keyCode) {
 		switch (keyCode) {

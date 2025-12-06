@@ -1,7 +1,6 @@
 package core;
 
-import java.util.ArrayList;
-import java.util.Iterator;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 import javax.swing.JPanel;
 
@@ -14,10 +13,10 @@ import view.GameWindow;
 public class GameManager {
 	private static GameManager gameManager = new GameManager();
 	private Tank tank;
-	private ArrayList<Entity> entities;
+	private CopyOnWriteArrayList<Entity> entities;
 
 	private GameManager() {
-		this.entities = new ArrayList<Entity>();
+		this.entities = new CopyOnWriteArrayList<Entity>();
 
 	}
 
@@ -41,33 +40,31 @@ public class GameManager {
 		entities.add(wall);
 	}
 
-	public void checkSuicideProjectile() {
-		Iterator<Entity> iterator = entities.iterator();
-		while (iterator.hasNext()) {
-			Entity e = iterator.next();
-			if (e.isDead()) {
-				System.out.println(e.getClass() + "삭제");
-				iterator.remove();
-			}
-		}
-	}
-
 	public Tank getPlayer() {
 		return tank;
 	}
 
 	public void removeEntities() {
-		Iterator<Entity> iterator = entities.iterator();
-		while (iterator.hasNext()) {
-			Entity e = iterator.next();
+		entities.removeIf(e -> {
 			if (e.isDead()) {
 				System.out.println(e.getClass() + "삭제");
-				iterator.remove();
+				return true;
+			}
+			return false;
+		});
+	}
+
+	public void checkEntityLife() {
+		for (Entity e : entities) {
+			if (e.isDead())
+				continue;
+			if (e.getHP() <= 0) {
+				e.destroy();
 			}
 		}
 	}
 
-	public ArrayList<Entity> getEntities() {
+	public CopyOnWriteArrayList<Entity> getEntities() {
 		return entities;
 
 	}
