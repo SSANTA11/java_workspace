@@ -1,6 +1,5 @@
 package view;
 
-import java.awt.BorderLayout;
 import java.awt.Graphics;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
@@ -12,9 +11,8 @@ import javax.swing.JPanel;
 import core.GameManager;
 import core.MapManager;
 import core.UIManager;
-import entities.Projectile;
+import entities.Entity;
 import entities.Tank;
-import entities.Wall;
 
 public class GamePanel extends JPanel {
 	private JButton option;
@@ -50,15 +48,9 @@ public class GamePanel extends JPanel {
 	protected void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		mapManager.draw(g);
-		player.draw(g);
-		ArrayList<Projectile> projectiles = GameManager.getInstance().getProjectiles();
-		for (Projectile e : projectiles) {
+		ArrayList<Entity> entities = GameManager.getInstance().getEntities();
+		for (Entity e : entities) {
 			e.draw(g);
 		}
-		ArrayList<Wall> walls = GameManager.getInstance().getWalls();
-		for (Wall e : walls) {
-			e.draw(g);
-		}
-
 	}
 }

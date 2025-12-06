@@ -32,8 +32,8 @@ public class MapManager {
 	}
 
 	public void draw(Graphics g) {
-		double viewPortworldX = camera.viewPortworldX;
-		double viewPortworldY = camera.viewPortworldY;
+		double viewPortworldX = camera.getViewPortworldX();
+		double viewPortworldY = camera.getViewPortworldY();
 
 		double screenWidth = UIManager.getInstance().getWindowWidth();
 		double screenHeight = UIManager.getInstance().getWindowHeight();

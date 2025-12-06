@@ -6,15 +6,15 @@ import entities.Entity;
 
 public class CollisionManager {
 	private static CollisionManager collisionManager = new CollisionManager();
-	private ArrayList<Entity> entities;
 
 	private CollisionManager() {
 	}
 
 	public void isCollision() {
+		ArrayList<Entity> entities = GameManager.getInstance().getEntities();
 		for (int i = 0; i < entities.size(); i++) {
-			Rectangle boundA = entities.get(i).getBound();
 			for (int j = i + 1; j < entities.size(); j++) {
+				Rectangle boundA = entities.get(i).getBound();
 				Rectangle boundB = entities.get(j).getBound();
 				if (boundA.intersects(boundB)) {
 					entities.get(j).setHp(entities.get(i).getDamage());

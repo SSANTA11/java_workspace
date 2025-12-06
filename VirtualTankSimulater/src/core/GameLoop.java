@@ -1,7 +1,8 @@
 package core;
 
+import java.util.ArrayList;
 
-import entities.Tank;
+import entities.Entity;
 import view.GamePanel;
 
 public class GameLoop implements Runnable {
@@ -10,15 +11,13 @@ public class GameLoop implements Runnable {
 	private final int TARGET_FPS = 120;
 	private final int TARGET_TIME = 1000 / TARGET_FPS;
 	private GamePanel gamePanel;
-	private Tank tank;
+	private GameManager gameManager;
 	private CameraViewLogic cameraViewLogic;
 
 	public GameLoop() {
 		this.gamePanel = UIManager.getInstance().getGamePanel();
-		this.tank = GameManager.getInstance().getPlayer();
 		this.cameraViewLogic = CameraViewLogic.getInstance();
-		
-
+		this.gameManager = GameManager.getInstance();
 	}
 
 	public void stopGameLoop() {
@@ -40,10 +39,13 @@ public class GameLoop implements Runnable {
 
 		while (flag) {
 			startTime = System.currentTimeMillis();
-			
-			tank.updateTank();
+
+			ArrayList<Entity> entities = gameManager.getEntities();
+			for (Entity e : entities) {
+				e.update();
+			}
 			cameraViewLogic.updateViewPort();
-			GameManager.getInstance().checkSuicideProjectile();
+			gameManager.checkSuicideProjectile();
 			CollisionManager.getInstance().isCollision();
 			gamePanel.repaint();
 

@@ -15,16 +15,9 @@ public class GameManager {
 	private static GameManager gameManager = new GameManager();
 	private Tank tank;
 	private ArrayList<Entity> entities;
-	private ArrayList<Tank> tanks;
-	private ArrayList<Projectile> projectiles;
-	private ArrayList<Wall> walls;
 
 	private GameManager() {
 		this.entities = new ArrayList<Entity>();
-		this.projectiles = new ArrayList<Projectile>();
-		this.tanks = new ArrayList<Tank>();
-		this.walls = new ArrayList<Wall>();
-		this.makeWall();
 
 	}
 
@@ -35,31 +28,24 @@ public class GameManager {
 	public void makePlayer() {
 		this.tank = new Tank();
 		this.entities.add(tank);
-		this.tanks.add(tank);
-	}
-
-	public ArrayList<Projectile> getProjectiles() {
-		return projectiles;
 	}
 
 	public Projectile makeProjectile(String weapon) {
 		Projectile projectile = new Projectile(weapon);
-		this.projectiles.add(projectile);
 		this.entities.add(projectile);
 		return projectile;
 	}
 
 	public void makeWall() {
 		Wall wall = new Wall();
-		walls.add(wall);
 		entities.add(wall);
 	}
 
 	public void checkSuicideProjectile() {
-		Iterator<Projectile> iterator = projectiles.iterator();
+		Iterator<Entity> iterator = entities.iterator();
 		while (iterator.hasNext()) {
-			Projectile e = iterator.next();
-			if (e.isSuicideFlag()) {
+			Entity e = iterator.next();
+			if (e.isDead()) {
 				System.out.println(e.getClass() + "삭제");
 				iterator.remove();
 			}
@@ -71,10 +57,10 @@ public class GameManager {
 	}
 
 	public void removeEntities() {
-		Iterator<Projectile> iterator = projectiles.iterator();
+		Iterator<Entity> iterator = entities.iterator();
 		while (iterator.hasNext()) {
-			Projectile e = iterator.next();
-			if (e.getHP() == 0) {
+			Entity e = iterator.next();
+			if (e.isDead()) {
 				System.out.println(e.getClass() + "삭제");
 				iterator.remove();
 			}
@@ -86,13 +72,10 @@ public class GameManager {
 
 	}
 
-	public ArrayList<Wall> getWalls() {
-		return walls;
-	}
-
 	public static void main(String[] args) {
 		SourceManager sourceManager;
 		gameManager.makePlayer();
+		gameManager.makeWall();
 		JPanel mainPanel = UIManager.getInstance().getMainPanel();
 		GameWindow gameWindow = new GameWindow(mainPanel);
 		UIManager.getInstance().insertWindow(gameWindow);

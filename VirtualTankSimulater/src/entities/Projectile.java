@@ -17,7 +17,7 @@ public class Projectile extends Entity {
 	private int height;
 	private int HP = 1;
 	private double playerAngle;
-	private boolean suicideFlag = false;
+	private boolean dead = false;
 	private int projectileScreenX;
 	private int projectileScreenY;
 
@@ -56,41 +56,46 @@ public class Projectile extends Entity {
 		this.projectileScreenY = (int) GameManager.getInstance().getPlayer().getCenterY();
 	}
 
-	public void updateLocation() {
-		projectileScreenX += speed * Math.cos(angleT);
-		projectileScreenY += speed * Math.sin(angleT);
-		range--;
-		if (range < 0) {
-			suicideFlag = true;
-		}
+	public void update() {
+		if (!isDead()) {
+
+			projectileScreenX += speed * Math.cos(angleT);
+			projectileScreenY += speed * Math.sin(angleT);
+			range--;
+			if (range < 0) {
+				this.dead = true;
+			}
 //		else if(만일 충돌했다면){
 //			
 //		}
-	}
-
-	public void draw(Graphics g) {
-		Graphics2D g2 = (Graphics2D) g.create();
-		double anlgleT = playerAngle;
-		g2.rotate(Math.toRadians(anlgleT), GameManager.getInstance().getPlayer().getCenterX(),
-				GameManager.getInstance().getPlayer().getCenterY());
-		g2.setColor(Color.RED);
-		g2.fillRect(projectileScreenX + 34, projectileScreenY - 4, width, height);
-		g2.dispose();
-		if (0 < range && range < 2 && explosionRange > 0) {
-			Graphics2D ex = (Graphics2D) g.create();
-			ex.setColor(Color.RED);
-			ex.rotate(Math.toRadians(anlgleT), GameManager.getInstance().getPlayer().getCenterX(),
-					GameManager.getInstance().getPlayer().getCenterY());
-			ex.fillRect(projectileScreenX - explosionRange / 2, projectileScreenY - explosionRange / 2, explosionRange,
-					explosionRange);
-			ex.dispose();
 		}
-		updateLocation();
-
 	}
 
-	public boolean isSuicideFlag() {
-		return suicideFlag;
+	@Override
+	public void draw(Graphics g) {
+		if (!isDead()) {
+			Graphics2D g2 = (Graphics2D) g.create();
+			double anlgleT = playerAngle;
+			g2.rotate(Math.toRadians(anlgleT), GameManager.getInstance().getPlayer().getCenterX(),
+					GameManager.getInstance().getPlayer().getCenterY());
+			g2.setColor(Color.RED);
+			g2.fillRect(projectileScreenX + 34, projectileScreenY - 4, width, height);
+			g2.dispose();
+			if (0 < range && range < 2 && explosionRange > 0) {
+				Graphics2D ex = (Graphics2D) g.create();
+				ex.setColor(Color.RED);
+				ex.rotate(Math.toRadians(anlgleT), GameManager.getInstance().getPlayer().getCenterX(),
+						GameManager.getInstance().getPlayer().getCenterY());
+				ex.fillRect(projectileScreenX - explosionRange / 2, projectileScreenY - explosionRange / 2,
+						explosionRange, explosionRange);
+				ex.dispose();
+			}
+		}
+	}
+
+	@Override
+	public boolean isDead() {
+		return dead;
 	}
 
 	@Override
@@ -111,6 +116,12 @@ public class Projectile extends Entity {
 	@Override
 	public int getHP() {
 		return HP;
+	}
+
+	@Override
+	public void destory() {
+		if (HP <= 0)
+			this.dead = true;
 	}
 
 }

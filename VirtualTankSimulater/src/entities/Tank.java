@@ -42,6 +42,8 @@ public class Tank extends Entity {
 	private double centerX;
 	private double centerY;
 
+	private boolean dead = false;
+
 	public Tank() {
 		this.tankTopIMG = SourceManager.getInstance().getIMGSource("tankTop");
 		this.tankBottomIMG = SourceManager.getInstance().getIMGSource("tankBottom");
@@ -77,7 +79,7 @@ public class Tank extends Entity {
 
 	}
 
-	public void updateTank() {
+	public void update() {
 		if (rightB) {
 			angleB += ROTATION_SPEED;
 		}
@@ -138,6 +140,7 @@ public class Tank extends Entity {
 		return centerY;
 	}
 
+	@Override
 	public void draw(Graphics g) {
 		Graphics2D g2b = (Graphics2D) g.create();
 		Graphics2D g2t = (Graphics2D) g.create();
@@ -173,6 +176,17 @@ public class Tank extends Entity {
 	@Override
 	public int getHP() {
 		return HP;
+	}
+
+	@Override
+	public boolean isDead() {
+		return dead;
+	}
+
+	@Override
+	public void destory() {
+		if (HP <= 0)
+			this.dead = true;
 	}
 
 }

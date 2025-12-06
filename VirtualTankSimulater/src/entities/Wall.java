@@ -4,24 +4,33 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Rectangle;
 
+import core.CameraViewLogic;
+
 public class Wall extends Entity {
 	private int HP = 100;
-	private int X = 800, Y = 800;
+	private int wallWorldX = 800, wallWorldY = 800;
+	private int wallScreenX, wallScreenY;
 	private int width = 200;
 	private int height = 200;
+	private boolean dead = false;
 
 	public Wall() {
 
 	}
 
 	public void draw(Graphics g) {
-		g.setColor(Color.black);
-		g.fillRect(X, Y, width, height);
+		if (!isDead()) {
+			g.setColor(Color.black);
+			g.fillRect(wallScreenX, wallScreenY, width, height);
+		} else {
+			g.setColor(Color.yellow);
+			g.fillRect(wallScreenX, wallScreenY, width, height);
+		}
 	}
 
 	@Override
 	public Rectangle getBound() {
-		return new Rectangle(X, Y, width, height);
+		return new Rectangle(wallScreenX, wallScreenY, width, height);
 	}
 
 	@Override
@@ -37,5 +46,24 @@ public class Wall extends Entity {
 	@Override
 	public int getHP() {
 		return HP;
+	}
+
+	@Override
+	public boolean isDead() {
+		return dead;
+	}
+
+	@Override
+	public void destory() {
+		if (HP <= 0)
+			this.dead = true;
+	}
+
+	@Override
+	public void update() {
+		if (!isDead()) {
+			wallScreenX = wallWorldX + (int) CameraViewLogic.getInstance().getViewPortworldX();
+			wallScreenY = wallWorldY + (int) CameraViewLogic.getInstance().getViewPortworldY();
+		}
 	}
 }

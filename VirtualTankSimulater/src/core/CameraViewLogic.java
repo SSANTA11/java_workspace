@@ -12,8 +12,8 @@ public class CameraViewLogic {
 
 	private double viewPortWidth;
 	private double viewPortHeight;
-	public double viewPortworldX;
-	public double viewPortworldY;
+	private double viewPortworldX;
+	private double viewPortworldY;
 
 	private static final double DEAD_ZONE_WIDTH = 10;
 	private static final double DEAD_ZONE_HEIGHT = 10;
@@ -42,7 +42,6 @@ public class CameraViewLogic {
 		double deadZoneMaxX = (deadZoneMinX + DEAD_ZONE_WIDTH);
 		double deadZoneMinY = ((viewPortHeight - DEAD_ZONE_HEIGHT) / 2);
 		double deadZoneMaxY = (deadZoneMinY + DEAD_ZONE_HEIGHT);
-		// 뷰포트 사이즈는 디버깅 중 실행 순서 문제로 옮겨놓음(고정값임으로 나중에 변경)
 		this.viewPortHeight = UIManager.getInstance().getWindowHeight();
 		this.viewPortWidth = UIManager.getInstance().getWindowWidth();
 
