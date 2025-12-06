@@ -160,7 +160,7 @@ public class Tank extends Entity {
 
 	@Override
 	public Rectangle getBound() {
-		return new Rectangle((int) playerScreenX, (int) playerScreenY, TANK_BOTTOM_WIDTH, TANK_BOTTOM_HEIGHT);
+		return new Rectangle((int) playerWorldX, (int) playerWorldY, TANK_BOTTOM_WIDTH, TANK_BOTTOM_HEIGHT);
 	}
 
 	@Override
