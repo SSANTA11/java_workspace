@@ -33,12 +33,12 @@ public class Weapons {
 			fireDelay = 600;
 			break;
 		case KeyEvent.VK_C:
-//			long start = System.currentTimeMillis();
-//			if (start - lastFireTime > fireDelay) {
+			long start = System.currentTimeMillis();
+			if (start - lastFireTime > fireDelay) {
 				fire();
-//				lastFireTime = start;
+				lastFireTime = start;
 				System.out.println("발사");
-//			}
+			}
 			break;
 		}
 	}

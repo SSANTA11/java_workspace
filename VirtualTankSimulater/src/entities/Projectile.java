@@ -2,7 +2,6 @@ package entities;
 
 import java.awt.Color;
 import java.awt.Graphics;
-import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import core.CameraViewLogic;
 import core.GameManager;
@@ -49,10 +48,10 @@ public class Projectile extends Entity {
 
 		Tank player = GameManager.getInstance().getPlayer();
 
-		this.angleT = Math.toRadians(player.getPlayerAngle());
+		this.angleT = Math.toRadians(player.getPlayerAngleT());
 
-		this.worldX = player.getCenterX() + speed * Math.cos(angleT) * 4;
-		this.worldY = player.getCenterY() + speed * Math.sin(angleT) * 4;
+		this.worldX = player.getPlayerWorldCenterX() + +speed * Math.cos(angleT) * 4;
+		this.worldY = player.getPlayerWorldCenterY() + +speed * Math.sin(angleT) * 4;
 	}
 
 	@Override
@@ -78,7 +77,7 @@ public class Projectile extends Entity {
 			g.fillRect(screenX, screenY, width, height);
 
 			if (range < 2 && explosionRange > 0) {
-				g.drawOval(screenX - explosionRange / 2, screenY - explosionRange / 2, explosionRange, explosionRange);
+				g.fillOval(screenX - explosionRange / 2, screenY - explosionRange / 2, explosionRange, explosionRange);
 			}
 		}
 	}

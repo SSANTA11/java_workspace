@@ -46,9 +46,9 @@ public class GameLoop implements Runnable {
 				e.update();
 			}
 			cameraViewLogic.updateViewPort();
+			gameManager.checkEntityLife();
 			gameManager.removeEntities();
 			CollisionManager.getInstance().isCollision();
-			gameManager.checkEntityLife();
 			gamePanel.repaint();
 
 			timeUsed = System.currentTimeMillis() - startTime;

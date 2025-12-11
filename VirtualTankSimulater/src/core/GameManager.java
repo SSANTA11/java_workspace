@@ -7,6 +7,7 @@ import javax.swing.JPanel;
 import entities.Entity;
 import entities.Projectile;
 import entities.Tank;
+import entities.Turret;
 import entities.Wall;
 import view.GameWindow;
 
@@ -35,9 +36,14 @@ public class GameManager {
 		return projectile;
 	}
 
-	public void makeWall() {
-		Wall wall = new Wall();
+	public void makeWall(int wallWorldX, int wallWorldY) {
+		Wall wall = new Wall(wallWorldX, wallWorldY);
 		entities.add(wall);
+	}
+
+	public void makeTurret(int turretWorldX, int turretWorldY) {
+		Turret turret = new Turret(turretWorldX, turretWorldY);
+		entities.add(turret);
 	}
 
 	public Tank getPlayer() {
@@ -64,15 +70,39 @@ public class GameManager {
 		}
 	}
 
+	public void loadMapEntities() {
+		char[][] mapData = MapManager.getInstance().getMapData();
+		final int TILE_SIZE = MapManager.getInstance().getTILE_SIZE();
+		final int TILES = MapManager.getInstance().getTILES();
+
+		for (int y = 0; y < TILES; y++) {
+			for (int x = 0; x < TILES; x++) {
+
+				int pixelX = x * TILE_SIZE;
+				int pixelY = y * TILE_SIZE;
+
+				switch (mapData[y][x]) {
+				case 'w':
+					this.makeWall(pixelX, pixelY);
+					break;
+				case 't':
+					this.makeTurret(pixelX, pixelY);
+					break;
+				}
+			}
+		}
+	}
+
 	public CopyOnWriteArrayList<Entity> getEntities() {
 		return entities;
 
 	}
 
 	public static void main(String[] args) {
-		SourceManager sourceManager;
+		MapManager.getInstance().initalize();
 		gameManager.makePlayer();
-		gameManager.makeWall();
+		gameManager.loadMapEntities();
+
 		JPanel mainPanel = UIManager.getInstance().getMainPanel();
 		GameWindow gameWindow = new GameWindow(mainPanel);
 		UIManager.getInstance().insertWindow(gameWindow);

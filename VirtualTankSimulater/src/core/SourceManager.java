@@ -11,8 +11,9 @@ public class SourceManager {
 	private BufferedImage tankBottom;
 	private BufferedImage tile;
 	private BufferedImage title;
-	private BufferedImage AP;
-	private BufferedImage HEAT;
+	private BufferedImage wall1;
+	private BufferedImage wall2;
+	private BufferedImage turret;
 
 	private SourceManager() {
 		try {
@@ -20,6 +21,9 @@ public class SourceManager {
 			this.tankBottom = ImageIO.read(getClass().getResource("/tankBottom.png"));
 			this.tankTop = ImageIO.read(getClass().getResource("/tankTop.png"));
 			this.tile = ImageIO.read(getClass().getResource("/floor.png"));
+			this.wall1 = ImageIO.read(getClass().getResource("/wall1.png"));
+			this.wall2 = ImageIO.read(getClass().getResource("/wall1.png"));
+			this.turret = ImageIO.read(getClass().getResource("/turret.png"));
 		} catch (IOException e) {
 			System.out.println("사진 없음");
 			System.exit(1);
@@ -36,10 +40,12 @@ public class SourceManager {
 			return tile;
 		case "tankTop":
 			return tankTop;
-		case "AP":
-			return AP;
-		case "HEAT":
-			return HEAT;
+		case "wall1":
+			return wall1;
+		case "wall2":
+			return wall2;
+		case "turret":
+			return turret;
 		default:
 			throw new IllegalArgumentException("input == null!");
 		}

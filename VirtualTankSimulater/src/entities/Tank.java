@@ -39,19 +39,19 @@ public class Tank extends Entity {
 	private boolean rightB = false, leftB = false, forwardB = false, backwardB = false;
 	private boolean rightT = false, leftT = false;
 
-	private double centerX;
-	private double centerY;
+	private double playerScreenCenterX;
+	private double playerScreenCenterY;
 
 	private boolean dead = false;
 
 	public Tank() {
 		this.tankTopIMG = SourceManager.getInstance().getIMGSource("tankTop");
 		this.tankBottomIMG = SourceManager.getInstance().getIMGSource("tankBottom");
-		this.TANK_BOTTOM_WIDTH = tankBottomIMG.getWidth() / 3;
-		this.TANK_BOTTOM_HEIGHT = tankBottomIMG.getHeight() / 3;
-		this.TANK_TOP_WIDTH = tankTopIMG.getWidth() / 3;
-		this.TANK_TOP_HEIGHT = tankTopIMG.getHeight() / 3;
-		this.MAP_SIZE = MapManager.MAP_SIZE;
+		this.TANK_BOTTOM_WIDTH = tankBottomIMG.getWidth() / 16;
+		this.TANK_BOTTOM_HEIGHT = tankBottomIMG.getHeight() / 16;
+		this.TANK_TOP_WIDTH = tankTopIMG.getWidth() / 20;
+		this.TANK_TOP_HEIGHT = tankTopIMG.getHeight() / 20;
+		this.MAP_SIZE = MapManager.getInstance().getMAP_SIZE();
 	}
 
 	public void setTank(int keyCode, boolean isSelected) {
@@ -64,10 +64,10 @@ public class Tank extends Entity {
 			leftT = isSelected;
 		}
 
-		if (keyCode == KeyEvent.VK_UP) {
-			forwardB = isSelected;
-		} else if (keyCode == KeyEvent.VK_DOWN) {
+		if (keyCode == KeyEvent.VK_DOWN) {
 			backwardB = isSelected;
+		} else if (keyCode == KeyEvent.VK_UP) {
+			forwardB = isSelected;
 		}
 
 		if (keyCode == KeyEvent.VK_LEFT) {
@@ -127,17 +127,35 @@ public class Tank extends Entity {
 
 	}
 
-	public double getPlayerAngle() {
+	public void setPlayerSpeed() {
+		if (this.forwardB) {
+			double deltaX = (MOVING_SPEED) * Math.cos(radiansB);
+			double deltaY = (MOVING_SPEED) * Math.sin(radiansB);
+			this.playerWorldX -= deltaX;
+			this.playerWorldY -= deltaY;
+		} else if (this.backwardB) {
+			double deltaX = MOVING_SPEED * Math.cos(radiansB);
+			double deltaY = MOVING_SPEED * Math.sin(radiansB);
+			this.playerWorldX += deltaX;
+			this.playerWorldY += deltaY;
+		}
+
+	}
+
+	public double getPlayerAngleT() {
 		return angleT;
-
 	}
 
-	public double getCenterX() {
-		return centerX;
+	public double getPlayerAngleB() {
+		return angleB;
 	}
 
-	public double getCenterY() {
-		return centerY;
+	public double getPlayerWorldCenterX() {
+		return playerWorldX + TANK_BOTTOM_WIDTH / 2;
+	}
+
+	public double getPlayerWorldCenterY() {
+		return playerWorldY + TANK_BOTTOM_HEIGHT / 2;
 	}
 
 	@Override
@@ -145,13 +163,13 @@ public class Tank extends Entity {
 		Graphics2D g2b = (Graphics2D) g.create();
 		Graphics2D g2t = (Graphics2D) g.create();
 
-		centerX = playerScreenX + TANK_BOTTOM_WIDTH / 2 + 8;
-		centerY = playerScreenY + TANK_BOTTOM_HEIGHT / 2;
-		g2b.rotate(radiansB, centerX, centerY);
+		playerScreenCenterX = playerScreenX + TANK_BOTTOM_WIDTH / 2 + 8;
+		playerScreenCenterY = playerScreenY + TANK_BOTTOM_HEIGHT / 2;
+		g2b.rotate(radiansB, playerScreenCenterX, playerScreenCenterY);
 		g2b.drawImage(tankBottomIMG, (int) playerScreenX, (int) playerScreenY, TANK_BOTTOM_WIDTH, TANK_BOTTOM_HEIGHT,
 				null);
 		g2b.dispose();
-		g2t.rotate(radiansT, centerX, centerY);
+		g2t.rotate(radiansT, playerScreenCenterX, playerScreenCenterY);
 		g2t.drawImage(tankTopIMG, (int) playerScreenX + (TANK_BOTTOM_WIDTH - TANK_TOP_WIDTH) / 2 + 10,
 				(int) playerScreenY + (TANK_BOTTOM_HEIGHT - TANK_TOP_HEIGHT) / 2, TANK_TOP_WIDTH, TANK_TOP_HEIGHT,
 				null);

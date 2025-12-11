@@ -3,10 +3,6 @@ package core;
 public class CameraViewLogic {
 	private static CameraViewLogic cameraViewLogic = new CameraViewLogic();
 
-	private final int TILE_SIZE;
-	private final int TILES;
-	private final int MAP_SIZE;
-
 	private double playerScreenX;
 	private double playerScreenY;
 
@@ -23,9 +19,6 @@ public class CameraViewLogic {
 	double deadZoneMaxY;
 
 	private CameraViewLogic() {
-		this.TILE_SIZE = MapManager.TILE_SIZE;
-		this.TILES = MapManager.TILES;
-		this.MAP_SIZE = TILE_SIZE * TILES;
 	}
 
 	public static CameraViewLogic getInstance() {
@@ -56,8 +49,8 @@ public class CameraViewLogic {
 		} else if (playerScreenY < deadZoneMinY) {
 			viewPortworldY += playerScreenY - deadZoneMinY;
 		}
-		viewPortworldX = Math.max(0, Math.min(viewPortworldX, MAP_SIZE - viewPortWidth));
-		viewPortworldY = Math.max(0, Math.min(viewPortworldY, MAP_SIZE - viewPortHeight));
+		viewPortworldX = Math.max(0, Math.min(viewPortworldX, MapManager.getInstance().getTILE_SIZE() * MapManager.getInstance().getTILES() - viewPortWidth));
+		viewPortworldY = Math.max(0, Math.min(viewPortworldY, MapManager.getInstance().getTILE_SIZE() * MapManager.getInstance().getTILES() - viewPortHeight));
 	}
 
 	public double getViewPortworldX() {

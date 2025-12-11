@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 import entities.Entity;
+import entities.Tank;
+import entities.Wall;
 
 public class CollisionManager {
 	private static CollisionManager collisionManager = new CollisionManager();
@@ -19,6 +21,11 @@ public class CollisionManager {
 				Rectangle boundA = entities.get(i).getBound();
 				Rectangle boundB = entities.get(j).getBound();
 				if (boundA.intersects(boundB)) {
+					if ((entities.get(i) instanceof Tank && entities.get(j) instanceof Wall)
+							|| (entities.get(j) instanceof Tank && entities.get(i) instanceof Wall)) {
+						GameManager.getInstance().getPlayer().setPlayerSpeed();
+
+					}
 					System.out.println(entities.get(i).getClass() + "와 " + entities.get(j).getClass() + "가 충돌했습니다.");
 					System.out.println(entities.get(i).getClass() + " 체력 " + entities.get(i).getHP() + " "
 							+ entities.get(j).getClass() + " 체력 " + entities.get(j).getHP());
