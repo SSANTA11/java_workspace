@@ -21,8 +21,8 @@ public class CollisionManager {
 				Rectangle boundA = entities.get(i).getBound();
 				Rectangle boundB = entities.get(j).getBound();
 				if (boundA.intersects(boundB)) {
-					if ((entities.get(i) instanceof Tank && entities.get(j) instanceof Wall)
-							|| (entities.get(j) instanceof Tank && entities.get(i) instanceof Wall)) {
+					if ((entities.get(i) instanceof Tank && entities.get(j) instanceof Entity)
+							|| (entities.get(j) instanceof Tank && entities.get(i) instanceof Entity)) {
 						GameManager.getInstance().getPlayer().setPlayerSpeed();
 
 					}

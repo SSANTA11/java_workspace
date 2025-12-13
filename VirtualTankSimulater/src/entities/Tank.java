@@ -16,7 +16,7 @@ public class Tank extends Entity {
 	private double playerWorldY = 500;
 	private double playerScreenX;
 	private double playerScreenY;
-	private int HP = 100;
+	private int HP = 100000;
 	private int damage = 3;
 	private final int MOVING_SPEED = 3;
 	private final int ROTATION_SPEED = 1;
@@ -27,8 +27,8 @@ public class Tank extends Entity {
 	private BufferedImage tankTopIMG;
 	private BufferedImage tankBottomIMG;
 
-	private double radiansT;
-	private double radiansB;
+	private double radianT;
+	private double radianB;
 	private final int TANK_TOP_WIDTH;
 	private final int TANK_TOP_HEIGHT;
 	private final int TANK_BOTTOM_WIDTH;
@@ -92,17 +92,17 @@ public class Tank extends Entity {
 		if (leftT) {
 			angleT -= ROTATION_SPEED;
 		}
-		radiansT = Math.toRadians(angleT);
-		radiansB = Math.toRadians(angleB);
+		radianT = Math.toRadians(angleT);
+		radianB = Math.toRadians(angleB);
 
 		if (forwardB) {
-			double deltaX = MOVING_SPEED * Math.cos(radiansB);
-			double deltaY = MOVING_SPEED * Math.sin(radiansB);
+			double deltaX = MOVING_SPEED * Math.cos(radianB);
+			double deltaY = MOVING_SPEED * Math.sin(radianB);
 			this.playerWorldX += deltaX;
 			this.playerWorldY += deltaY;
 		} else if (backwardB) {
-			double deltaX = (MOVING_SPEED - 1) * Math.cos(radiansB);
-			double deltaY = (MOVING_SPEED - 1) * Math.sin(radiansB);
+			double deltaX = (MOVING_SPEED - 1) * Math.cos(radianB);
+			double deltaY = (MOVING_SPEED - 1) * Math.sin(radianB);
 			this.playerWorldX -= deltaX;
 			this.playerWorldY -= deltaY;
 		}
@@ -129,25 +129,20 @@ public class Tank extends Entity {
 
 	public void setPlayerSpeed() {
 		if (this.forwardB) {
-			double deltaX = (MOVING_SPEED) * Math.cos(radiansB);
-			double deltaY = (MOVING_SPEED) * Math.sin(radiansB);
+			double deltaX = (MOVING_SPEED) * Math.cos(radianB);
+			double deltaY = (MOVING_SPEED) * Math.sin(radianB);
 			this.playerWorldX -= deltaX;
 			this.playerWorldY -= deltaY;
 		} else if (this.backwardB) {
-			double deltaX = MOVING_SPEED * Math.cos(radiansB);
-			double deltaY = MOVING_SPEED * Math.sin(radiansB);
+			double deltaX = MOVING_SPEED * Math.cos(radianB);
+			double deltaY = MOVING_SPEED * Math.sin(radianB);
 			this.playerWorldX += deltaX;
 			this.playerWorldY += deltaY;
 		}
-
 	}
 
-	public double getPlayerAngleT() {
-		return angleT;
-	}
-
-	public double getPlayerAngleB() {
-		return angleB;
+	public double getRadianT() {
+		return radianT;
 	}
 
 	public double getPlayerWorldCenterX() {
@@ -163,13 +158,13 @@ public class Tank extends Entity {
 		Graphics2D g2b = (Graphics2D) g.create();
 		Graphics2D g2t = (Graphics2D) g.create();
 
-		playerScreenCenterX = playerScreenX + TANK_BOTTOM_WIDTH / 2 + 8;
+		playerScreenCenterX = playerScreenX + TANK_BOTTOM_WIDTH / 2;
 		playerScreenCenterY = playerScreenY + TANK_BOTTOM_HEIGHT / 2;
-		g2b.rotate(radiansB, playerScreenCenterX, playerScreenCenterY);
+		g2b.rotate(radianB, playerScreenCenterX, playerScreenCenterY);
 		g2b.drawImage(tankBottomIMG, (int) playerScreenX, (int) playerScreenY, TANK_BOTTOM_WIDTH, TANK_BOTTOM_HEIGHT,
 				null);
 		g2b.dispose();
-		g2t.rotate(radiansT, playerScreenCenterX, playerScreenCenterY);
+		g2t.rotate(radianT, playerScreenCenterX, playerScreenCenterY);
 		g2t.drawImage(tankTopIMG, (int) playerScreenX + (TANK_BOTTOM_WIDTH - TANK_TOP_WIDTH) / 2 + 10,
 				(int) playerScreenY + (TANK_BOTTOM_HEIGHT - TANK_TOP_HEIGHT) / 2, TANK_TOP_WIDTH, TANK_TOP_HEIGHT,
 				null);

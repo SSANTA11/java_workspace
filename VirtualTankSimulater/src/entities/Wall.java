@@ -20,8 +20,8 @@ public class Wall extends Entity {
 
 	public Wall(int wallWorldX, int wallWorldY) {
 		this.wall1IMG = SourceManager.getInstance().getIMGSource("wall1");
-		this.width = MapManager.getInstance().getTILE_SIZE()/2;
-		this.height = MapManager.getInstance().getTILE_SIZE()/2;
+		this.width = MapManager.getInstance().getTILE_SIZE() / 2;
+		this.height = MapManager.getInstance().getTILE_SIZE() / 2;
 		this.wallWorldX = wallWorldX;
 		this.wallWorldY = wallWorldY;
 
@@ -39,7 +39,7 @@ public class Wall extends Entity {
 
 	@Override
 	public Rectangle getBound() {
-		return new Rectangle(wallWorldX+30, wallWorldY+30, 30, 30);
+		return new Rectangle(wallWorldX + 30, wallWorldY + 30, 30, 30);
 	}
 
 	@Override

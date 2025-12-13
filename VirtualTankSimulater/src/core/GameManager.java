@@ -30,8 +30,8 @@ public class GameManager {
 		this.entities.add(tank);
 	}
 
-	public Projectile makeProjectile(String weapon) {
-		Projectile projectile = new Projectile(weapon);
+	public Projectile makeProjectile(String weapon, double worldX, double worldY, double radian, int bulletStart) {
+		Projectile projectile = new Projectile(weapon, worldX, worldY, radian, bulletStart);
 		this.entities.add(projectile);
 		return projectile;
 	}
@@ -78,8 +78,8 @@ public class GameManager {
 		for (int y = 0; y < TILES; y++) {
 			for (int x = 0; x < TILES; x++) {
 
-				int pixelX = x * TILE_SIZE;
-				int pixelY = y * TILE_SIZE;
+				int pixelX = x * TILE_SIZE + TILE_SIZE / 2;
+				int pixelY = y * TILE_SIZE + TILE_SIZE / 2;
 
 				switch (mapData[y][x]) {
 				case 'w':

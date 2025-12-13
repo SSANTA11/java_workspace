@@ -4,24 +4,23 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Rectangle;
 import core.CameraViewLogic;
-import core.GameManager;
 
 public class Projectile extends Entity {
 	private double worldX, worldY;
 
 	private int speed;
 	private int range;
-	private double angleT; // 발사 각도
+	private double radian; // 발사 각도
 	private int damage;
 	private int explosionRange;
 	private int width, height;
 	private int HP = 1;
 	private boolean dead = false;
 
-	public Projectile(String weapon) {
+	public Projectile(String weapon, double worldX, double WorldY, double radian, int bulletStart) {
 		switch (weapon) {
 		case "MG":
-			this.speed = 20;
+			this.speed = 10;
 			this.range = 60;
 			this.explosionRange = 0;
 			this.damage = 3;
@@ -29,7 +28,7 @@ public class Projectile extends Entity {
 			this.height = 4;
 			break;
 		case "AP":
-			this.speed = 30;
+			this.speed = 5;
 			this.range = 100;
 			this.explosionRange = 0;
 			this.damage = 20;
@@ -37,7 +36,15 @@ public class Projectile extends Entity {
 			this.height = 8;
 			break;
 		case "HEAT":
-			this.speed = 25;
+			this.speed = 10;
+			this.range = 80;
+			this.explosionRange = 300;
+			this.damage = 100;
+			this.width = 6;
+			this.height = 8;
+			break;
+		case "ENEMY_HEAT":
+			this.speed = 5;
 			this.range = 80;
 			this.explosionRange = 300;
 			this.damage = 100;
@@ -46,19 +53,17 @@ public class Projectile extends Entity {
 			break;
 		}
 
-		Tank player = GameManager.getInstance().getPlayer();
+		this.radian = radian;
 
-		this.angleT = Math.toRadians(player.getPlayerAngleT());
-
-		this.worldX = player.getPlayerWorldCenterX() + +speed * Math.cos(angleT) * 4;
-		this.worldY = player.getPlayerWorldCenterY() + +speed * Math.sin(angleT) * 4;
+		this.worldX = worldX + speed * Math.cos(radian) * bulletStart;
+		this.worldY = WorldY + speed * Math.sin(radian) * bulletStart;
 	}
 
 	@Override
 	public void update() {
 		if (!isDead()) {
-			worldX += speed * Math.cos(angleT);
-			worldY += speed * Math.sin(angleT);
+			worldX += speed * Math.cos(radian);
+			worldY += speed * Math.sin(radian);
 
 			range--;
 			if (range < 0) {
@@ -74,7 +79,7 @@ public class Projectile extends Entity {
 			int screenY = (int) (worldY - CameraViewLogic.getInstance().getViewPortworldY());
 
 			g.setColor(Color.RED);
-			g.fillRect(screenX, screenY, width, height);
+			g.fillOval(screenX, screenY, width, height);
 
 			if (range < 2 && explosionRange > 0) {
 				g.fillOval(screenX - explosionRange / 2, screenY - explosionRange / 2, explosionRange, explosionRange);
