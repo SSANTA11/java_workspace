@@ -14,7 +14,7 @@ public class TitleOptionPanel extends JPanel {
 		game.addActionListener(e -> {
 			UIManager.getInstance().changePanel("game");
 		});
-		title.addActionListener(e -> {
+		title.addActionListener(e -> { 
 			UIManager.getInstance().changePanel("title");
 		});
 

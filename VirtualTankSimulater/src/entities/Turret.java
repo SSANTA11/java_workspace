@@ -18,7 +18,7 @@ public class Turret extends Entity {
 	private int height;
 	private boolean dead = false;
 	private BufferedImage turretIMG;
-	private double tAngle;
+	private double tRadian;
 	private long lastFireTime = 0;
 
 	public Turret(int turretWorldX, int turretWorldY) {
@@ -35,7 +35,7 @@ public class Turret extends Entity {
 		double distance = (playerWorldX - turretWorldX) * (playerWorldX - turretWorldX)
 				+ (playerWorldY - turretWorldY) * (playerWorldY - turretWorldY);
 		if (distance < 800000) {
-			tAngle = Math.atan2(playerWorldY - turretWorldY, playerWorldX - turretWorldX);
+			tRadian = Math.atan2(playerWorldY - turretWorldY, playerWorldX - turretWorldX);
 			long start = System.currentTimeMillis();
 			if (start - lastFireTime > 600) {
 				fire();
@@ -87,8 +87,8 @@ public class Turret extends Entity {
 	}
 
 	private void fire() {
-		GameManager.getInstance().makeProjectile("ENEMY_HEAT", turretWorldX + width / 4, turretWorldY + height / 2, tAngle,
-				23);
+		GameManager.getInstance().makeProjectile("ENEMY_HEAT", turretWorldX + width / 4, turretWorldY + height / 2,
+				tRadian, 23, Color.blue);
 	}
 
 	@Override
@@ -96,7 +96,7 @@ public class Turret extends Entity {
 		if (!isDead()) {
 			Graphics2D g2 = (Graphics2D) g.create();
 
-			g2.rotate(tAngle, turretScreenX + width / 4, turretScreenY + height / 2);
+			g2.rotate(tRadian, turretScreenX + width / 4, turretScreenY + height / 2);
 			g2.drawImage(turretIMG, turretScreenX, turretScreenY, width, height, null);
 			g2.dispose();
 

@@ -14,6 +14,7 @@ public class SourceManager {
 	private BufferedImage wall1;
 	private BufferedImage wall2;
 	private BufferedImage turret;
+	private BufferedImage soldier;
 
 	private SourceManager() {
 		try {
@@ -24,6 +25,7 @@ public class SourceManager {
 			this.wall1 = ImageIO.read(getClass().getResource("/wall1.png"));
 			this.wall2 = ImageIO.read(getClass().getResource("/wall1.png"));
 			this.turret = ImageIO.read(getClass().getResource("/turret.png"));
+			this.soldier = ImageIO.read(getClass().getResource("/soldier.png"));
 		} catch (IOException e) {
 			System.out.println("사진 없음");
 			System.exit(1);
@@ -46,6 +48,8 @@ public class SourceManager {
 			return wall2;
 		case "turret":
 			return turret;
+		case "soldier":
+			return soldier;
 		default:
 			throw new IllegalArgumentException("input == null!");
 		}

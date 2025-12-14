@@ -20,4 +20,8 @@ public abstract class Entity {
 
 	public abstract void destroy();
 
+	public void setPosition() {
+		
+	}
+
 }

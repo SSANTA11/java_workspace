@@ -1,9 +1,11 @@
 package core;
 
+import java.awt.Color;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 import javax.swing.JPanel;
 
+import entities.EnemySoldier;
 import entities.Entity;
 import entities.Projectile;
 import entities.Tank;
@@ -30,8 +32,9 @@ public class GameManager {
 		this.entities.add(tank);
 	}
 
-	public Projectile makeProjectile(String weapon, double worldX, double worldY, double radian, int bulletStart) {
-		Projectile projectile = new Projectile(weapon, worldX, worldY, radian, bulletStart);
+	public Projectile makeProjectile(String weapon, double worldX, double worldY, double radian, int bulletStart,
+			Color color) {
+		Projectile projectile = new Projectile(weapon, worldX, worldY, radian, bulletStart, color);
 		this.entities.add(projectile);
 		return projectile;
 	}
@@ -44,6 +47,11 @@ public class GameManager {
 	public void makeTurret(int turretWorldX, int turretWorldY) {
 		Turret turret = new Turret(turretWorldX, turretWorldY);
 		entities.add(turret);
+	}
+
+	public void makeSoldier(int soldierWorldX, int soldierWorldY) {
+		EnemySoldier enemySoldier = new EnemySoldier(soldierWorldX, soldierWorldY);
+		entities.add(enemySoldier);
 	}
 
 	public Tank getPlayer() {
@@ -81,13 +89,32 @@ public class GameManager {
 				int pixelX = x * TILE_SIZE + TILE_SIZE / 2;
 				int pixelY = y * TILE_SIZE + TILE_SIZE / 2;
 
-				switch (mapData[y][x]) {
-				case 'w':
-					this.makeWall(pixelX, pixelY);
-					break;
-				case 't':
+				if (mapData[y][x] == 't') {
 					this.makeTurret(pixelX, pixelY);
-					break;
+				}
+			}
+
+		}
+		for (int y = 0; y < TILES; y++) {
+			for (int x = 0; x < TILES; x++) {
+
+				int pixelX = x * TILE_SIZE + TILE_SIZE / 2;
+				int pixelY = y * TILE_SIZE + TILE_SIZE / 2;
+
+				if (mapData[y][x] == 's') {
+					this.makeSoldier(pixelX, pixelY);
+
+				}
+			}
+		}
+		for (int y = 0; y < TILES; y++) {
+			for (int x = 0; x < TILES; x++) {
+
+				int pixelX = x * TILE_SIZE + TILE_SIZE / 2;
+				int pixelY = y * TILE_SIZE + TILE_SIZE / 2;
+
+				if (mapData[y][x] == 'w') {
+					this.makeWall(pixelX, pixelY);
 				}
 			}
 		}

@@ -4,6 +4,7 @@ import java.awt.Rectangle;
 import java.util.ArrayList;
 import java.util.concurrent.CopyOnWriteArrayList;
 
+import entities.EnemySoldier;
 import entities.Entity;
 import entities.Tank;
 import entities.Wall;
@@ -29,8 +30,17 @@ public class CollisionManager {
 					System.out.println(entities.get(i).getClass() + "와 " + entities.get(j).getClass() + "가 충돌했습니다.");
 					System.out.println(entities.get(i).getClass() + " 체력 " + entities.get(i).getHP() + " "
 							+ entities.get(j).getClass() + " 체력 " + entities.get(j).getHP());
-					entities.get(j).setHp(entities.get(i).getDamage());
-					entities.get(i).setHp(entities.get(j).getDamage());
+
+					if ((entities.get(j) instanceof Wall && entities.get(i) instanceof EnemySoldier)) {
+						entities.get(i).setPosition();
+					} else if ((entities.get(j) instanceof EnemySoldier && entities.get(i) instanceof Wall)) {
+						entities.get(j).setPosition();
+					} else if ((entities.get(j) instanceof EnemySoldier && entities.get(i) instanceof EnemySoldier)) {
+						continue;
+					} else {
+						entities.get(j).setHp(entities.get(i).getDamage());
+						entities.get(i).setHp(entities.get(j).getDamage());
+					}
 				}
 			}
 		}
