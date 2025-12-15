@@ -11,7 +11,7 @@ import core.GameManager;
 import core.SourceManager;
 
 public class Turret extends Entity {
-	private int HP = 1000;
+	private int HP = 100;
 	private int turretWorldX, turretWorldY;
 	private int turretScreenX, turretScreenY;
 	private int width;
@@ -30,8 +30,8 @@ public class Turret extends Entity {
 	}
 
 	public void trackAndKillTarget() {
-		double playerWorldX = GameManager.getInstance().getPlayer().getPlayerWorldCenterX();
-		double playerWorldY = GameManager.getInstance().getPlayer().getPlayerWorldCenterY();
+		double playerWorldX = GameManager.getInstance().getPlayer().getCenterX();
+		double playerWorldY = GameManager.getInstance().getPlayer().getCenterY();
 		double distance = (playerWorldX - turretWorldX) * (playerWorldX - turretWorldX)
 				+ (playerWorldY - turretWorldY) * (playerWorldY - turretWorldY);
 		if (distance < 800000) {
@@ -72,15 +72,14 @@ public class Turret extends Entity {
 
 	@Override
 	public void destroy() {
-		if (HP <= 0)
-			this.dead = true;
+		this.dead = true;
 	}
 
 	@Override
 	public void update() {
 		if (!isDead()) {
 			trackAndKillTarget();
-			turretScreenX = turretWorldX - (int) CameraViewLogic.getInstance().getViewPortworldX();
+			turretScreenX = turretWorldX- (int) CameraViewLogic.getInstance().getViewPortworldX();
 			turretScreenY = turretWorldY - (int) CameraViewLogic.getInstance().getViewPortworldY();
 		}
 
@@ -95,7 +94,8 @@ public class Turret extends Entity {
 	public void draw(Graphics g) {
 		if (!isDead()) {
 			Graphics2D g2 = (Graphics2D) g.create();
-
+			g2.setColor(Color.BLUE);
+			g2.fillRect(turretScreenX + width / 4 - HP * 8 / 2, turretScreenY - 50, HP * 8, 5);
 			g2.rotate(tRadian, turretScreenX + width / 4, turretScreenY + height / 2);
 			g2.drawImage(turretIMG, turretScreenX, turretScreenY, width, height, null);
 			g2.dispose();
@@ -104,6 +104,16 @@ public class Turret extends Entity {
 			g.setColor(Color.red);
 			g.fillRect(turretScreenX, turretScreenY, width, height);
 		}
+	}
+
+	@Override
+	public double getCenterX() {
+		return turretWorldX+ width / 4;
+	}
+
+	@Override
+	public double getCenterY() {
+		return turretWorldY+ height / 2;
 	}
 
 }

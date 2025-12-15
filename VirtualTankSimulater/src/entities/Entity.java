@@ -4,6 +4,10 @@ import java.awt.Graphics;
 import java.awt.Rectangle;
 
 public abstract class Entity {
+	public abstract double getCenterX();
+
+	public abstract double getCenterY();
+
 	public abstract int getHP();
 
 	public abstract Rectangle getBound();
@@ -21,7 +25,9 @@ public abstract class Entity {
 	public abstract void destroy();
 
 	public void setPosition() {
-		
+	}
+
+	public void calculateHPVar() {
 	}
 
 }

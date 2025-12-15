@@ -49,7 +49,7 @@ public class Projectile extends Entity {
 		case "ENEMY_HEAT":
 			this.speed = 5;
 			this.range = 80;
-			this.explosionRange = 100;
+			this.explosionRange = 200;
 			this.damage = 100;
 			this.width = 6;
 			this.height = 8;
@@ -67,7 +67,7 @@ public class Projectile extends Entity {
 		this.radian = radian;
 		this.worldX = worldX + speed * Math.cos(radian) * bulletStart;
 		this.worldY = WorldY + speed * Math.sin(radian) * bulletStart;
-		this.color=color;
+		this.color = color;
 	}
 
 	@Override
@@ -128,7 +128,16 @@ public class Projectile extends Entity {
 
 	@Override
 	public void destroy() {
-		if (HP <= 0)
-			this.dead = true;
+		this.dead = true;
+	}
+
+	@Override
+	public double getCenterX() {
+		return worldX;
+	}
+
+	@Override
+	public double getCenterY() {
+		return worldY;
 	}
 }

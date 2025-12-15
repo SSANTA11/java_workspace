@@ -1,5 +1,6 @@
 package entities;
 
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
@@ -16,7 +17,7 @@ public class Tank extends Entity {
 	private double playerWorldY = 500;
 	private double playerScreenX;
 	private double playerScreenY;
-	private int HP = 100000;
+	private int HP = 1000;
 	private int damage = 3;
 	private final int MOVING_SPEED = 3;
 	private final int ROTATION_SPEED = 1;
@@ -145,14 +146,6 @@ public class Tank extends Entity {
 		return radianT;
 	}
 
-	public double getPlayerWorldCenterX() {
-		return playerWorldX + TANK_BOTTOM_WIDTH / 2;
-	}
-
-	public double getPlayerWorldCenterY() {
-		return playerWorldY + TANK_BOTTOM_HEIGHT / 2;
-	}
-
 	@Override
 	public void draw(Graphics g) {
 		Graphics2D g2b = (Graphics2D) g.create();
@@ -160,6 +153,8 @@ public class Tank extends Entity {
 
 		playerScreenCenterX = playerScreenX + TANK_BOTTOM_WIDTH / 2;
 		playerScreenCenterY = playerScreenY + TANK_BOTTOM_HEIGHT / 2;
+		g2b.setColor(Color.RED);
+		g2b.fillRect((int) playerScreenCenterX - HP / 2, (int) playerScreenCenterY - 50, HP, 5);
 		g2b.rotate(radianB, playerScreenCenterX, playerScreenCenterY);
 		g2b.drawImage(tankBottomIMG, (int) playerScreenX, (int) playerScreenY, TANK_BOTTOM_WIDTH, TANK_BOTTOM_HEIGHT,
 				null);
@@ -198,8 +193,16 @@ public class Tank extends Entity {
 
 	@Override
 	public void destroy() {
-		if (HP <= 0)
-			this.dead = true;
+		this.dead = true;
 	}
 
+	@Override
+	public double getCenterX() {
+		return playerWorldX + TANK_BOTTOM_WIDTH / 2;
+	}
+
+	@Override
+	public double getCenterY() {
+		return playerWorldY + TANK_TOP_HEIGHT / 2;
+	}
 }

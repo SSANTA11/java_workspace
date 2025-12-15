@@ -18,11 +18,11 @@ public class ExploManager {
 	public void damageByExplo(double projectileX, double projectileY, int explosionRange, int damage) {
 		CopyOnWriteArrayList<Entity> entities = GameManager.getInstance().getEntities();
 		for (int i = 0; i < entities.size(); i++) {
-			double centerX = entities.get(i).getBound().getCenterX();
-			double centerY = entities.get(i).getBound().getCenterY();
+			double centerX = entities.get(i).getCenterX();
+			double centerY = entities.get(i).getCenterY();
 			double distance = (projectileX - centerX) * (projectileX - centerX)
 					+ (projectileY - centerY) * (projectileY - centerY);
-			if (distance < explosionRange / 2 * explosionRange / 2) {
+			if (distance - 5000  < (explosionRange / 2) * (explosionRange / 2)) {
 				if (!(entities.get(i) instanceof Projectile) && entities.get(i) instanceof Entity) {
 					entities.get(i).setHp(damage);
 				}

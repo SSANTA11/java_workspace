@@ -10,6 +10,7 @@ import javax.imageio.ImageIO;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
+import core.GameLoop;
 import core.SourceManager;
 import core.UIManager;
 
@@ -31,6 +32,7 @@ public class TitlePanel extends JPanel {
 		g.add(game);
 		game.addActionListener(e -> {
 			UIManager.getInstance().changePanel("game");
+			new Thread(GameLoop.getInstance()).start();
 		});
 		option.addActionListener(e -> {
 			UIManager.getInstance().changePanel("titleOption");

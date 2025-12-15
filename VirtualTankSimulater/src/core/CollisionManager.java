@@ -7,6 +7,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 import entities.EnemySoldier;
 import entities.Entity;
 import entities.Tank;
+import entities.Turret;
 import entities.Wall;
 
 public class CollisionManager {
@@ -36,6 +37,10 @@ public class CollisionManager {
 					} else if ((entities.get(j) instanceof EnemySoldier && entities.get(i) instanceof Wall)) {
 						entities.get(j).setPosition();
 					} else if ((entities.get(j) instanceof EnemySoldier && entities.get(i) instanceof EnemySoldier)) {
+						continue;
+					} else if ((entities.get(j) instanceof EnemySoldier && entities.get(i) instanceof Turret)) {
+						continue;
+					} else if ((entities.get(j) instanceof Turret && entities.get(i) instanceof EnemySoldier)) {
 						continue;
 					} else {
 						entities.get(j).setHp(entities.get(i).getDamage());

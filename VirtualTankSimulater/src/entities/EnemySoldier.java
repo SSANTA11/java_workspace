@@ -16,7 +16,7 @@ public class EnemySoldier extends Entity {
 	private int width = 15, height = 10;
 
 	private int HP = 10;
-	private double speed = 0.5;
+	private double speed = 1.5;
 	private double detectionDistance = 640000;
 	private double attackDistsance = 90000;
 
@@ -27,40 +27,41 @@ public class EnemySoldier extends Entity {
 
 	public EnemySoldier(int startX, int startY) {
 		this.soldierIMG = SourceManager.getInstance().getIMGSource("soldier");
-
 		this.worldX = startX;
 		this.worldY = startY;
 	}
 
-	@Override
 	public void setPosition() {
-		worldX += 1;
-		worldY += 1;
+		double deltaX = (speed) * Math.cos(radian);
+		double deltaY = (speed) * Math.sin(radian);
+		this.worldX -= deltaX;
+		this.worldY -= deltaY;
 	}
 
 	@Override
 	public void update() {
 		if (isDead())
 			return;
-		trackAndKillTarget();
+		trackAndKillTargetOrReturn();
 		screenX = (int) worldX - (int) CameraViewLogic.getInstance().getViewPortworldX();
 		screenY = (int) worldY - (int) CameraViewLogic.getInstance().getViewPortworldY();
 	}
 
-	private void trackAndKillTarget() {
+	private void trackAndKillTargetOrReturn() {
 
-		double pX = GameManager.getInstance().getPlayer().getPlayerWorldCenterX();
-		double pY = GameManager.getInstance().getPlayer().getPlayerWorldCenterY();
+		double pX = GameManager.getInstance().getPlayer().getCenterX();
+		double pY = GameManager.getInstance().getPlayer().getCenterY();
 
 		double distance = (pX - worldX) * (pX - worldX) + (pY - worldY) * (pY - worldY);
-		if (distance < detectionDistance && detectionDistance - distance > 2000) {
+
+		if (distance < detectionDistance) {
 			this.radian = Math.atan2(pY - worldY, pX - worldX);
 			if (distance < attackDistsance) {
 				long currentTime = System.currentTimeMillis();
 				if (currentTime - lastFireTime > 800) {
 					fire();
 					lastFireTime = currentTime;
-				} else if (distance < detectionDistance) {
+				} else {
 					worldX -= Math.cos(radian) * speed;
 					worldY -= Math.sin(radian) * speed;
 				}
@@ -68,7 +69,8 @@ public class EnemySoldier extends Entity {
 				worldX += Math.cos(radian) * speed;
 				worldY += Math.sin(radian) * speed;
 			}
-		}
+		} //else 문 추가 후 초기 움직임 추가
+
 	}
 
 	private void fire() {
@@ -84,9 +86,9 @@ public class EnemySoldier extends Entity {
 
 			int centerX = screenX + width / 2;
 			int centerY = screenY + height / 2;
-
+			g2.setColor(Color.BLUE);
+			g2.fillRect(centerX - HP * 8 / 2, centerY - 50, HP * 8, 5);
 			g2.rotate(radian, centerX, centerY);
-
 			g2.drawImage(soldierIMG, screenX, screenY, width, height, null);
 			g2.dispose();
 		} else {
@@ -125,5 +127,15 @@ public class EnemySoldier extends Entity {
 	@Override
 	public void destroy() {
 		this.dead = true;
+	}
+
+	@Override
+	public double getCenterX() {
+		return worldX + 15 / 2;
+	}
+
+	@Override
+	public double getCenterY() {
+		return worldY + 10 / 2;
 	}
 }

@@ -64,8 +64,7 @@ public class Wall extends Entity {
 
 	@Override
 	public void destroy() {
-		if (HP <= 0)
-			this.dead = true;
+		this.dead = true;
 	}
 
 	@Override
@@ -77,5 +76,15 @@ public class Wall extends Entity {
 			wallScreenX = -100;
 			wallScreenY = -100;
 		}
+	}
+
+	@Override
+	public double getCenterX() {
+		return wallWorldX + 30;
+	}
+
+	@Override
+	public double getCenterY() {
+		return wallWorldY + 30;
 	}
 }

@@ -17,10 +17,10 @@ public class GameManager {
 	private static GameManager gameManager = new GameManager();
 	private Tank tank;
 	private CopyOnWriteArrayList<Entity> entities;
+	private Thread t;
 
 	private GameManager() {
 		this.entities = new CopyOnWriteArrayList<Entity>();
-
 	}
 
 	public static GameManager getInstance() {
@@ -78,23 +78,19 @@ public class GameManager {
 		}
 	}
 
+	public void startGameLoopThread() {
+		t = new Thread(GameLoop.getInstance());
+	}
+
+	public void endGameLoopThread() {
+		t.interrupt();
+	}
+
 	public void loadMapEntities() {
 		char[][] mapData = MapManager.getInstance().getMapData();
 		final int TILE_SIZE = MapManager.getInstance().getTILE_SIZE();
 		final int TILES = MapManager.getInstance().getTILES();
 
-		for (int y = 0; y < TILES; y++) {
-			for (int x = 0; x < TILES; x++) {
-
-				int pixelX = x * TILE_SIZE + TILE_SIZE / 2;
-				int pixelY = y * TILE_SIZE + TILE_SIZE / 2;
-
-				if (mapData[y][x] == 't') {
-					this.makeTurret(pixelX, pixelY);
-				}
-			}
-
-		}
 		for (int y = 0; y < TILES; y++) {
 			for (int x = 0; x < TILES; x++) {
 
@@ -113,6 +109,18 @@ public class GameManager {
 				int pixelX = x * TILE_SIZE + TILE_SIZE / 2;
 				int pixelY = y * TILE_SIZE + TILE_SIZE / 2;
 
+				if (mapData[y][x] == 't') {
+					this.makeTurret(pixelX, pixelY);
+				}
+			}
+		}
+
+		for (int y = 0; y < TILES; y++) {
+			for (int x = 0; x < TILES; x++) {
+
+				int pixelX = x * TILE_SIZE + TILE_SIZE / 2;
+				int pixelY = y * TILE_SIZE + TILE_SIZE / 2;
+
 				if (mapData[y][x] == 'w') {
 					this.makeWall(pixelX, pixelY);
 				}
@@ -122,7 +130,6 @@ public class GameManager {
 
 	public CopyOnWriteArrayList<Entity> getEntities() {
 		return entities;
-
 	}
 
 	public static void main(String[] args) {
@@ -133,6 +140,6 @@ public class GameManager {
 		JPanel mainPanel = UIManager.getInstance().getMainPanel();
 		GameWindow gameWindow = new GameWindow(mainPanel);
 		UIManager.getInstance().insertWindow(gameWindow);
-		new Thread(new GameLoop()).start();
+
 	}
 }

@@ -8,6 +8,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
+import core.GameLoop;
 import core.GameManager;
 import core.MapManager;
 import core.UIManager;
@@ -38,6 +39,7 @@ public class GamePanel extends JPanel {
 
 		this.option = new JButton("옵션");
 		option.addActionListener(e -> {
+			GameLoop.getInstance().stopGameLoop();
 			UIManager.getInstance().changePanel("ingameOption");
 		});
 

@@ -42,9 +42,9 @@ public class Weapons {
 	}
 
 	public void fire() {
-		GameManager.getInstance().makeProjectile(weapon, GameManager.getInstance().getPlayer().getPlayerWorldCenterX(),
-				GameManager.getInstance().getPlayer().getPlayerWorldCenterY(),
-				GameManager.getInstance().getPlayer().getRadianT(), 10, Color.black);
+		GameManager.getInstance().makeProjectile(weapon, GameManager.getInstance().getPlayer().getCenterX(),
+				GameManager.getInstance().getPlayer().getCenterY(), GameManager.getInstance().getPlayer().getRadianT(),
+				10, Color.black);
 	}
 
 	public static Weapons getInstance() {
