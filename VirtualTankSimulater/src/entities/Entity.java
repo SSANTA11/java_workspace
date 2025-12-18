@@ -3,31 +3,28 @@ package entities;
 import java.awt.Graphics;
 import java.awt.Rectangle;
 
-public abstract class Entity {
-	public abstract double getCenterX();
+public interface Entity {
+	double getCenterX();
 
-	public abstract double getCenterY();
+	double getCenterY();
 
-	public abstract int getHP();
+	int getHP();
 
-	public abstract Rectangle getBound();
+	Rectangle getBound();
 
-	public abstract int getDamage();
+	int getDamage();
 
-	public abstract void setHp(int damage);
+	void takeDamage(int damage);
 
-	public abstract boolean isDead();
+	boolean isDead();
 
-	public abstract void draw(Graphics g);
+	void draw(Graphics g);
 
-	public abstract void update();
+	void update();
 
-	public abstract void destroy();
+	void destroy();
 
-	public void setPosition() {
-	}
+	public void setPosition();
 
-	public void calculateHPVar() {
-	}
 
 }

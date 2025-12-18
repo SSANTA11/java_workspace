@@ -22,12 +22,12 @@ public class GameLoop implements Runnable {
 
 	public void stopGameLoop() {
 		this.flag = false;
-		System.out.println("스레드 실행 중, 반복문 정지");
+		System.out.println("스레드 실행 중, 정지");
 	}
 
 	public void startGameLoop() {
-		System.out.println("스레드 실행 중, 반복문 실행");
 		this.flag = true;
+		System.out.println("스레드 실행 중, 실행");
 	}
 
 	public static GameLoop getInstance() {

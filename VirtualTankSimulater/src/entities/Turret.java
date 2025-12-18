@@ -10,7 +10,7 @@ import core.CameraViewLogic;
 import core.GameManager;
 import core.SourceManager;
 
-public class Turret extends Entity {
+public class Turret implements Entity, Enemy {
 	private int HP = 100;
 	private int turretWorldX, turretWorldY;
 	private int turretScreenX, turretScreenY;
@@ -61,7 +61,7 @@ public class Turret extends Entity {
 	}
 
 	@Override
-	public void setHp(int damage) {
+	public void takeDamage(int damage) {
 		this.HP -= damage;
 	}
 
@@ -79,7 +79,7 @@ public class Turret extends Entity {
 	public void update() {
 		if (!isDead()) {
 			trackAndKillTarget();
-			turretScreenX = turretWorldX- (int) CameraViewLogic.getInstance().getViewPortworldX();
+			turretScreenX = turretWorldX - (int) CameraViewLogic.getInstance().getViewPortworldX();
 			turretScreenY = turretWorldY - (int) CameraViewLogic.getInstance().getViewPortworldY();
 		}
 
@@ -87,7 +87,7 @@ public class Turret extends Entity {
 
 	private void fire() {
 		GameManager.getInstance().makeProjectile("ENEMY_HEAT", turretWorldX + width / 4, turretWorldY + height / 2,
-				tRadian, 23, Color.blue);
+				tRadian, 30, Color.blue);
 	}
 
 	@Override
@@ -108,12 +108,18 @@ public class Turret extends Entity {
 
 	@Override
 	public double getCenterX() {
-		return turretWorldX+ width / 4;
+		return turretWorldX + width / 4;
 	}
 
 	@Override
 	public double getCenterY() {
-		return turretWorldY+ height / 2;
+		return turretWorldY + height / 2;
+	}
+
+	@Override
+	public void setPosition() {
+		// TODO Auto-generated method stub
+
 	}
 
 }

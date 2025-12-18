@@ -22,9 +22,9 @@ public class ExploManager {
 			double centerY = entities.get(i).getCenterY();
 			double distance = (projectileX - centerX) * (projectileX - centerX)
 					+ (projectileY - centerY) * (projectileY - centerY);
-			if (distance - 5000  < (explosionRange / 2) * (explosionRange / 2)) {
-				if (!(entities.get(i) instanceof Projectile) && entities.get(i) instanceof Entity) {
-					entities.get(i).setHp(damage);
+			if (distance  < (explosionRange / 2) * (explosionRange / 2)) {
+				if (!(entities.get(i) instanceof Projectile)) {
+					entities.get(i).takeDamage(damage);
 				}
 			}
 		}

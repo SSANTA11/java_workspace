@@ -5,7 +5,8 @@ import java.util.concurrent.CopyOnWriteArrayList;
 
 import javax.swing.JPanel;
 
-import entities.EnemySoldier;
+import entities.Soldier;
+import entities.EnemyTank;
 import entities.Entity;
 import entities.Projectile;
 import entities.Tank;
@@ -39,8 +40,13 @@ public class GameManager {
 		return projectile;
 	}
 
-	public void makeWall(int wallWorldX, int wallWorldY) {
-		Wall wall = new Wall(wallWorldX, wallWorldY);
+	public void makeWall1(int wallWorldX, int wallWorldY) {
+		Wall wall = new Wall(wallWorldX, wallWorldY, 1);
+		entities.add(wall);
+	}
+
+	public void makeWall2(int wallWorldX, int wallWorldY) {
+		Wall wall = new Wall(wallWorldX, wallWorldY, 2);
 		entities.add(wall);
 	}
 
@@ -50,8 +56,13 @@ public class GameManager {
 	}
 
 	public void makeSoldier(int soldierWorldX, int soldierWorldY) {
-		EnemySoldier enemySoldier = new EnemySoldier(soldierWorldX, soldierWorldY);
+		Soldier enemySoldier = new Soldier(soldierWorldX, soldierWorldY);
 		entities.add(enemySoldier);
+	}
+
+	public void makeEnemyTank(int enemyTankWorldX, int enemyTankWorldY) {
+		EnemyTank enemyTank = new EnemyTank(enemyTankWorldX, enemyTankWorldY);
+		entities.add(enemyTank);
 	}
 
 	public Tank getPlayer() {
@@ -109,6 +120,18 @@ public class GameManager {
 				int pixelX = x * TILE_SIZE + TILE_SIZE / 2;
 				int pixelY = y * TILE_SIZE + TILE_SIZE / 2;
 
+				if (mapData[y][x] == 'T') {
+					this.makeEnemyTank(pixelX, pixelY);
+
+				}
+			}
+		}
+		for (int y = 0; y < TILES; y++) {
+			for (int x = 0; x < TILES; x++) {
+
+				int pixelX = x * TILE_SIZE + TILE_SIZE / 2;
+				int pixelY = y * TILE_SIZE + TILE_SIZE / 2;
+
 				if (mapData[y][x] == 't') {
 					this.makeTurret(pixelX, pixelY);
 				}
@@ -122,7 +145,18 @@ public class GameManager {
 				int pixelY = y * TILE_SIZE + TILE_SIZE / 2;
 
 				if (mapData[y][x] == 'w') {
-					this.makeWall(pixelX, pixelY);
+					this.makeWall1(pixelX, pixelY);
+				}
+			}
+		}
+		for (int y = 0; y < TILES; y++) {
+			for (int x = 0; x < TILES; x++) {
+
+				int pixelX = x * TILE_SIZE + TILE_SIZE / 2;
+				int pixelY = y * TILE_SIZE + TILE_SIZE / 2;
+
+				if (mapData[y][x] == 'W') {
+					this.makeWall2(pixelX, pixelY);
 				}
 			}
 		}

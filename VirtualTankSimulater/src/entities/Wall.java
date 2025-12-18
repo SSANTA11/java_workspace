@@ -9,17 +9,23 @@ import core.CameraViewLogic;
 import core.MapManager;
 import core.SourceManager;
 
-public class Wall extends Entity {
-	private int HP = 100;
+public class Wall implements Entity {
+	private int HP;
 	private int wallWorldX, wallWorldY;
 	private int wallScreenX, wallScreenY;
 	private int width;
 	private int height;
 	private boolean dead = false;
-	private BufferedImage wall1IMG;
+	private BufferedImage wallIMG;
 
-	public Wall(int wallWorldX, int wallWorldY) {
-		this.wall1IMG = SourceManager.getInstance().getIMGSource("wall1");
+	public Wall(int wallWorldX, int wallWorldY, int n) {
+		if (n == 1) {
+			this.wallIMG = SourceManager.getInstance().getIMGSource("wall1");
+			this.HP = 100;
+		} else {
+			this.wallIMG = SourceManager.getInstance().getIMGSource("wall2");
+			HP = 10000;
+		}
 		this.width = MapManager.getInstance().getTILE_SIZE() / 2;
 		this.height = MapManager.getInstance().getTILE_SIZE() / 2;
 		this.wallWorldX = wallWorldX;
@@ -30,7 +36,7 @@ public class Wall extends Entity {
 	@Override
 	public void draw(Graphics g) {
 		if (!isDead()) {
-			g.drawImage(wall1IMG, wallScreenX, wallScreenY, width, height, null);
+			g.drawImage(wallIMG, wallScreenX, wallScreenY, width, height, null);
 		} else {
 			g.setColor(Color.red);
 			g.fillRect(wallScreenX, wallScreenY, width, height);
@@ -48,7 +54,7 @@ public class Wall extends Entity {
 	}
 
 	@Override
-	public void setHp(int damage) {
+	public void takeDamage(int damage) {
 		this.HP -= damage;
 	}
 
@@ -80,11 +86,17 @@ public class Wall extends Entity {
 
 	@Override
 	public double getCenterX() {
-		return wallWorldX + 30;
+		return wallWorldX + width;
 	}
 
 	@Override
 	public double getCenterY() {
-		return wallWorldY + 30;
+		return wallWorldY + height;
+	}
+
+	@Override
+	public void setPosition() {
+		// TODO Auto-generated method stub
+
 	}
 }

@@ -10,7 +10,7 @@ import core.CameraViewLogic;
 import core.GameManager;
 import core.SourceManager;
 
-public class EnemySoldier extends Entity {
+public class Soldier implements Entity, Enemy {
 	private double worldX, worldY;
 	private int screenX, screenY;
 	private int width = 15, height = 10;
@@ -25,7 +25,7 @@ public class EnemySoldier extends Entity {
 	private long lastFireTime = 0;
 	private BufferedImage soldierIMG;
 
-	public EnemySoldier(int startX, int startY) {
+	public Soldier(int startX, int startY) {
 		this.soldierIMG = SourceManager.getInstance().getIMGSource("soldier");
 		this.worldX = startX;
 		this.worldY = startY;
@@ -69,7 +69,7 @@ public class EnemySoldier extends Entity {
 				worldX += Math.cos(radian) * speed;
 				worldY += Math.sin(radian) * speed;
 			}
-		} //else 문 추가 후 초기 움직임 추가
+		}
 
 	}
 
@@ -113,7 +113,7 @@ public class EnemySoldier extends Entity {
 	}
 
 	@Override
-	public void setHp(int damage) {
+	public void takeDamage(int damage) {
 		this.HP -= damage;
 		if (this.HP <= 0)
 			destroy();

@@ -16,7 +16,8 @@ import entities.Entity;
 import entities.Tank;
 
 public class GamePanel extends JPanel {
-	private JButton option;
+	private JButton option1;
+	private JButton option2;
 	private Tank player;
 	private MapManager mapManager;
 
@@ -28,22 +29,31 @@ public class GamePanel extends JPanel {
 			@Override
 			public void keyPressed(KeyEvent e) {
 				player.setTank(e.getKeyCode(), true);
+				option1.setFocusable(false);
+				option2.setFocusable(false);
 			}
 
 			@Override
 			public void keyReleased(KeyEvent e) {
 				player.setTank(e.getKeyCode(), false);
+				option1.setFocusable(false);
+				option2.setFocusable(false);
 
 			}
 		});
 
-		this.option = new JButton("옵션");
-		option.addActionListener(e -> {
+		this.option1 = new JButton("일시 정지");
+		option1.addActionListener(e -> {
 			GameLoop.getInstance().stopGameLoop();
-			UIManager.getInstance().changePanel("ingameOption");
+
+		});
+		this.option2 = new JButton("시작");
+		option2.addActionListener(e -> {
+			GameLoop.getInstance().startGameLoop();
 		});
 
-		add(option);
+		add(option1);
+		add(option2);
 	}
 
 	@Override

@@ -6,7 +6,6 @@ import javax.swing.JPanel;
 
 import view.GamePanel;
 import view.GameWindow;
-import view.IngameOptionPanel;
 import view.TitlePanel;
 import view.TitleOptionPanel;
 
@@ -15,7 +14,6 @@ public class UIManager {
 	private GameWindow gameWindow;
 	private TitlePanel title;
 	private TitleOptionPanel titleOption;
-	private IngameOptionPanel ingameOption;
 	private GamePanel gamePanel;
 	private JPanel mainPanel;
 	private CardLayout cardLayout;
@@ -26,7 +24,6 @@ public class UIManager {
 		title = TitlePanel.getInstance();
 		gamePanel = new GamePanel();
 		titleOption = new TitleOptionPanel();
-		ingameOption = new IngameOptionPanel();
 		makeMainPanel();
 	}
 
@@ -40,7 +37,6 @@ public class UIManager {
 		mainPanel.add(title, "title");
 		mainPanel.add(titleOption, "titleOption");
 		mainPanel.add(gamePanel, "game");
-		mainPanel.add(ingameOption, "ingameOption");
 	}
 
 	public JPanel getMainPanel() {

@@ -9,6 +9,8 @@ public class SourceManager {
 	private static SourceManager sourceManager = new SourceManager();
 	private BufferedImage tankTop;
 	private BufferedImage tankBottom;
+	private BufferedImage tankTopE;
+	private BufferedImage tankBottomE;
 	private BufferedImage tile;
 	private BufferedImage title;
 	private BufferedImage wall1;
@@ -21,9 +23,11 @@ public class SourceManager {
 			this.title = ImageIO.read(getClass().getResource("/title.png"));
 			this.tankBottom = ImageIO.read(getClass().getResource("/tankBottom.png"));
 			this.tankTop = ImageIO.read(getClass().getResource("/tankTop.png"));
+			this.tankBottomE = ImageIO.read(getClass().getResource("/tankBottomE.png"));
+			this.tankTopE = ImageIO.read(getClass().getResource("/tankTopE.png"));
 			this.tile = ImageIO.read(getClass().getResource("/floor.png"));
 			this.wall1 = ImageIO.read(getClass().getResource("/wall1.png"));
-			this.wall2 = ImageIO.read(getClass().getResource("/wall1.png"));
+			this.wall2 = ImageIO.read(getClass().getResource("/wall2.png"));
 			this.turret = ImageIO.read(getClass().getResource("/turret.png"));
 			this.soldier = ImageIO.read(getClass().getResource("/soldier.png"));
 		} catch (IOException e) {
@@ -36,12 +40,16 @@ public class SourceManager {
 		switch (img) {
 		case "title":
 			return title;
-		case "tankBottom":
-			return tankBottom;
 		case "tile":
 			return tile;
 		case "tankTop":
 			return tankTop;
+		case "tankBottom":
+			return tankBottom;
+		case "tankTopE":
+			return tankTopE;
+		case "tankBottomE":
+			return tankBottomE;
 		case "wall1":
 			return wall1;
 		case "wall2":

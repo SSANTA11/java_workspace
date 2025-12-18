@@ -12,7 +12,7 @@ import core.MapManager;
 import core.SourceManager;
 import core.Weapons;
 
-public class Tank extends Entity {
+public class Tank implements Entity {
 	private double playerWorldX = 0;
 	private double playerWorldY = 500;
 	private double playerScreenX;
@@ -42,7 +42,6 @@ public class Tank extends Entity {
 
 	private double playerScreenCenterX;
 	private double playerScreenCenterY;
-
 	private boolean dead = false;
 
 	public Tank() {
@@ -128,20 +127,6 @@ public class Tank extends Entity {
 
 	}
 
-	public void setPlayerSpeed() {
-		if (this.forwardB) {
-			double deltaX = (MOVING_SPEED) * Math.cos(radianB);
-			double deltaY = (MOVING_SPEED) * Math.sin(radianB);
-			this.playerWorldX -= deltaX;
-			this.playerWorldY -= deltaY;
-		} else if (this.backwardB) {
-			double deltaX = MOVING_SPEED * Math.cos(radianB);
-			double deltaY = MOVING_SPEED * Math.sin(radianB);
-			this.playerWorldX += deltaX;
-			this.playerWorldY += deltaY;
-		}
-	}
-
 	public double getRadianT() {
 		return radianT;
 	}
@@ -154,15 +139,16 @@ public class Tank extends Entity {
 		playerScreenCenterX = playerScreenX + TANK_BOTTOM_WIDTH / 2;
 		playerScreenCenterY = playerScreenY + TANK_BOTTOM_HEIGHT / 2;
 		g2b.setColor(Color.RED);
-		g2b.fillRect((int) playerScreenCenterX - HP / 2, (int) playerScreenCenterY - 50, HP, 5);
+		g2b.fillRect((int) playerScreenCenterX - HP / 4 / 2, (int) playerScreenCenterY - 50, HP / 4, 5);
 		g2b.rotate(radianB, playerScreenCenterX, playerScreenCenterY);
 		g2b.drawImage(tankBottomIMG, (int) playerScreenX, (int) playerScreenY, TANK_BOTTOM_WIDTH, TANK_BOTTOM_HEIGHT,
 				null);
-		g2b.dispose();
 		g2t.rotate(radianT, playerScreenCenterX, playerScreenCenterY);
 		g2t.drawImage(tankTopIMG, (int) playerScreenX + (TANK_BOTTOM_WIDTH - TANK_TOP_WIDTH) / 2 + 10,
 				(int) playerScreenY + (TANK_BOTTOM_HEIGHT - TANK_TOP_HEIGHT) / 2, TANK_TOP_WIDTH, TANK_TOP_HEIGHT,
 				null);
+
+		g2b.dispose();
 		g2t.dispose();
 	}
 
@@ -177,7 +163,7 @@ public class Tank extends Entity {
 	}
 
 	@Override
-	public void setHp(int damage) {
+	public void takeDamage(int damage) {
 		this.HP -= damage;
 	}
 
@@ -204,5 +190,20 @@ public class Tank extends Entity {
 	@Override
 	public double getCenterY() {
 		return playerWorldY + TANK_TOP_HEIGHT / 2;
+	}
+
+	@Override
+	public void setPosition() {
+		if (this.forwardB) {
+			double deltaX = (MOVING_SPEED) * Math.cos(radianB);
+			double deltaY = (MOVING_SPEED) * Math.sin(radianB);
+			this.playerWorldX -= deltaX;
+			this.playerWorldY -= deltaY;
+		} else if (this.backwardB) {
+			double deltaX = MOVING_SPEED * Math.cos(radianB);
+			double deltaY = MOVING_SPEED * Math.sin(radianB);
+			this.playerWorldX += deltaX;
+			this.playerWorldY += deltaY;
+		}
 	}
 }

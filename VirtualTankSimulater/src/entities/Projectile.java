@@ -7,7 +7,7 @@ import java.awt.Rectangle;
 import core.CameraViewLogic;
 import core.ExploManager;
 
-public class Projectile extends Entity {
+public class Projectile implements Entity {
 	private double worldX, worldY;
 
 	private int speed;
@@ -48,7 +48,7 @@ public class Projectile extends Entity {
 			break;
 		case "ENEMY_HEAT":
 			this.speed = 5;
-			this.range = 80;
+			this.range = 100;
 			this.explosionRange = 200;
 			this.damage = 100;
 			this.width = 6;
@@ -77,7 +77,7 @@ public class Projectile extends Entity {
 			worldY += speed * Math.sin(radian);
 
 			range--;
-			if (range < 2) {
+			if (range < 2 && explosionRange > 0 || HP < 0) {
 				ExploManager.getInstance().damageByExplo(worldX, worldY, explosionRange, damage);
 			}
 			if (range < 0) {
@@ -117,7 +117,7 @@ public class Projectile extends Entity {
 	}
 
 	@Override
-	public void setHp(int damage) {
+	public void takeDamage(int damage) {
 		this.HP -= damage;
 	}
 
@@ -139,5 +139,11 @@ public class Projectile extends Entity {
 	@Override
 	public double getCenterY() {
 		return worldY;
+	}
+
+	@Override
+	public void setPosition() {
+		// TODO Auto-generated method stub
+
 	}
 }
